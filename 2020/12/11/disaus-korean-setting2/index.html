@@ -21,8 +21,8 @@
 <meta property="og:site_name" content="정준기의 개발공간 (dev.joongi)">
 <meta property="og:description" content="얼마전 디스커스에서 또 한번의 패치를 하고 그동안 편법으로 하던 한글세팅의 방법이 변경되었다. 기존의 편법으로 이용하던 이용자들은 피해가 없지만, 신규로 블로그에 유입되는 사람들은 또 한번의 난항을 겪고있다.">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://jungjoongi.com/disqus-title.jpg">
-<meta property="og:image" content="https://jungjoongi.com/disqus-01.png">
+<meta property="og:image" content="https://jungjoongi.com/2020/12/11/disaus-korean-setting2/disqus-title.jpg">
+<meta property="og:image" content="https://jungjoongi.com/2020/12/11/disaus-korean-setting2/disqus-01.png">
 <meta property="article:published_time" content="2020-12-10T22:30:00.000Z">
 <meta property="article:modified_time" content="2024-06-30T07:22:24.272Z">
 <meta property="article:author" content="jung joongi">
@@ -31,7 +31,7 @@
 <meta property="article:tag" content="disqus">
 <meta property="article:tag" content="hexo">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://jungjoongi.com/disqus-title.jpg">
+<meta name="twitter:image" content="https://jungjoongi.com/2020/12/11/disaus-korean-setting2/disqus-title.jpg">
     
     
         
@@ -50,7 +50,7 @@
     
     <!--STYLES-->
     
-<link rel="stylesheet" href="/assets/css/style-qpc0pajev9ijvppedh1xvn7ziogp0dosczmggdazhoyhuctwfgz871lfqsnv.min.css">
+<link rel="stylesheet" href="/assets/css/style-4q6nhi8pac71r4emmsgkqkzyzryb6qr53gvanhmfnag6yuzb4ecxtdmmmp1k.min.css">
 
     <!--STYLES END-->
     
@@ -83,7 +83,7 @@
 <header id="header" data-behavior="5">
     <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
     <div class="header-title">
-        <a class="header-title-link" href="/">정준기의 개발공간 (dev.joongi)</a>
+        <a class="header-title-link" href="/%20">정준기의 개발공간 (dev.joongi)</a>
     </div>
     
         
@@ -399,10 +399,10 @@
             <p>얼마전 디스커스에서 또 한번의 패치를 하고 그동안 편법으로 하던 한글세팅의 방법이 변경되었다. 기존의 편법으로 이용하던 이용자들은 피해가 없지만, 신규로 블로그에 유입되는 사람들은 또 한번의 난항을 겪고있다.</p>
 <span id="more"></span>
 <!-- toc -->
-<p><img src="/disqus-title.jpg" alt="디스커스(Disqus))"><span class="image-caption">디스커스(Disqus))</span></p>
+<p><img src="disqus-title.jpg" alt="디스커스(Disqus))"><span class="image-caption">디스커스(Disqus))</span></p>
 <h1 id="새로-변경된-내용"><a href="#새로-변경된-내용" class="headerlink" title="새로 변경된 내용"></a>새로 변경된 내용</h1><p>그동안에는 select box를 수정하여 쉽게 <code>en</code>을 <code>ko</code>로 변경하여 사용을 하였다.<br>그러나 이 방법은 이제 적용되지 않는다. 2020년 12월 기준으로는 selectBox 형식이 아닌 div로 UI를 그려내고 있어 이용자들이 쉽게 한글로 변경하기는 쉽지 않다. 거두절미하고 쉽게 설명하도록 하겠다.</p>
 <h1 id="Quick-Start-이미지-새-창으로-보기"><a href="#Quick-Start-이미지-새-창으로-보기" class="headerlink" title="Quick Start [이미지 새 창으로 보기]"></a>Quick Start <a href="disqus-01.png" target="_blank">[이미지 새 창으로 보기]</a></h1><hr>
-<p><a href="disqus-01.png" target="_blank"><img src="/disqus-01.png" alt="disqus 전송구간 파라메터 변경"><span class="image-caption">disqus 전송구간 파라메터 변경</span></a><br><strong>1. 개발자도구 (또는 F12)를 누른다.</strong><br><strong>2. 개발자도구의 Search부분에서 forums&#x2F;update를 검색한다.</strong><br><strong>3. ctrl + F로 <code>Oa.a.call(t &amp;&amp; t.useInternal ? &quot;internal/forums/update&quot; : &quot;forums/update&quot;</code> 를 검색한다.</strong><br><strong>4. <code>n.props.selection.forum &amp;&amp; (e = dm(&#123;</code> 부분을 찾아서 브레이크 포인트를 걸고 아무언어를 선택한 후에 SAVE를 눌러 변경처리를 한다.</strong><br><strong>5. <code>e</code> 부분에 마우스를 클릭하여 <code>en -&gt; ko</code>로 변경한다.</strong><br><strong>6. 브레이크포인트 <code>Next</code>를 눌러 변경된 값을 전송한다.</strong></p>
+<p><a href="disqus-01.png" target="_blank"><img src="disqus-01.png" alt="disqus 전송구간 파라메터 변경"><span class="image-caption">disqus 전송구간 파라메터 변경</span></a><br><strong>1. 개발자도구 (또는 F12)를 누른다.</strong><br><strong>2. 개발자도구의 Search부분에서 forums&#x2F;update를 검색한다.</strong><br><strong>3. ctrl + F로 <code>Oa.a.call(t &amp;&amp; t.useInternal ? &quot;internal/forums/update&quot; : &quot;forums/update&quot;</code> 를 검색한다.</strong><br><strong>4. <code>n.props.selection.forum &amp;&amp; (e = dm(&#123;</code> 부분을 찾아서 브레이크 포인트를 걸고 아무언어를 선택한 후에 SAVE를 눌러 변경처리를 한다.</strong><br><strong>5. <code>e</code> 부분에 마우스를 클릭하여 <code>en -&gt; ko</code>로 변경한다.</strong><br><strong>6. 브레이크포인트 <code>Next</code>를 눌러 변경된 값을 전송한다.</strong></p>
 <p><strong>이렇게 하면 역시 한글로 디스커스를 이용할 수 가 있다.</strong></p>
 <h2 id="끝으로"><a href="#끝으로" class="headerlink" title="끝으로"></a>끝으로</h2><p>정상적인 방법은 아니지만, 동일하게 디스커스를 한글로 설장이 가능하다. 왜 한국어를 빼먹었는지 아직까지도 의문이다. 2018년 최초로 한글세팅을 하는 방법을 작성하였다. 많은 사람들이 내 글을 읽고 성공하고 블로그에 퍼가주시니 감사할 따름이다.</p>
 <p>이 방법또한 최초로 작성하여 공유하는 방법이다.<br>많은분들에게 도움이 되고 출처를 남겨 퍼가셔도 무방하니 많은 사람들이 한글세팅에 성공하길 바란다.<br><br></p>
@@ -681,7 +681,7 @@
 <div id="cover" style="background-image:url('/assets/images/covers.jpg');"></div>
         <!--SCRIPTS-->
 
-<script src="/assets/js/script-ewjayjroretzx9wlecqeerhwauqone18ewhmxcpuzfuiymclvzs3kljhmthr.min.js"></script>
+<script src="/assets/js/script-zdw28enqufxjuq0xzejhuc1fc1w7craukdt2deq1vk3sx0ovc44fvd9h6edz.min.js"></script>
 
 <!--SCRIPTS END-->
 

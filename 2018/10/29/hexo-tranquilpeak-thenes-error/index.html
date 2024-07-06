@@ -21,15 +21,15 @@
 <meta property="og:site_name" content="정준기의 개발공간 (dev.joongi)">
 <meta property="og:description" content="tranquilpeak 테마의 빌드이슈를 공개합니다.약 한달전부터 hexo 개발블로그를 개설해 공부해가고 가장 마음에 들었던 tranquilpeak테마를 적용하였지만 생각보다 까다로운 여석인지 시작부터 순탄치 않게 되었습니다. 그리고 일주일이상을 헤매다 나만 이상한건지 구글링을 해도 해결점이 나오지 않았습니다. 그리고 소스파일을 하나하나 뜯다가 테마 빌드오">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://jungjoongi.com/tranquilpeak-01.jpg">
-<meta property="og:image" content="https://jungjoongi.com/tranquilpeak-02.jpg">
+<meta property="og:image" content="https://jungjoongi.com/2018/10/29/hexo-tranquilpeak-thenes-error/tranquilpeak-01.jpg">
+<meta property="og:image" content="https://jungjoongi.com/2018/10/29/hexo-tranquilpeak-thenes-error/tranquilpeak-02.jpg">
 <meta property="article:published_time" content="2018-10-29T07:46:10.000Z">
 <meta property="article:modified_time" content="2024-06-30T07:22:24.275Z">
 <meta property="article:author" content="jung joongi">
 <meta property="article:tag" content="hexo">
 <meta property="article:tag" content="tranquilpeak">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://jungjoongi.com/tranquilpeak-01.jpg">
+<meta name="twitter:image" content="https://jungjoongi.com/2018/10/29/hexo-tranquilpeak-thenes-error/tranquilpeak-01.jpg">
     
     
         
@@ -48,7 +48,7 @@
     
     <!--STYLES-->
     
-<link rel="stylesheet" href="/assets/css/style-qpc0pajev9ijvppedh1xvn7ziogp0dosczmggdazhoyhuctwfgz871lfqsnv.min.css">
+<link rel="stylesheet" href="/assets/css/style-4q6nhi8pac71r4emmsgkqkzyzryb6qr53gvanhmfnag6yuzb4ecxtdmmmp1k.min.css">
 
     <!--STYLES END-->
     
@@ -81,7 +81,7 @@
 <header id="header" data-behavior="5">
     <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
     <div class="header-title">
-        <a class="header-title-link" href="/">정준기의 개발공간 (dev.joongi)</a>
+        <a class="header-title-link" href="/%20">정준기의 개발공간 (dev.joongi)</a>
     </div>
     
         
@@ -400,7 +400,7 @@
 <h4 id="기본적인-세팅-참고"><a href="#기본적인-세팅-참고" class="headerlink" title="#기본적인 세팅 &amp; 참고"></a>#기본적인 세팅 &amp; 참고</h4><p>일단 기본적인 세팅은 <strong>tranquilpeak제작자인</strong> <a href="https://github.com/LouisBarranqueiro/hexo-theme-tranquilpeak/blob/master/DOCUMENTATION.md">LouisBarranqueiro</a>의 git을 참고하면 도큐먼트 문서가 있는데 보고 따라하는것이 가장 간편하다.<br>그외에 한글로 된 설명이 필요하다면 <a href="https://taetaetae.github.io/2017/08/27/hexo-themes-tranquilpeak/">태태태의 개발공간</a>을 참고해도 좋다. 잘 정리되어 있다.</p>
 <h3 id="build-그리고-오류"><a href="#build-그리고-오류" class="headerlink" title="# build? 그리고 오류"></a># build? 그리고 오류</h3><p>일단 이 테마는 build를 내부적으로 해야 작동하는 테마이다.<br>이전에 다른 테마를 사용할때에는 그냥 적용하면 됐었지만, css나 js등 테마의 자원을 변경했을때에는 별도의 build작업이 필요하다.<br><strong>그런데!!</strong> 문제가 생긴다. build가 되지 않는것이다.</p>
 <p>일단 도큐먼트 문서를 보자.</p>
-<p><img src="/tranquilpeak-01.jpg" alt="도큐먼트 문서중 자원변경시 해야할일"><span class="image-caption">도큐먼트 문서중 자원변경시 해야할일</span><br>외부 라이브러리를 추가&#x2F;삭제할때에는 <code>npm install</code> 을 통해서 모듈을 설치&#x2F;삭제를 해주어야한다. 그렇지만 이것이 빌드는 아니다.<br><em><strong>LouisBarranqueiro</strong></em> 는 테마를 수정했을때에 <code>hexo s</code>명령어를 실행해 local환경에서 서버를 띄어보게 하고 <code>npm run start</code> 명령어를 실행하여 변경된 모듈 &amp; 자원들을 임시저장소로 옮겨 로컬환경에서 로드시키도록 했다.</p>
+<p><img src="tranquilpeak-01.jpg" alt="도큐먼트 문서중 자원변경시 해야할일"><span class="image-caption">도큐먼트 문서중 자원변경시 해야할일</span><br>외부 라이브러리를 추가&#x2F;삭제할때에는 <code>npm install</code> 을 통해서 모듈을 설치&#x2F;삭제를 해주어야한다. 그렇지만 이것이 빌드는 아니다.<br><em><strong>LouisBarranqueiro</strong></em> 는 테마를 수정했을때에 <code>hexo s</code>명령어를 실행해 local환경에서 서버를 띄어보게 하고 <code>npm run start</code> 명령어를 실행하여 변경된 모듈 &amp; 자원들을 임시저장소로 옮겨 로컬환경에서 로드시키도록 했다.</p>
 <p>그렇지만 아래와 같은 오류를 반환할 뿐 아무일도 일어나지 않는다.</p>
 <figure class="highlight json"><figcaption><span>명령프롬프트에서 반환하는 값</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">npm ERR! code ELIFECYCLE</span><br><span class="line">npm ERR! errno <span class="number">1</span></span><br><span class="line">npm ERR! hexo-theme-tranquilpeak@<span class="number">3.0</span><span class="number">.1</span> grunt<span class="punctuation">:</span> `./node_modules/grunt-cli/bin/grunt <span class="string">&quot;default&quot;</span>`</span><br><span class="line">npm ERR! Exit status <span class="number">1</span></span><br><span class="line">npm ERR!</span><br><span class="line">npm ERR! Failed at the hexo-theme-tranquilpeak@<span class="number">3.0</span><span class="number">.1</span> grunt script.</span><br><span class="line">npm ERR! This is probably not a problem with npm. There is likely additional logging output above.</span><br><span class="line"></span><br><span class="line">npm ERR! A complete log of this run can be found in<span class="punctuation">:</span></span><br><span class="line">npm ERR!     C<span class="punctuation">:</span>\Users\name\scoop\persist\nodejs\cache\_logs\<span class="number">2018</span><span class="number">-10</span><span class="number">-29</span>T08_21_56_667Z-debug.log</span><br><span class="line">npm ERR! code ELIFECYCLE</span><br><span class="line">npm ERR! errno <span class="number">1</span></span><br><span class="line">npm ERR! hexo-theme-tranquilpeak@<span class="number">3.0</span><span class="number">.1</span> start<span class="punctuation">:</span> `npm run grunt -- default`</span><br><span class="line">npm ERR! Exit status <span class="number">1</span></span><br><span class="line">npm ERR!</span><br><span class="line">npm ERR! Failed at the hexo-theme-tranquilpeak@<span class="number">3.0</span><span class="number">.1</span> start script.</span><br><span class="line">npm ERR! This is probably not a problem with npm. There is likely additional logging output above.</span><br><span class="line"></span><br><span class="line">npm ERR! A complete log of this run can be found in<span class="punctuation">:</span></span><br><span class="line">npm ERR!     C<span class="punctuation">:</span>\Users\name\scoop\persist\nodejs\cache\_logs\<span class="number">2018</span><span class="number">-10</span><span class="number">-29</span>T08_21_56_709Z-debug.log</span><br></pre></td></tr></table></figure>
 
@@ -413,7 +413,7 @@
 <figure class="highlight json"><figcaption><span>package.json 9번째줄 node명령어 추가</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;hexo-theme-tranquilpeak&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;version&quot;</span><span class="punctuation">:</span> <span class="string">&quot;3.0.1&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;description&quot;</span><span class="punctuation">:</span> <span class="string">&quot;A gorgeous responsive theme for Hexo blog framework&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;main&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Gruntfile.js&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;scripts&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;start&quot;</span><span class="punctuation">:</span> <span class="string">&quot;npm run grunt -- default&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;build&quot;</span><span class="punctuation">:</span> <span class="string">&quot;npm run prod&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;prod&quot;</span><span class="punctuation">:</span> <span class="string">&quot;npm run grunt -- buildProd&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;grunt&quot;</span><span class="punctuation">:</span> <span class="string">&quot;node ./node_modules/grunt-cli/bin/grunt&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;lint&quot;</span><span class="punctuation">:</span> <span class="string">&quot;./node_modules/eslint/bin/eslint.js&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;test&quot;</span><span class="punctuation">:</span> <span class="string">&quot;echo \&quot;Error: no test specified\&quot; &amp;&amp; exit 1&quot;</span></span><br><span class="line">  <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;repository&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;git&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;url&quot;</span><span class="punctuation">:</span> <span class="string">&quot;https://github.com/LouisBarranqueiro/hexo-theme-tranquilpeak.git&quot;</span></span><br><span class="line">  <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">....</span><br><span class="line"> <span class="punctuation">[</span>생략<span class="punctuation">]</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
 
 <p>package.json파일에 짜여져있는 로직에서 grunt파일을 실행할때 node를 통해 실행하도록 하는것이다.<br>이렇게 변경후 저장한 다음 <code>npm run start</code>명령을 실행하면 자연스레 실행이 되는것을 확인할 수 있을 것이다.<br>그리고 local서버에서는 실시간으로 적용되기때문에 확인을 할 수가 있고 자원을 변경한 후에는 <code>npm run prod</code>명령을 통하여 테마 폴더로 배포가 될것이다.<br>그러면 root폴더로 이동하여 <code>hexo generate -d</code> 명령을 수행하면 <code>public</code>폴더로 배포가 되며 블로그에 정상 배포가 되는것을 확인할 수 있을것이다.</p>
-<h3 id="이슈제기-및-마무리"><a href="#이슈제기-및-마무리" class="headerlink" title="#이슈제기 및 마무리"></a>#이슈제기 및 마무리</h3><p>나는 이것을 발견하여  <strong>tranquilpeak제작자인</strong> <a href="https://github.com/LouisBarranqueiro/hexo-theme-tranquilpeak/">LouisBarranqueiro</a>의 git로가서 이슈를 제기하였다.<br><img src="/tranquilpeak-02.jpg" alt="테마 제작자인 LouisBarranqueiro에게 이슈제기"><span class="image-caption">테마 제작자인 LouisBarranqueiro에게 이슈제기</span></p>
+<h3 id="이슈제기-및-마무리"><a href="#이슈제기-및-마무리" class="headerlink" title="#이슈제기 및 마무리"></a>#이슈제기 및 마무리</h3><p>나는 이것을 발견하여  <strong>tranquilpeak제작자인</strong> <a href="https://github.com/LouisBarranqueiro/hexo-theme-tranquilpeak/">LouisBarranqueiro</a>의 git로가서 이슈를 제기하였다.<br><img src="tranquilpeak-02.jpg" alt="테마 제작자인 LouisBarranqueiro에게 이슈제기"><span class="image-caption">테마 제작자인 LouisBarranqueiro에게 이슈제기</span></p>
 <p>짧은 영어지만 이슈를 제기하니 1-2일 이내로 답변이 왔다. 아마 다음버전 배포할때에는 수정이 되어 배포가 될 것같다.<br>이런 이슈들을 접하다보니 나도모르게 많이 배워가는것 같다.</p>
 <p>언젠가 나도 라이브러리나 오픈소스를 배포할날이 올까? 아직 멀었지만 그런 날을 기대하며 개발을 하러간다.<br>읽어주셔 감사합니다.</p>
 
@@ -684,7 +684,7 @@
 <div id="cover" style="background-image:url('/assets/images/covers.jpg');"></div>
         <!--SCRIPTS-->
 
-<script src="/assets/js/script-ewjayjroretzx9wlecqeerhwauqone18ewhmxcpuzfuiymclvzs3kljhmthr.min.js"></script>
+<script src="/assets/js/script-zdw28enqufxjuq0xzejhuc1fc1w7craukdt2deq1vk3sx0ovc44fvd9h6edz.min.js"></script>
 
 <!--SCRIPTS END-->
 

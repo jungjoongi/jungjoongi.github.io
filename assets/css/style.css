@@ -7102,8 +7102,7 @@ blockquote > p:first-child {
     width: calc(100% - 60px);
     padding: 0 30px;
   }
-  #about #about-card #about-card-picture-div {
-    position: relative;
+  #about #about-card #about-card-picture {
     width: 90px;
     height: 90px;
     border-radius: 45px;
