@@ -13,7 +13,7 @@
     
         <link rel="alternate" type="application/atom+xml" title="RSS" href="/rss2.xml">
     
-    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"jung joongi","sameAs":["https://github.com/jungjoongi","https://facebook.com/joongi.jung.kr","mailto:dev.joongi@gmail.com"],"image":"profile.jpg"},"articleBody":"Server에서 Date객체를 이용해 View에 보여줄때에 Timezone설정에 따라 시간이 다른것을 알 수가 있다.이것을 해결하고자 해당 방법을 제시하고자한다.\n\n\nAmazone Web Service\nEC2 TimeZone을 변경해야하는 이유는?\n\nMySQL – 기본적으로 RDS MySQL DB 인스턴스의 표준 시간대는 Coordinated Universal Time(UTC)입니다. MySQL 5.5, 5.6 또는 5.7을 사용하는 경우 인스턴스의파라미터 그룹에서 time_zone 파라미터를 설정하여 인스턴스의 표준 시간대를 변경할 수 있습니다. 해당 파라미터 그룹을 사용하는 모든 인스턴스 및 읽기 전용 복제본이 새 표준 시간대를 사용하도록 변경됩니다.RDS MySQL 5.5 이전 버전의 경우 표준 시간대를 변경할 수 없습니다. 자세한 내용은 MySQL DB 인스턴스의 로컬 표준 시간대를 참조하십시오\nAWS문서\n\n\n\n위의 AWS문서를 참고하면 기본적으로 EC2를 쓸때에 MySQL을 함께 쓴다면 5.5 이하버전은 파라미터로 표준시간대를 설정할 수가 없습니다.만약 해당사항이 없거나 변경하고싶지 않으시다면 안하셔도 됩니다. 그외에 다른 해당사항은 다음 도큐먼트 문서를 참고해주시기 바랍니다.\n\n도큐먼트문서\n\n\n\n\n\n(adsbygoogle = window.adsbygoogle || []).push({});\n\n\nQuick StartTimezone\n12345678910111213$ dateThu Dec 13 06:41:49 UTC 2018 // 이런식으로 나올 것이다.$ cat /etc/localtime...UTCUTC.. // UTC로 되어있는것을 확인$sudo rm /etc/localtime // 디렉토리를 삭제한다.$sudo ln -s /usr/share/zoneinfo/Asia/Seoul /etc/localtime // Asia/Seoul 이기때문에 해당 폴더를 심볼릭 링크한다.$ dateThu Dec 13 11:15:08 KST 2018\nLocale리눅스는 기본적으로 en_US로 설정되어있는데 서버시간 설정이나 언어설정등의 문제로 변경을 필요로할때 변경하시면 됩니다.\n\n12345678910111213141516171819202122232425262728293031323334$ locale // 현재 설정이 어느것으로 되어있는지 확인하는 명령어이다.LANG=en_US.UTF-8LC_CTYPE=&quot;en_US.UTF-8&quot;LC_NUMERIC=&quot;en_US.UTF-8&quot;LC_TIME=&quot;en_US.UTF-8&quot;LC_COLLATE=&quot;en_US.UTF-8&quot;LC_MONETARY=&quot;en_US.UTF-8&quot;LC_MESSAGES=&quot;en_US.UTF-8&quot;LC_PAPER=&quot;en_US.UTF-8&quot;LC_NAME=&quot;en_US.UTF-8&quot;LC_ADDRESS=&quot;en_US.UTF-8&quot;LC_TELEPHONE=&quot;en_US.UTF-8&quot;LC_MEASUREMENT=&quot;en_US.UTF-8&quot;LC_IDENTIFICATION=&quot;en_US.UTF-8&quot;LC_ALL=$ locale -a // 변경 가능한 locale을 확인한다.aa_DJaa_DJ.iso88591aa_DJ.utf8...zh_TW.big5zh_TW.euctwzh_TW.utf8zu_ZAzu_ZA.iso88591zu_ZA.utf8$ nano /etc/sysconfig/i18n // 나노에디터 또는 vi or vim 등으로 편집을 한다.LANG=en_US.UTF-8---&gt;LANG=ko_KR.utf8\n\n설정 끝Restart하면 적용 된다.\n","dateCreated":"2018-12-13T11:00:34+09:00","dateModified":"2024-06-30T16:22:24+09:00","datePublished":"2018-12-13T11:00:34+09:00","description":"Server에서 Date객체를 이용해 View에 보여줄때에 Timezone설정에 따라 시간이 다른것을 알 수가 있다.이것을 해결하고자 해당 방법을 제시하고자한다.","headline":"AWS EC2 시간(timezone) / Locale 변경하기","image":[["title.jpg"]],"mainEntityOfPage":{"@type":"WebPage","@id":"https://jungjoongi.com/2018/12/13/aws-ec2-timezone/"},"publisher":{"@type":"Organization","name":"jung joongi","sameAs":["https://github.com/jungjoongi","https://facebook.com/joongi.jung.kr","mailto:dev.joongi@gmail.com"],"image":"profile.jpg","logo":{"@type":"ImageObject","url":"profile.jpg"}},"url":"https://jungjoongi.com/2018/12/13/aws-ec2-timezone/","keywords":"aws, ec2","thumbnailUrl":["title.jpg"]}</script>
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"jung joongi","sameAs":["https://github.com/jungjoongi","mailto:dev.joongi@gmail.com"],"image":"profile.jpg"},"articleBody":"Server에서 Date객체를 이용해 View에 보여줄때에 Timezone설정에 따라 시간이 다른것을 알 수가 있다.이것을 해결하고자 해당 방법을 제시하고자한다.\n\n\nAmazone Web Service\nEC2 TimeZone을 변경해야하는 이유는?\n\nMySQL – 기본적으로 RDS MySQL DB 인스턴스의 표준 시간대는 Coordinated Universal Time(UTC)입니다. MySQL 5.5, 5.6 또는 5.7을 사용하는 경우 인스턴스의파라미터 그룹에서 time_zone 파라미터를 설정하여 인스턴스의 표준 시간대를 변경할 수 있습니다. 해당 파라미터 그룹을 사용하는 모든 인스턴스 및 읽기 전용 복제본이 새 표준 시간대를 사용하도록 변경됩니다.RDS MySQL 5.5 이전 버전의 경우 표준 시간대를 변경할 수 없습니다. 자세한 내용은 MySQL DB 인스턴스의 로컬 표준 시간대를 참조하십시오\nAWS문서\n\n\n\n위의 AWS문서를 참고하면 기본적으로 EC2를 쓸때에 MySQL을 함께 쓴다면 5.5 이하버전은 파라미터로 표준시간대를 설정할 수가 없습니다.만약 해당사항이 없거나 변경하고싶지 않으시다면 안하셔도 됩니다. 그외에 다른 해당사항은 다음 도큐먼트 문서를 참고해주시기 바랍니다.\n\n도큐먼트문서\n\n\n\n\n\n(adsbygoogle = window.adsbygoogle || []).push({});\n\n\nQuick StartTimezone\n12345678910111213$ dateThu Dec 13 06:41:49 UTC 2018 // 이런식으로 나올 것이다.$ cat /etc/localtime...UTCUTC.. // UTC로 되어있는것을 확인$sudo rm /etc/localtime // 디렉토리를 삭제한다.$sudo ln -s /usr/share/zoneinfo/Asia/Seoul /etc/localtime // Asia/Seoul 이기때문에 해당 폴더를 심볼릭 링크한다.$ dateThu Dec 13 11:15:08 KST 2018\nLocale리눅스는 기본적으로 en_US로 설정되어있는데 서버시간 설정이나 언어설정등의 문제로 변경을 필요로할때 변경하시면 됩니다.\n\n12345678910111213141516171819202122232425262728293031323334$ locale // 현재 설정이 어느것으로 되어있는지 확인하는 명령어이다.LANG=en_US.UTF-8LC_CTYPE=&quot;en_US.UTF-8&quot;LC_NUMERIC=&quot;en_US.UTF-8&quot;LC_TIME=&quot;en_US.UTF-8&quot;LC_COLLATE=&quot;en_US.UTF-8&quot;LC_MONETARY=&quot;en_US.UTF-8&quot;LC_MESSAGES=&quot;en_US.UTF-8&quot;LC_PAPER=&quot;en_US.UTF-8&quot;LC_NAME=&quot;en_US.UTF-8&quot;LC_ADDRESS=&quot;en_US.UTF-8&quot;LC_TELEPHONE=&quot;en_US.UTF-8&quot;LC_MEASUREMENT=&quot;en_US.UTF-8&quot;LC_IDENTIFICATION=&quot;en_US.UTF-8&quot;LC_ALL=$ locale -a // 변경 가능한 locale을 확인한다.aa_DJaa_DJ.iso88591aa_DJ.utf8...zh_TW.big5zh_TW.euctwzh_TW.utf8zu_ZAzu_ZA.iso88591zu_ZA.utf8$ nano /etc/sysconfig/i18n // 나노에디터 또는 vi or vim 등으로 편집을 한다.LANG=en_US.UTF-8---&gt;LANG=ko_KR.utf8\n\n설정 끝Restart하면 적용 된다.\n","dateCreated":"2018-12-13T11:00:34+09:00","dateModified":"2024-06-30T16:22:24+09:00","datePublished":"2018-12-13T11:00:34+09:00","description":"Server에서 Date객체를 이용해 View에 보여줄때에 Timezone설정에 따라 시간이 다른것을 알 수가 있다.이것을 해결하고자 해당 방법을 제시하고자한다.","headline":"AWS EC2 시간(timezone) / Locale 변경하기","image":[["title.jpg"]],"mainEntityOfPage":{"@type":"WebPage","@id":"https://jungjoongi.com/2018/12/13/aws-ec2-timezone/"},"publisher":{"@type":"Organization","name":"jung joongi","sameAs":["https://github.com/jungjoongi","mailto:dev.joongi@gmail.com"],"image":"profile.jpg","logo":{"@type":"ImageObject","url":"profile.jpg"}},"url":"https://jungjoongi.com/2018/12/13/aws-ec2-timezone/","keywords":"aws, ec2","thumbnailUrl":["title.jpg"]}</script>
     <meta name="description" content="Server에서 Date객체를 이용해 View에 보여줄때에 Timezone설정에 따라 시간이 다른것을 알 수가 있다.이것을 해결하고자 해당 방법을 제시하고자한다.">
 <meta property="og:type" content="blog">
 <meta property="og:title" content="AWS EC2 시간(timezone) &#x2F; Locale 변경하기">
@@ -186,15 +186,6 @@
                     
                         <i class="sidebar-button-icon fab fa-github" aria-hidden="true"></i>
                         <span class="sidebar-button-desc">GitHub</span>
-                    </a>
-            </li>
-            
-                <li class="sidebar-button">
-                    
-                        <a  class="sidebar-button-link " href="https://facebook.com/joongi.jung.kr" target="_blank" rel="noopener" title="Facebook">
-                    
-                        <i class="sidebar-button-icon fab fa-facebook" aria-hidden="true"></i>
-                        <span class="sidebar-button-desc">Facebook</span>
                     </a>
             </li>
             
@@ -465,14 +456,6 @@
             
             
             <li class="post-action hide-xs">
-                <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://jungjoongi.com/2018/12/13/aws-ec2-timezone/" title="Share on Facebook">
-                    <i class="fab fa-facebook" aria-hidden="true"></i>
-                </a>
-            </li>
-        
-            
-            
-            <li class="post-action hide-xs">
                 <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=https://jungjoongi.com/2018/12/13/aws-ec2-timezone/" title="Share on Twitter">
                     <i class="fab fa-twitter" aria-hidden="true"></i>
                 </a>
@@ -566,14 +549,6 @@
             
             
             <li class="post-action hide-xs">
-                <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://jungjoongi.com/2018/12/13/aws-ec2-timezone/" title="Share on Facebook">
-                    <i class="fab fa-facebook" aria-hidden="true"></i>
-                </a>
-            </li>
-        
-            
-            
-            <li class="post-action hide-xs">
                 <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=https://jungjoongi.com/2018/12/13/aws-ec2-timezone/" title="Share on Twitter">
                     <i class="fab fa-twitter" aria-hidden="true"></i>
                 </a>
@@ -611,14 +586,6 @@
                 <div id="share-options-bar" class="share-options-bar" data-behavior="5">
     <i id="btn-close-shareoptions" class="fa fa-times"></i>
     <ul class="share-options">
-        
-            
-            
-            <li class="share-option">
-                <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://jungjoongi.com/2018/12/13/aws-ec2-timezone/">
-                    <i class="fab fa-facebook" aria-hidden="true"></i><span>Share on Facebook</span>
-                </a>
-            </li>
         
             
             

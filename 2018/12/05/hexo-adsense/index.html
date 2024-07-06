@@ -13,7 +13,7 @@
     
         <link rel="alternate" type="application/atom+xml" title="RSS" href="/rss2.xml">
     
-    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"jung joongi","sameAs":["https://github.com/jungjoongi","https://facebook.com/joongi.jung.kr","mailto:dev.joongi@gmail.com"],"image":"profile.jpg"},"articleBody":"요즘 일이 바빠서 블로그 작성을 소홀히 하였지만 드디어 구글애드센스와 쿠팡광고를 블로그에 설치하였다.이에대한 과정을 나누어보려고 한다.\n\n\n근황최근 프로젝트가 하나 끝나고 얼마전부터 sm운영을 하고있었다. 그전까지는 조금 바빠서 블로그에 손을 델수가 없었다.글을 쓰고싶었지만 집에가면 쉬고싶고 역시 그냥 쉬고싶은 것이었다.\n이제 다시 블로그에 투자를 하기위해서 미루고 미루었던 광고게재하기위한 작업을 다시 시작했다.처음에 너무나 귀찮았던 일이라.. 1달여 넘게 미루었던 일이었는데 더이상 마루게된다면 글쓰는것도 미루게될 것 같았다.드디어 블로그 소스를 까보고 어디위치에 넣어볼까 고민을 하던끝에 좌측에 광고를 달기로 결심했다.\n광고위치 선정 고려사항\n블로그에 광고를 게재하기 위해 많은것을 고려하게 되었다.\n1. 가독성을 방해하면 안된다.2. 컨텐츠 외에 장소를 확보해야한다.3. 모바일 환경에서는 광고를 보여주지 않는다.4. 한번의 삽입으로 끝내야한다\n이와같은 이유는 모두 컨텐츠를 보호하기 위함이었다.첫째도 둘째도 컨텐츠를 방해하지 않기위한 방향으로 잡았기 때문이다.예컨데 우리나라 인터넷 신문 사이트만 들어가도 광고로 도배가 되어있는것을 볼 수가 있다. 정말 스트레스 받는다.도무지 기사내용을 확인할 수가 없다. 그래서 생각해낸 방법은 블로그에 컨텐츠 영역을 나누는 것이었다.\n작업그런데 문제가 하나 더 생겼다. 내 블로그는 post에 최적화 되어있는 블로그이기때문에 약간 손을봐야 했던 것이었다.tranquilpeak 테마를 사용해본 사람들은 알것이다. 딱 post에 최적화가 되어있고 글에 집중할수 있도록 되어있기 때문이었다.그래서 어쩔수없이 테마를 손보기로 하였다.\n테마는 좌측에 광고가 들어갈만큼 나누어주었다.post.ejs파일을 건드려 post를 2영역으로 나누어주었고 좌측에는 광고 우측에는 포스트가 들어가도록 설정해주었다.좌측 광고는 fixed를 걸어 항상 고정이 되게하였고 컨텐츠는 스크롤하는 방향에 맞추어 기존과 같이 기능이 동작하도록 하였다.\n광고는 3개만\n1. 쿠팡광고 1개2. 쿠팡광고 1개3. 구글애드센스 1개\n그래도 배너형식으로 넣어보니 꾀 블로그가 깔끔하게 보이기 시작했다.여기서 고려해야 할 사항들이 몇가지 생겨났다.\n광고대응 작업모바일페이지와 화면이 작아졌을때를 대비하는 것이었다.나는 여기서 resize()함수를 사용하여 최소 아이패드 해상도까지만 광고가 보이게하였고 그 이하로 해상도가 내려간다면 과감하게 광고를 지우고 post의 사이즈는 원래대로 복귀시키는 것이었다.\n예제코드를 첨부한다.\n123456789101112$(window).resize(function ()&#123;    var width_size = window.outerWidth;        if (width_size &lt;= 760) &#123;        $(&quot;#ads&quot;).css(&quot;display&quot;,&quot;none&quot;);        $(&quot;#main-content&quot;).attr(&quot;style&quot;,&quot;&quot;);    &#125;    if (width_size &gt; 760) &#123;        $(&quot;#ads&quot;).css(&quot;display&quot;,&quot;block&quot;);        $(&quot;#main-content&quot;).css(&quot;margin-left&quot;,&quot;270px&quot;);    &#125;&#125;)\n\n물론 나의 DOM트리 상황에 맞는 attribute 설정을 하였지만 이것은 자신의 소스코드 입맛에 맞게 사용하면 될것같다.또 google Adsense는 반응형으로 사이즈가 동적으로 생겨난다.그래서 스크립트가 실행이 되기전 사용자의 스크롤이동으로 인한 깨짐을 최소한으로 방지하고자 로딩 이미지등 사전작업을 실시하였다.\n방법은 간단하다.\n1. 로딩이미지를 띄운다2. 스크롤바 기능을 중지시킨다.3. window.onload 함수를 사용하여 이미지 제거&#x2F;스크롤 작동\n질문이 있다면 댓글남겨주세요. 답변드리겠습니다.\n","dateCreated":"2018-12-05T15:23:01+09:00","dateModified":"2024-06-30T16:22:24+09:00","datePublished":"2018-12-05T15:23:01+09:00","description":"요즘 일이 바빠서 블로그 작성을 소홀히 하였지만 드디어 구글애드센스와 쿠팡광고를 블로그에 설치하였다.이에대한 과정을 나누어보려고 한다.","headline":"hexo블로그(tranquilpeak)에 구글애드센스(adsense) 및 광고 설치","image":[["adsense-title.jpg"],["adsense-title.jpg"]],"mainEntityOfPage":{"@type":"WebPage","@id":"https://jungjoongi.com/2018/12/05/hexo-adsense/"},"publisher":{"@type":"Organization","name":"jung joongi","sameAs":["https://github.com/jungjoongi","https://facebook.com/joongi.jung.kr","mailto:dev.joongi@gmail.com"],"image":"profile.jpg","logo":{"@type":"ImageObject","url":"profile.jpg"}},"url":"https://jungjoongi.com/2018/12/05/hexo-adsense/","keywords":"hexo, tranquilpeak, adsense","thumbnailUrl":["adsense-title.jpg"]}</script>
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"jung joongi","sameAs":["https://github.com/jungjoongi","mailto:dev.joongi@gmail.com"],"image":"profile.jpg"},"articleBody":"요즘 일이 바빠서 블로그 작성을 소홀히 하였지만 드디어 구글애드센스와 쿠팡광고를 블로그에 설치하였다.이에대한 과정을 나누어보려고 한다.\n\n\n근황최근 프로젝트가 하나 끝나고 얼마전부터 sm운영을 하고있었다. 그전까지는 조금 바빠서 블로그에 손을 델수가 없었다.글을 쓰고싶었지만 집에가면 쉬고싶고 역시 그냥 쉬고싶은 것이었다.\n이제 다시 블로그에 투자를 하기위해서 미루고 미루었던 광고게재하기위한 작업을 다시 시작했다.처음에 너무나 귀찮았던 일이라.. 1달여 넘게 미루었던 일이었는데 더이상 마루게된다면 글쓰는것도 미루게될 것 같았다.드디어 블로그 소스를 까보고 어디위치에 넣어볼까 고민을 하던끝에 좌측에 광고를 달기로 결심했다.\n광고위치 선정 고려사항\n블로그에 광고를 게재하기 위해 많은것을 고려하게 되었다.\n1. 가독성을 방해하면 안된다.2. 컨텐츠 외에 장소를 확보해야한다.3. 모바일 환경에서는 광고를 보여주지 않는다.4. 한번의 삽입으로 끝내야한다\n이와같은 이유는 모두 컨텐츠를 보호하기 위함이었다.첫째도 둘째도 컨텐츠를 방해하지 않기위한 방향으로 잡았기 때문이다.예컨데 우리나라 인터넷 신문 사이트만 들어가도 광고로 도배가 되어있는것을 볼 수가 있다. 정말 스트레스 받는다.도무지 기사내용을 확인할 수가 없다. 그래서 생각해낸 방법은 블로그에 컨텐츠 영역을 나누는 것이었다.\n작업그런데 문제가 하나 더 생겼다. 내 블로그는 post에 최적화 되어있는 블로그이기때문에 약간 손을봐야 했던 것이었다.tranquilpeak 테마를 사용해본 사람들은 알것이다. 딱 post에 최적화가 되어있고 글에 집중할수 있도록 되어있기 때문이었다.그래서 어쩔수없이 테마를 손보기로 하였다.\n테마는 좌측에 광고가 들어갈만큼 나누어주었다.post.ejs파일을 건드려 post를 2영역으로 나누어주었고 좌측에는 광고 우측에는 포스트가 들어가도록 설정해주었다.좌측 광고는 fixed를 걸어 항상 고정이 되게하였고 컨텐츠는 스크롤하는 방향에 맞추어 기존과 같이 기능이 동작하도록 하였다.\n광고는 3개만\n1. 쿠팡광고 1개2. 쿠팡광고 1개3. 구글애드센스 1개\n그래도 배너형식으로 넣어보니 꾀 블로그가 깔끔하게 보이기 시작했다.여기서 고려해야 할 사항들이 몇가지 생겨났다.\n광고대응 작업모바일페이지와 화면이 작아졌을때를 대비하는 것이었다.나는 여기서 resize()함수를 사용하여 최소 아이패드 해상도까지만 광고가 보이게하였고 그 이하로 해상도가 내려간다면 과감하게 광고를 지우고 post의 사이즈는 원래대로 복귀시키는 것이었다.\n예제코드를 첨부한다.\n123456789101112$(window).resize(function ()&#123;    var width_size = window.outerWidth;        if (width_size &lt;= 760) &#123;        $(&quot;#ads&quot;).css(&quot;display&quot;,&quot;none&quot;);        $(&quot;#main-content&quot;).attr(&quot;style&quot;,&quot;&quot;);    &#125;    if (width_size &gt; 760) &#123;        $(&quot;#ads&quot;).css(&quot;display&quot;,&quot;block&quot;);        $(&quot;#main-content&quot;).css(&quot;margin-left&quot;,&quot;270px&quot;);    &#125;&#125;)\n\n물론 나의 DOM트리 상황에 맞는 attribute 설정을 하였지만 이것은 자신의 소스코드 입맛에 맞게 사용하면 될것같다.또 google Adsense는 반응형으로 사이즈가 동적으로 생겨난다.그래서 스크립트가 실행이 되기전 사용자의 스크롤이동으로 인한 깨짐을 최소한으로 방지하고자 로딩 이미지등 사전작업을 실시하였다.\n방법은 간단하다.\n1. 로딩이미지를 띄운다2. 스크롤바 기능을 중지시킨다.3. window.onload 함수를 사용하여 이미지 제거&#x2F;스크롤 작동\n질문이 있다면 댓글남겨주세요. 답변드리겠습니다.\n","dateCreated":"2018-12-05T15:23:01+09:00","dateModified":"2024-06-30T16:22:24+09:00","datePublished":"2018-12-05T15:23:01+09:00","description":"요즘 일이 바빠서 블로그 작성을 소홀히 하였지만 드디어 구글애드센스와 쿠팡광고를 블로그에 설치하였다.이에대한 과정을 나누어보려고 한다.","headline":"hexo블로그(tranquilpeak)에 구글애드센스(adsense) 및 광고 설치","image":[["adsense-title.jpg"],["adsense-title.jpg"]],"mainEntityOfPage":{"@type":"WebPage","@id":"https://jungjoongi.com/2018/12/05/hexo-adsense/"},"publisher":{"@type":"Organization","name":"jung joongi","sameAs":["https://github.com/jungjoongi","mailto:dev.joongi@gmail.com"],"image":"profile.jpg","logo":{"@type":"ImageObject","url":"profile.jpg"}},"url":"https://jungjoongi.com/2018/12/05/hexo-adsense/","keywords":"hexo, tranquilpeak, adsense","thumbnailUrl":["adsense-title.jpg"]}</script>
     <meta name="description" content="요즘 일이 바빠서 블로그 작성을 소홀히 하였지만 드디어 구글애드센스와 쿠팡광고를 블로그에 설치하였다.이에대한 과정을 나누어보려고 한다.">
 <meta property="og:type" content="blog">
 <meta property="og:title" content="hexo블로그(tranquilpeak)에 구글애드센스(adsense) 및 광고 설치">
@@ -188,15 +188,6 @@
                     
                         <i class="sidebar-button-icon fab fa-github" aria-hidden="true"></i>
                         <span class="sidebar-button-desc">GitHub</span>
-                    </a>
-            </li>
-            
-                <li class="sidebar-button">
-                    
-                        <a  class="sidebar-button-link " href="https://facebook.com/joongi.jung.kr" target="_blank" rel="noopener" title="Facebook">
-                    
-                        <i class="sidebar-button-icon fab fa-facebook" aria-hidden="true"></i>
-                        <span class="sidebar-button-desc">Facebook</span>
                     </a>
             </li>
             
@@ -463,14 +454,6 @@
             
             
             <li class="post-action hide-xs">
-                <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://jungjoongi.com/2018/12/05/hexo-adsense/" title="Share on Facebook">
-                    <i class="fab fa-facebook" aria-hidden="true"></i>
-                </a>
-            </li>
-        
-            
-            
-            <li class="post-action hide-xs">
                 <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=https://jungjoongi.com/2018/12/05/hexo-adsense/" title="Share on Twitter">
                     <i class="fab fa-twitter" aria-hidden="true"></i>
                 </a>
@@ -564,14 +547,6 @@
             
             
             <li class="post-action hide-xs">
-                <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://jungjoongi.com/2018/12/05/hexo-adsense/" title="Share on Facebook">
-                    <i class="fab fa-facebook" aria-hidden="true"></i>
-                </a>
-            </li>
-        
-            
-            
-            <li class="post-action hide-xs">
                 <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=https://jungjoongi.com/2018/12/05/hexo-adsense/" title="Share on Twitter">
                     <i class="fab fa-twitter" aria-hidden="true"></i>
                 </a>
@@ -609,14 +584,6 @@
                 <div id="share-options-bar" class="share-options-bar" data-behavior="5">
     <i id="btn-close-shareoptions" class="fa fa-times"></i>
     <ul class="share-options">
-        
-            
-            
-            <li class="share-option">
-                <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://jungjoongi.com/2018/12/05/hexo-adsense/">
-                    <i class="fab fa-facebook" aria-hidden="true"></i><span>Share on Facebook</span>
-                </a>
-            </li>
         
             
             

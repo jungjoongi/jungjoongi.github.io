@@ -13,7 +13,7 @@
     
         <link rel="alternate" type="application/atom+xml" title="RSS" href="/rss2.xml">
     
-    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"jung joongi","sameAs":["https://github.com/jungjoongi","https://facebook.com/joongi.jung.kr","mailto:dev.joongi@gmail.com"],"image":"profile.jpg"},"articleBody":"얼마전 디스커스에서 또 한번의 패치를 하고 그동안 편법으로 하던 한글세팅의 방법이 변경되었다. 기존의 편법으로 이용하던 이용자들은 피해가 없지만, 신규로 블로그에 유입되는 사람들은 또 한번의 난항을 겪고있다.\n\n\n디스커스(Disqus))\n새로 변경된 내용그동안에는 select box를 수정하여 쉽게 en을 ko로 변경하여 사용을 하였다.그러나 이 방법은 이제 적용되지 않는다. 2020년 12월 기준으로는 selectBox 형식이 아닌 div로 UI를 그려내고 있어 이용자들이 쉽게 한글로 변경하기는 쉽지 않다. 거두절미하고 쉽게 설명하도록 하겠다.\nQuick Start [이미지 새 창으로 보기]\ndisqus 전송구간 파라메터 변경1. 개발자도구 (또는 F12)를 누른다.2. 개발자도구의 Search부분에서 forums&#x2F;update를 검색한다.3. ctrl + F로 Oa.a.call(t &amp;&amp; t.useInternal ? &quot;internal/forums/update&quot; : &quot;forums/update&quot; 를 검색한다.4. n.props.selection.forum &amp;&amp; (e = dm(&#123; 부분을 찾아서 브레이크 포인트를 걸고 아무언어를 선택한 후에 SAVE를 눌러 변경처리를 한다.5. e 부분에 마우스를 클릭하여 en -&gt; ko로 변경한다.6. 브레이크포인트 Next를 눌러 변경된 값을 전송한다.\n이렇게 하면 역시 한글로 디스커스를 이용할 수 가 있다.\n끝으로정상적인 방법은 아니지만, 동일하게 디스커스를 한글로 설장이 가능하다. 왜 한국어를 빼먹었는지 아직까지도 의문이다. 2018년 최초로 한글세팅을 하는 방법을 작성하였다. 많은 사람들이 내 글을 읽고 성공하고 블로그에 퍼가주시니 감사할 따름이다.\n이 방법또한 최초로 작성하여 공유하는 방법이다.많은분들에게 도움이 되고 출처를 남겨 퍼가셔도 무방하니 많은 사람들이 한글세팅에 성공하길 바란다.\n감사의 글GodSchool.kr 님 께서 댓글로 한글세팅이 변경되었다는 사실을 알려주셨습니다. 알려주셔서 감사합니다. 덕분에 다시 방법을 찾아 정정하고 블로그에 발행하게 되었습니다. 모두 한글세팅에 성공하시고 좋은 블로그를 만들어가길 바랍니다.\n감사합니다.\n이전 글을 확인하려면연결되는 링크로 이동하면 이전 글을 확인하실 수 있습니다.\n디스커스 Disqus 한글 세팅을 해보자 편법(?)으로\n\n\n질문문의사항이 있으면 댓글로 남겨주세요.연구해서 답변드리도록 하겠습니다 ^^\n","dateCreated":"2020-12-11T07:30:00+09:00","dateModified":"2024-06-30T16:22:24+09:00","datePublished":"2020-12-11T07:30:00+09:00","description":"얼마전 디스커스에서 또 한번의 패치를 하고 그동안 편법으로 하던 한글세팅의 방법이 변경되었다. 기존의 편법으로 이용하던 이용자들은 피해가 없지만, 신규로 블로그에 유입되는 사람들은 또 한번의 난항을 겪고있다.","headline":"2020년 변경된 디스커스 Disqus 한글 세팅을 해보자","image":[["disqus-title.jpg"],[null]],"mainEntityOfPage":{"@type":"WebPage","@id":"https://jungjoongi.com/2020/12/11/disaus-korean-setting2/"},"publisher":{"@type":"Organization","name":"jung joongi","sameAs":["https://github.com/jungjoongi","https://facebook.com/joongi.jung.kr","mailto:dev.joongi@gmail.com"],"image":"profile.jpg","logo":{"@type":"ImageObject","url":"profile.jpg"}},"url":"https://jungjoongi.com/2020/12/11/disaus-korean-setting2/","keywords":"개발, 버그, disqus, hexo","thumbnailUrl":["disqus-title.jpg"]}</script>
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"jung joongi","sameAs":["https://github.com/jungjoongi","mailto:dev.joongi@gmail.com"],"image":"profile.jpg"},"articleBody":"얼마전 디스커스에서 또 한번의 패치를 하고 그동안 편법으로 하던 한글세팅의 방법이 변경되었다. 기존의 편법으로 이용하던 이용자들은 피해가 없지만, 신규로 블로그에 유입되는 사람들은 또 한번의 난항을 겪고있다.\n\n\n디스커스(Disqus))\n새로 변경된 내용그동안에는 select box를 수정하여 쉽게 en을 ko로 변경하여 사용을 하였다.그러나 이 방법은 이제 적용되지 않는다. 2020년 12월 기준으로는 selectBox 형식이 아닌 div로 UI를 그려내고 있어 이용자들이 쉽게 한글로 변경하기는 쉽지 않다. 거두절미하고 쉽게 설명하도록 하겠다.\nQuick Start [이미지 새 창으로 보기]\ndisqus 전송구간 파라메터 변경1. 개발자도구 (또는 F12)를 누른다.2. 개발자도구의 Search부분에서 forums&#x2F;update를 검색한다.3. ctrl + F로 Oa.a.call(t &amp;&amp; t.useInternal ? &quot;internal/forums/update&quot; : &quot;forums/update&quot; 를 검색한다.4. n.props.selection.forum &amp;&amp; (e = dm(&#123; 부분을 찾아서 브레이크 포인트를 걸고 아무언어를 선택한 후에 SAVE를 눌러 변경처리를 한다.5. e 부분에 마우스를 클릭하여 en -&gt; ko로 변경한다.6. 브레이크포인트 Next를 눌러 변경된 값을 전송한다.\n이렇게 하면 역시 한글로 디스커스를 이용할 수 가 있다.\n끝으로정상적인 방법은 아니지만, 동일하게 디스커스를 한글로 설장이 가능하다. 왜 한국어를 빼먹었는지 아직까지도 의문이다. 2018년 최초로 한글세팅을 하는 방법을 작성하였다. 많은 사람들이 내 글을 읽고 성공하고 블로그에 퍼가주시니 감사할 따름이다.\n이 방법또한 최초로 작성하여 공유하는 방법이다.많은분들에게 도움이 되고 출처를 남겨 퍼가셔도 무방하니 많은 사람들이 한글세팅에 성공하길 바란다.\n감사의 글GodSchool.kr 님 께서 댓글로 한글세팅이 변경되었다는 사실을 알려주셨습니다. 알려주셔서 감사합니다. 덕분에 다시 방법을 찾아 정정하고 블로그에 발행하게 되었습니다. 모두 한글세팅에 성공하시고 좋은 블로그를 만들어가길 바랍니다.\n감사합니다.\n이전 글을 확인하려면연결되는 링크로 이동하면 이전 글을 확인하실 수 있습니다.\n디스커스 Disqus 한글 세팅을 해보자 편법(?)으로\n\n\n질문문의사항이 있으면 댓글로 남겨주세요.연구해서 답변드리도록 하겠습니다 ^^\n","dateCreated":"2020-12-11T07:30:00+09:00","dateModified":"2024-06-30T16:22:24+09:00","datePublished":"2020-12-11T07:30:00+09:00","description":"얼마전 디스커스에서 또 한번의 패치를 하고 그동안 편법으로 하던 한글세팅의 방법이 변경되었다. 기존의 편법으로 이용하던 이용자들은 피해가 없지만, 신규로 블로그에 유입되는 사람들은 또 한번의 난항을 겪고있다.","headline":"2020년 변경된 디스커스 Disqus 한글 세팅을 해보자","image":[["disqus-title.jpg"],[null]],"mainEntityOfPage":{"@type":"WebPage","@id":"https://jungjoongi.com/2020/12/11/disaus-korean-setting2/"},"publisher":{"@type":"Organization","name":"jung joongi","sameAs":["https://github.com/jungjoongi","mailto:dev.joongi@gmail.com"],"image":"profile.jpg","logo":{"@type":"ImageObject","url":"profile.jpg"}},"url":"https://jungjoongi.com/2020/12/11/disaus-korean-setting2/","keywords":"개발, 버그, disqus, hexo","thumbnailUrl":["disqus-title.jpg"]}</script>
     <meta name="description" content="얼마전 디스커스에서 또 한번의 패치를 하고 그동안 편법으로 하던 한글세팅의 방법이 변경되었다. 기존의 편법으로 이용하던 이용자들은 피해가 없지만, 신규로 블로그에 유입되는 사람들은 또 한번의 난항을 겪고있다.">
 <meta property="og:type" content="blog">
 <meta property="og:title" content="2020년 변경된 디스커스 Disqus 한글 세팅을 해보자">
@@ -192,15 +192,6 @@
                     
                         <i class="sidebar-button-icon fab fa-github" aria-hidden="true"></i>
                         <span class="sidebar-button-desc">GitHub</span>
-                    </a>
-            </li>
-            
-                <li class="sidebar-button">
-                    
-                        <a  class="sidebar-button-link " href="https://facebook.com/joongi.jung.kr" target="_blank" rel="noopener" title="Facebook">
-                    
-                        <i class="sidebar-button-icon fab fa-facebook" aria-hidden="true"></i>
-                        <span class="sidebar-button-desc">Facebook</span>
                     </a>
             </li>
             
@@ -462,14 +453,6 @@
             
             
             <li class="post-action hide-xs">
-                <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://jungjoongi.com/2020/12/11/disaus-korean-setting2/" title="Share on Facebook">
-                    <i class="fab fa-facebook" aria-hidden="true"></i>
-                </a>
-            </li>
-        
-            
-            
-            <li class="post-action hide-xs">
                 <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=https://jungjoongi.com/2020/12/11/disaus-korean-setting2/" title="Share on Twitter">
                     <i class="fab fa-twitter" aria-hidden="true"></i>
                 </a>
@@ -563,14 +546,6 @@
             
             
             <li class="post-action hide-xs">
-                <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://jungjoongi.com/2020/12/11/disaus-korean-setting2/" title="Share on Facebook">
-                    <i class="fab fa-facebook" aria-hidden="true"></i>
-                </a>
-            </li>
-        
-            
-            
-            <li class="post-action hide-xs">
                 <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=https://jungjoongi.com/2020/12/11/disaus-korean-setting2/" title="Share on Twitter">
                     <i class="fab fa-twitter" aria-hidden="true"></i>
                 </a>
@@ -608,14 +583,6 @@
                 <div id="share-options-bar" class="share-options-bar" data-behavior="5">
     <i id="btn-close-shareoptions" class="fa fa-times"></i>
     <ul class="share-options">
-        
-            
-            
-            <li class="share-option">
-                <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://jungjoongi.com/2020/12/11/disaus-korean-setting2/">
-                    <i class="fab fa-facebook" aria-hidden="true"></i><span>Share on Facebook</span>
-                </a>
-            </li>
         
             
             
