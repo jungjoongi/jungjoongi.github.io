@@ -1,0 +1,720 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="정준기의 개발공간 (dev.joongi)">
+    <title>단축 URL과 Snowflake id 구현 - 정준기의 개발공간 (dev.joongi)</title>
+    <meta name="author" content="jung joongi">
+    
+    
+    
+        <link rel="alternate" type="application/atom+xml" title="RSS" href="/rss2.xml">
+    
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"jung joongi","sameAs":["https://github.com/jungjoongi","mailto:dev.joongi@gmail.com"],"image":"profile.jpg"},"articleBody":"저는 백엔드 개발을 담당하며, 비즈니스 요구사항을 기술적으로 풀어내는 문제 해결에 집중하고 있습니다.\n이번 글에서는 최근 경험한 단축 URL 시스템 구축 사례를 중심으로, 분산 환경에서의 ID 문제 해결, 아키텍처 설계, 그리고 실무 적용까지의 과정을 소개합니다.\n이 글이 비슷한 고민을 하고 있는 개발자분들께 실질적인 인사이트로 다가가길 바랍니다.\n\n\n\nurl 압축중..\n목차\n개요\n단축 URL (Shorten URL)이란?\n단축 URL은 어떻게 동작할까?\n트러블 슈팅 — 분산환경, ECS 환경에 직면한 문제\nShorten URL 처리 아키텍처 정리\n마무리 하면서\n\n개요**단축 URL(Short Link)**이라고 하면 많은 분들이 자연스럽게 Bitly와 같은 외부 서비스를 떠올릴 겁니다. 제가 있던 월부에서도 Bitly를 잘 활용해 왔죠.\n하지만 점점 늘어나는 메시지 개인화 수요, 실시간 마케팅, 그리고 수천 건 단위의 링크를 한 번에 생성해야 하는 환경에서는 외부 서비스만으로는 한계가 분명해졌습니다.\n특히, 외부 단축 URL 서비스는 링크를 생성할 때마다 네트워크 통신이 발생하기 때문에, 속도와 비용, 그리고 커스터마이징 기능 측면에서 우리가 원하는 수준을 만족시키기 어려웠습니다.\n최근에는 실시간 또는 대량의 커스터마이징 링크를 기반으로 CRM 메시지를 발송하거나 외부용 링크를 동적으로 생성해야 하는 요구사항이 많아졌고, 이는 자연스럽게 분산 서버 환경과 배치성 업무를 기반으로 대규모 단축 URL을 빠르게 처리해야 하는 기술적 과제로 이어졌습니다.\n결국, 이런 니즈를 저비용·고효율로 해결하기 위해, 우리는 자체 단축 URL 서비스를 직접 구축하기로 결정하게 되었습니다.\n이 글에서는 우리가 왜 자체 단축 URL을 만들게 되었는지, 어떤 기술적 도전과 마주했는지, 그리고** 그 문제를 어떤 방식으로 해결했는지를 자세히 소개합니다. Snowflake 기반의 고유 ID 설계**, AWS ECS 환경에서의 worker ID 할당, Base62 인코딩 등 다양한 기술 요소를 아키텍처와 함께 공유합니다.\n월부의 기술 문화에 관심이 있으신 분들, 혹은 비슷한 고민을 하고 계신 분들께 이 글이 인사이트와 영감을 드릴 수 있기를 바랍니다.\n단축 URL (Shorten URL)이란?배경단축 URL이란 긴 형태의 URL(Uniform Resource Locator)을 간략하게 축약하여 사용하는 짧은 형태의 링크를 말합니다. 일반적으로 웹 주소가 길면 사용자가 공유하거나 기억하기 어려운 문제가 생기기 때문에, 이를 짧게 만들어 간편하게 공유하고 효율적으로 관리할 수 있도록 돕습니다.\n대표적인 단축 URL 서비스로는 Bitly, TinyURL, 구글의 goo.gl 등이 있으며, 월부는 Bitly를 이용하여 단축 URL을 만들어왔습니다.\n단축 URL을 왜 사용할까?보통 단축 URL은 주로 마케팅과 데이터 분석 목적으로 사용됩니다. 특히 데이터 분석을 위한 링크는 UTM 파라미터 등을 추가하여 길어지는 경우가 많습니다. (UTM은 마케팅 성과 분석을 위한 URL 태그로, 이번 글의 주제와 직접 관련이 없으므로 자세한 설명은 생략합니다.)\n이렇게 길어진 링크는 사용자 입장에서 보기 어렵고 공유하기 불편합니다. 이를 해결하기 위해 긴 링크를 짧고 간편한 형태로 축약한 단축 URL을 사용하게 됩니다.\n아래는 월부 단축 URL을 활용해 만든 실제 링크 예시입니다.\n(제가 좋아하는 글.. ㅎㅎ)\n\n원본 링크 (길다 길어…)https://weolbu.com/community/61888?utm_source=tech_blog&amp;utm_medium=tech_blog&amp;utm_campaign=tech_blog_shorten_link\n단축 URL로 축약한 링크 (어메이징 하지 않나요?ㅎㅎ)https://weolbu.com/s/CXHwau2Mgg\n\n단축 URL은 어떻게 동작할까?단축 URL을 클릭하면 어떻게 동작할까?HTTP 상태 코드 301\nHTTP 상태 코드 301\n응답 헤더 위치 정보\n응답 헤더 위치 정보\n\n링크를 클릭하면 301 Moved Permanently라는 Status Code를 먼저 응답받습니다.\nResponse Header의 Location을 보면 원본 링크에 대한 정보를 읽을 수 있습니다.이 정보를 통해 알 수 있는 것은 링크를 클릭했을 때 단축링크를 확인하는 서버가 있고, 그 서버는 실제로 이동해야 할 정보에 대해서 알려준다는 것을 알 수 있습니다.\n\n위의 흐름을 아래의 Flow로 간단하게 정리할 수 있습니다.\nURL 클릭 흐름 단축\nURL 클릭 흐름 단축\n단축 URL 알고리즘이 글을 읽는 여러분에게 질문을 해보겠습니다.\n‘나’라면 아래의 긴 링크를 어떻게 줄일 수 있을까요?\n\nhttps://weolbu.com/community/61888?utm_source=tech_blog&amp;utm_medium=tech_blog&amp;utm_campaign=tech_blog_shorten_link\n\n대부분 사람들은 ‘단축’이라는 단어 때문에 링크를 실제로 압축하여 줄인다고 생각합니다. 어떤 마법 같은 특별한 압축 알고리즘이 존재할 것이라 생각하지만, 실제로 URL을 압축하는 방식은 효율적이지 않습니다.\n왜냐하면 URL 자체를 압축하면 실제 크기 감소 효과가 미미하며, 압축된 형태가 항상 고유하다고 보장하기도 어렵습니다. 따라서 단축 URL은 URL 압축이 아니라, 원본 URL과 매핑되는 고유한 짧은 키(key)를 생성하여 간략한 링크를 만들어 사용합니다.\nBase62 알고리즘Base62 알고리즘\nBase62 알고리즘을 선택한 이유는 명확하고 단순합니다. 숫자(0–9), 대문자(A-Z), 소문자(a-z)를 조합해 총 62개의 문자 집합을 사용할 수 있기 때문에, 짧은 문자열로도 많은 수의 조합을 만들어낼 수 있는 효율적인 인코딩 방식입니다.\n우리는 단축 URL의 키(key)를 웹 주소로 직접 사용해야 하므로, URL-safe하고, 사람이 읽기 쉬우며, 길이도 짧은 인코딩 방식이 필요했습니다. 이 조건에 가장 적합한 방식이 바로 Base62였으며 통상적으로 사용하는 방식이기도 합니다.\n긴 링크는 바로 Base62 알고리즘으로 Key를 생성한 후 Value에는 원본 링크를 저장하는 방식으로 구현을 합니다.\n자 그러면 왜 원본 URL을 압축하는 것보다 Base62 알고리즘을 활용하였을 때 압도적으로 좋은 효율을 낼 수 있는지 알 수 있겠죠?\n\nKey : Base62로 인코딩된 ID\nValue : 원본 URL\n\n단축 URL을 생성하는 서버자 그러면 간단하게 단축 URL을 생성하는 요청이 들어왔을 때 어떤 흐름으로 URL이 생성되는지 확인해 보도록 하겠습니다.\nShorten URL Generate Server\nShorten URL Generate Server\n\n원본 URL을 단축 URL로 생성하라는 요청을 한다.\n숏링크 생성기는 고유한 ID를 만들어낸다.\n고유한 ID는 Base62 알고리즘으로 인코딩한다.\nData 저장소는 Key와 Value형식으로 URL을 저장한다.Key : Base62로 인코딩한 IDValue : 원본링크그림으로 보니 생각보다 어렵지 않은 구조로 풀어낼 수 있습니다.\n\n그러면 이 링크를 해석하는 과정도 유추할 수 있겠죠?\n단축 URL 요청을 처리하는 서버Shorten URL Resolver\nShorten URL Resolver\n\n&#x2F;s&#x2F;{key} 패턴을 해석\nData 저장소에 {key}가 있는지 확인\n있다면 원본링크를 301 Redirection\n없다면 기본링크(home)를 301 Redirection위의 흐름 외에도 서비스별로 고려야 할 것들이 있습니다.\n\n각 서비스의 사정에 맞게 설정을 하시면 될 것 같습니다.\n\n숏링크 유효상태, 유효기간 관리\n타깃링크 없을 때 기본링크 정책\n\n트러블 슈팅 — 분산환경, ECS 환경에 직면한 문제트러블 슈팅 1 (분산환경의 고유 ID 생성)이때까지만 해도 순조롭게 해결할 것이라고 생각했는데 문제가 발생했습니다.\nImage 8\n?!\nID생성 책임을 애플리케이션에게 위임했는데 우리 백엔드 서버는 분산서버로 여러 대의 인스턴스가 실행되고 있습니다.\n문제는 ‘분산 서버 환경에서 절대 겹치지 않는 고유 ID’를 어떻게 생성할 것인가였습니다.\n이 부분에 대해서 몇 가지 대안이 있을 수 있습니다.\n\nID생성 책임을 Redis를 활용하면 되지 않은가?\nRDB의 Sequence, AutoIncrement ID를 사용하면 되는 거 아닌가?일단 1번에 대해서는 Redis에 의존하는 관계를 만드는 순간 종속이 되고 장애나 지연과 같은 상황이 발생하였을 때 모든 인스턴스가 영향을 받아 제외했습니다.\n\n그리고, 이번 개발에서는 Document DB를 사용하기 때문에 고유의 채번으로 이루어진 숫자ID를 얻는데에는 한계가 있었습니다.\n서버 고유ID를 생성기가 있다면 DB에 종속되지 않고 여러곳에 사용할 수 있는 장점이 있습니다.\n이 문제의 해결은 바로 Snowflake ID 생성 알고리즘을 사용하는 것입니다.\n고유 ID 필요\n분산환경의 고유 ID : Snowflake ID 생성 알고리즘으로 해결하다.❄️ Snowflake ID란?\ntwitter snowflke ID는 트위터가 개발한 64비트(Long의 비트수와 일치) 고유 ID 생성 방식으로, 분산 시스템에서도 중복되지 않는 순차적인 ID를 생성하는 것이 핵심이다.\n\n글로벌 고유 ID 제공\n높은 성능 (분산 환경에서 독립적 ID 생성 가능)\n시간 순 정렬(검색 및 정렬에 유리)\n\n","dateCreated":"2025-03-30T09:00:00+00:00","dateModified":"2025-10-31T12:21:00+00:00","datePublished":"2025-03-30T09:00:00+00:00","description":"저는 백엔드 개발을 담당하며, 비즈니스 요구사항을 기술적으로 풀어내는 문제 해결에 집중하고 있습니다.\n이번 글에서는 최근 경험한 단축 URL 시스템 구축 사례를 중심으로, 분산 환경에서의 ID 문제 해결, 아키텍처 설계, 그리고 실무 적용까지의 과정을 소개합니다.\n이 글이 비슷한 고민을 하고 있는 개발자분들께 실질적인 인사이트로 다가가길 바랍니다.","headline":"단축 URL과 Snowflake id 구현","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"https://jungjoongi.com/2025/03/30/blo-5-shorten-url/"},"publisher":{"@type":"Organization","name":"jung joongi","sameAs":["https://github.com/jungjoongi","mailto:dev.joongi@gmail.com"],"image":"profile.jpg","logo":{"@type":"ImageObject","url":"profile.jpg"}},"url":"https://jungjoongi.com/2025/03/30/blo-5-shorten-url/","keywords":"개발"}</script>
+    <meta name="description" content="저는 백엔드 개발을 담당하며, 비즈니스 요구사항을 기술적으로 풀어내는 문제 해결에 집중하고 있습니다. 이번 글에서는 최근 경험한 단축 URL 시스템 구축 사례를 중심으로, 분산 환경에서의 ID 문제 해결, 아키텍처 설계, 그리고 실무 적용까지의 과정을 소개합니다. 이 글이 비슷한 고민을 하고 있는 개발자분들께 실질적인 인사이트로 다가가길 바랍니다.">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="단축 URL과 Snowflake id 구현">
+<meta property="og:url" content="https://jungjoongi.com/2025/03/30/blo-5-shorten-url/index.html">
+<meta property="og:site_name" content="정준기의 개발공간 (dev.joongi)">
+<meta property="og:description" content="저는 백엔드 개발을 담당하며, 비즈니스 요구사항을 기술적으로 풀어내는 문제 해결에 집중하고 있습니다. 이번 글에서는 최근 경험한 단축 URL 시스템 구축 사례를 중심으로, 분산 환경에서의 ID 문제 해결, 아키텍처 설계, 그리고 실무 적용까지의 과정을 소개합니다. 이 글이 비슷한 고민을 하고 있는 개발자분들께 실질적인 인사이트로 다가가길 바랍니다.">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:image" content="https://jungjoongi.com/2025/03/30/blo-5-shorten-url/image-1.png">
+<meta property="og:image" content="https://jungjoongi.com/2025/03/30/blo-5-shorten-url/image-2.png">
+<meta property="og:image" content="https://jungjoongi.com/2025/03/30/blo-5-shorten-url/image-3.png">
+<meta property="og:image" content="https://jungjoongi.com/2025/03/30/blo-5-shorten-url/image-4.png">
+<meta property="og:image" content="https://jungjoongi.com/2025/03/30/blo-5-shorten-url/image-5.png">
+<meta property="og:image" content="https://jungjoongi.com/2025/03/30/blo-5-shorten-url/image-6.png">
+<meta property="og:image" content="https://jungjoongi.com/2025/03/30/blo-5-shorten-url/image-7.png">
+<meta property="og:image" content="https://jungjoongi.com/2025/03/30/blo-5-shorten-url/image-8.png">
+<meta property="og:image" content="https://jungjoongi.com/2025/03/30/blo-5-shorten-url/image-9.png">
+<meta property="article:published_time" content="2025-03-30T09:00:00.000Z">
+<meta property="article:modified_time" content="2025-10-31T12:21:00.000Z">
+<meta property="article:author" content="jung joongi">
+<meta property="article:tag" content="개발">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://jungjoongi.com/2025/03/30/blo-5-shorten-url/image-1.png">
+    
+    
+        
+    
+    
+        <meta property="og:image" content="https://jungjoongi.com/assets/images/profile.jpg">
+    
+    
+    
+    
+    <!--STYLES-->
+    
+<link rel="stylesheet" href="/assets/css/style-xbuojjy2ght4affx1n45g4jpzfblrkkc3n5xp00pvqgm4xqgmjfrnfgqsmqd.min.css">
+
+    <!--STYLES END-->
+    
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-KRV6LZLE5Z"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-KRV6LZLE5Z');
+    </script>
+
+
+    
+    <link rel="canonical" href="https://jungjoongi.com/2025/03/30/blo-5-shorten-url/">
+</head>
+
+    <body>
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+        
+            
+        
+    
+
+<header id="header" data-behavior="5">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <div class="header-title">
+        <a class="header-title-link" href="/">정준기의 개발공간 (dev.joongi)</a>
+    </div>
+    
+        
+            <a class="header-right-picture " href="#about">
+        
+        
+            <img class="header-picture" src="/assets/images/profile.jpg" alt="프로필 사진">
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+
+        
+    
+
+<nav id="sidebar" data-behavior="5">
+    <div class="sidebar-container">
+        
+            <div class="sidebar-profile">
+                <a href="/#about">
+                    <img class="sidebar-profile-picture" src="/assets/images/profile.jpg" alt="프로필 사진">
+                </a>
+                <h4 class="sidebar-profile-name">jung joongi</h4>
+                
+                    <h5 class="sidebar-profile-bio"><p>백엔드 개발을 하고있습니다.</p>
+</h5>
+                
+            </div>
+        
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/" title="홈">
+                    
+                        <i class="sidebar-button-icon fa fa-home" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">홈</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/all-categories" title="카테고리">
+                    
+                        <i class="sidebar-button-icon fa fa-bookmark" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">카테고리</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/all-tags" title="태그">
+                    
+                        <i class="sidebar-button-icon fa fa-tags" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">태그</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/all-archives" title="아카이브">
+                    
+                        <i class="sidebar-button-icon fa fa-archive" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">아카이브</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="https://www.linkedin.com/in/jungjoongi" target="_blank" rel="external nofollow noopener noreferrer" title="소개">
+                    
+                        <i class="sidebar-button-icon fa fa-question" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">소개</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="https://github.com/jungjoongi" target="_blank" rel="external nofollow noopener noreferrer" title="GitHub">
+                    
+                        <i class="sidebar-button-icon fab fa-github" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">GitHub</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="mailto:dev.joongi@gmail.com" target="_blank" rel="external nofollow noopener noreferrer" title="메일">
+                    
+                        <i class="sidebar-button-icon fa fa-envelope" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">메일</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/rss2.xml" title="RSS">
+                    
+                        <i class="sidebar-button-icon fa fa-rss" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">RSS</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+    </div>
+</nav>
+
+            
+            <div id="main" data-behavior="5" class="
+                        hasCoverMetaIn
+                        ">
+                
+<style>
+    #loading {
+        width: 100%;
+        height: 100%;
+        top: 0px;
+        left: 0px;
+        position: fixed;
+        display: block;
+        background-color: #fff;
+        z-index: 99;
+        text-align: center;
+    }
+
+    html body {
+        overflow: hidden;
+        height: 100%
+    }
+
+    #loading-image {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 100;
+    }
+
+    #loading-text {
+        position: absolute;
+        top: 60%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 100;
+        font-style: bold;
+    }
+
+    ol {
+        padding: 0 0 0 20px;
+        list-style: disc;
+    }
+
+    #coupang-layer-pop {
+        position: fixed;
+        width: 386px;
+        height: 345px;
+        padding: 16px;
+        background-color: white;
+        border: 1px dashed#c7c7c7;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        display: none;
+    }
+
+    #ads {
+        width: 360px;
+        margin-top: 30px;
+        position: absolute;
+        top: 30px;
+    }
+
+    #content-list {
+        font-size: 14px;
+        margin-bottom: 20px;
+    }
+
+    #coupang-layer-button {
+        position: absolute;
+        right: 30px;
+        bottom: 10px;
+    }
+</style>
+
+<div id="loading"><img id="loading-image" src="/assets/images/loading.gif" alt="Loading..."><span id="loading-text">페이지가 로딩중입니다. 잠시만 기다려주세요</span></div>
+<article class="post">
+    
+
+    
+    <div class="post-header main-content-wrap text-left">
+    
+        <h1 class="post-title">
+            단축 URL과 Snowflake id 구현
+        </h1>
+    
+    
+        <div class="post-meta">
+    <time datetime="2025-03-30T09:00:00+00:00">
+	
+		    2025년 03월 30일
+    	
+    </time>
+    
+        <span>카테고리: </span>
+        
+    <a class="category-link" href="/categories/%EA%B0%9C%EB%B0%9C/">개발</a>
+
+
+    
+</div>
+
+    
+</div>
+
+    
+    <div id="coupang-layer-pop">
+        <iframe src="https://ads-partners.coupang.com/iframe/search-bar?id=19092917192714204211009791-l1&type=l1&trackingCode=AF9416635" width="383px" height="75" frameborder="0" scrolling="no"></iframe>
+        <iframe id="coupang-0" src="https://coupa.ng/bgdTAw" width="125px" height="240" frameborder="0" scrolling="no"></iframe>
+        <iframe id="coupang-1" src="https://coupa.ng/bgdTbp" width="125px" height="240" frameborder="0" scrolling="no"></iframe>
+        <iframe id="coupang-2" src="https://coupa.ng/bgd0rL" width="125px" height="240" frameborder="0" scrolling="no"></iframe>
+        <button id="coupang-layer-button">close</button>
+    </div>
+    <div class="post-content markdown" style="margin:auto;max-width:1360px;">
+
+        <div id="ads" class="ad-area">
+            <div id="content-list">
+                <h3 id="table-of-contents"></h3><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%EB%AA%A9%EC%B0%A8"><span class="toc-text">목차</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%EA%B0%9C%EC%9A%94"><span class="toc-text">개요</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%EB%8B%A8%EC%B6%95-URL-Shorten-URL-%EC%9D%B4%EB%9E%80"><span class="toc-text">단축 URL (Shorten URL)이란?</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%EB%B0%B0%EA%B2%BD"><span class="toc-text">배경</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%EB%8B%A8%EC%B6%95-URL%EC%9D%84-%EC%99%9C-%EC%82%AC%EC%9A%A9%ED%95%A0%EA%B9%8C"><span class="toc-text">단축 URL을 왜 사용할까?</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%EB%8B%A8%EC%B6%95-URL%EC%9D%80-%EC%96%B4%EB%96%BB%EA%B2%8C-%EB%8F%99%EC%9E%91%ED%95%A0%EA%B9%8C"><span class="toc-text">단축 URL은 어떻게 동작할까?</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%EB%8B%A8%EC%B6%95-URL%EC%9D%84-%ED%81%B4%EB%A6%AD%ED%95%98%EB%A9%B4-%EC%96%B4%EB%96%BB%EA%B2%8C-%EB%8F%99%EC%9E%91%ED%95%A0%EA%B9%8C"><span class="toc-text">단축 URL을 클릭하면 어떻게 동작할까?</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%EB%8B%A8%EC%B6%95-URL-%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98"><span class="toc-text">단축 URL 알고리즘</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Base62-%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98"><span class="toc-text">Base62 알고리즘</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%EB%8B%A8%EC%B6%95-URL%EC%9D%84-%EC%83%9D%EC%84%B1%ED%95%98%EB%8A%94-%EC%84%9C%EB%B2%84"><span class="toc-text">단축 URL을 생성하는 서버</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%EB%8B%A8%EC%B6%95-URL-%EC%9A%94%EC%B2%AD%EC%9D%84-%EC%B2%98%EB%A6%AC%ED%95%98%EB%8A%94-%EC%84%9C%EB%B2%84"><span class="toc-text">단축 URL 요청을 처리하는 서버</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%ED%8A%B8%EB%9F%AC%EB%B8%94-%EC%8A%88%ED%8C%85-%E2%80%94-%EB%B6%84%EC%82%B0%ED%99%98%EA%B2%BD-ECS-%ED%99%98%EA%B2%BD%EC%97%90-%EC%A7%81%EB%A9%B4%ED%95%9C-%EB%AC%B8%EC%A0%9C"><span class="toc-text">트러블 슈팅 — 분산환경, ECS 환경에 직면한 문제</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%ED%8A%B8%EB%9F%AC%EB%B8%94-%EC%8A%88%ED%8C%85-1-%EB%B6%84%EC%82%B0%ED%99%98%EA%B2%BD%EC%9D%98-%EA%B3%A0%EC%9C%A0-ID-%EC%83%9D%EC%84%B1"><span class="toc-text">트러블 슈팅 1 (분산환경의 고유 ID 생성)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%EB%B6%84%EC%82%B0%ED%99%98%EA%B2%BD%EC%9D%98-%EA%B3%A0%EC%9C%A0-ID-Snowflake-ID-%EC%83%9D%EC%84%B1-%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98%EC%9C%BC%EB%A1%9C-%ED%95%B4%EA%B2%B0%ED%95%98%EB%8B%A4"><span class="toc-text">분산환경의 고유 ID : Snowflake ID 생성 알고리즘으로 해결하다.</span></a></li></ol></li></ol>
+            </div>
+            <!-- hexo-side1 -->
+            <ins class="adsbygoogle" style="display:block;width:340px;" data-ad-client="ca-pub-5379974693765383" data-ad-slot="6166524771" data-ad-format="auto" data-full-width-responsive="true"></ins>
+            <script>
+                (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+            <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+            <div id="lastAds">
+                <div class="coupang-ads">
+                    <!-- <p id="coupang-title">2020년 11월 28일 쿠팡 Best50</p><span id="coupang-title-icon">HOT</span> -->
+                    <p id="coupang-title"><iframe id="coupang-search" src="https://ads-partners.coupang.com/iframe/search-bar?id=19092917192714204211009791-l1&amp;type=l1&amp;trackingCode=AF9416635" width="383px" height="75" frameborder="0" scrolling="no"></iframe></p>
+                    <div class="ads-wrap ads-wrap-first">
+                        <img src>
+                        <p id="ads-first-name"></p>
+                    </div>
+                    <div class="ads-wrap ads-wrap-second">
+                        <img src>
+                        <p id="ads-second-name"></p>
+                    </div>
+                    <p id="coupang-notice">*파트너스 활동을 통해 일정액의 수수료를 제공받을 수 있음</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="main-content" class="main-content-wrap" style="margin-right:360px;">
+            <p>저는 백엔드 개발을 담당하며, 비즈니스 요구사항을 기술적으로 풀어내는 문제 해결에 집중하고 있습니다.</p>
+<p>이번 글에서는 최근 경험한 단축 URL 시스템 구축 사례를 중심으로, 분산 환경에서의 ID 문제 해결, 아키텍처 설계, 그리고 실무 적용까지의 과정을 소개합니다.</p>
+<p>이 글이 비슷한 고민을 하고 있는 개발자분들께 실질적인 인사이트로 다가가길 바랍니다.</p>
+<span id="more"></span>
+<!-- toc -->
+
+<p><img src="image-1.png" alt="url 압축중.."><span class="image-caption">url 압축중..</span></p>
+<h1 id="목차"><a href="#목차" class="headerlink" title="목차"></a><strong>목차</strong></h1><ul>
+<li><strong>개요</strong></li>
+<li><strong>단축 URL (Shorten URL)이란?</strong></li>
+<li><strong>단축 URL은 어떻게 동작할까?</strong></li>
+<li><strong>트러블 슈팅 — 분산환경, ECS 환경에 직면한 문제</strong></li>
+<li><strong>Shorten URL 처리 아키텍처 정리</strong></li>
+<li><strong>마무리 하면서</strong></li>
+</ul>
+<h1 id="개요"><a href="#개요" class="headerlink" title="개요"></a><strong>개요</strong></h1><p>**단축 URL(Short Link)**이라고 하면 많은 분들이 자연스럽게 Bitly와 같은 외부 서비스를 떠올릴 겁니다. 제가 있던 월부에서도 Bitly를 잘 활용해 왔죠.</p>
+<p>하지만 점점 늘어나는 <strong>메시지 개인화 수요</strong>, <strong>실시간 마케팅</strong>, 그리고 <strong>수천 건 단위의 링크를 한 번에 생성해야 하는 환경</strong>에서는 외부 서비스만으로는 한계가 분명해졌습니다.</p>
+<p>특히, 외부 단축 URL 서비스는 <strong>링크를 생성할 때마다 네트워크 통신이 발생</strong>하기 때문에, <strong>속도와 비용</strong>, 그리고 <strong>커스터마이징 기능</strong> 측면에서 우리가 원하는 수준을 만족시키기 어려웠습니다.</p>
+<p>최근에는 실시간 또는 대량의 커스터마이징 링크를 기반으로 <strong>CRM 메시지를 발송</strong>하거나 <strong>외부용 링크를 동적으로 생성해야 하는 요구사항</strong>이 많아졌고, 이는 자연스럽게 <strong>분산 서버 환경</strong>과 <strong>배치성 업무</strong>를 기반으로 <strong>대규모 단축 URL을 빠르게 처리해야 하는 기술적 과제</strong>로 이어졌습니다.</p>
+<p>결국, 이런 니즈를 저비용·고효율로 해결하기 위해, <strong>우리는 자체 단축 URL 서비스를 직접 구축</strong>하기로 결정하게 되었습니다.</p>
+<p>이 글에서는 <strong>우리가 왜 자체 단축 URL을 만들게 되었는지</strong>, 어<strong>떤 기술적 도전과 마주했는지</strong>, 그리고** 그 문제를 어떤 방식으로 해결했는지<strong>를 자세히 소개합니다.</strong> Snowflake 기반의 고유 ID 설계**, <strong>AWS ECS 환경에서의 worker ID 할당</strong>, <strong>Base62 인코딩 등</strong> 다양한 기술 요소를 아키텍처와 함께 공유합니다.</p>
+<p>월부의 기술 문화에 관심이 있으신 분들, 혹은 비슷한 고민을 하고 계신 분들께 이 글이 인사이트와 영감을 드릴 수 있기를 바랍니다.</p>
+<h1 id="단축-URL-Shorten-URL-이란"><a href="#단축-URL-Shorten-URL-이란" class="headerlink" title="단축 URL (Shorten URL)이란?"></a><strong>단축 URL (Shorten URL)이란?</strong></h1><h2 id="배경"><a href="#배경" class="headerlink" title="배경"></a><strong>배경</strong></h2><p>단축 URL이란 긴 형태의 URL(Uniform Resource Locator)을 간략하게 축약하여 사용하는 짧은 형태의 링크를 말합니다. 일반적으로 웹 주소가 길면 사용자가 공유하거나 기억하기 어려운 문제가 생기기 때문에, 이를 짧게 만들어 간편하게 공유하고 효율적으로 관리할 수 있도록 돕습니다.</p>
+<p>대표적인 단축 URL 서비스로는 Bitly, TinyURL, 구글의 goo.gl 등이 있으며, 월부는 Bitly를 이용하여 단축 URL을 만들어왔습니다.</p>
+<h2 id="단축-URL을-왜-사용할까"><a href="#단축-URL을-왜-사용할까" class="headerlink" title="단축 URL을 왜 사용할까?"></a><strong>단축 URL을 왜 사용할까?</strong></h2><p>보통 단축 URL은 주로 마케팅과 데이터 분석 목적으로 사용됩니다. 특히 데이터 분석을 위한 링크는 UTM 파라미터 등을 추가하여 길어지는 경우가 많습니다. (UTM은 마케팅 성과 분석을 위한 URL 태그로, 이번 글의 주제와 직접 관련이 없으므로 자세한 설명은 생략합니다.)</p>
+<p>이렇게 길어진 링크는 사용자 입장에서 보기 어렵고 공유하기 불편합니다. 이를 해결하기 위해 긴 링크를 짧고 간편한 형태로 축약한 단축 URL을 사용하게 됩니다.</p>
+<p>아래는 월부 단축 URL을 활용해 만든 실제 링크 예시입니다.</p>
+<p><em>(제가 좋아하는 글.. ㅎㅎ)</em></p>
+<ul>
+<li><strong>원본 링크 (길다 길어…)</strong><a href="https://weolbu.com/community/61888?utm_source=tech_blog&utm_medium=tech_blog&utm_campaign=tech_blog_shorten_link" rel="external nofollow noopener noreferrer" target="_blank"><code>https://weolbu.com/community/61888?utm_source=tech_blog&amp;utm_medium=tech_blog&amp;utm_campaign=tech_blog_shorten_link</code></a></li>
+<li><strong>단축 URL로 축약한 링크 (어메이징 하지 않나요?ㅎㅎ)</strong><a href="https://weolbu.com/s/CXGwau2Mgg" rel="external nofollow noopener noreferrer" target="_blank"><code>https://weolbu.com/s/CXHwau2Mgg</code></a></li>
+</ul>
+<h1 id="단축-URL은-어떻게-동작할까"><a href="#단축-URL은-어떻게-동작할까" class="headerlink" title="단축 URL은 어떻게 동작할까?"></a><strong>단축 URL은 어떻게 동작할까?</strong></h1><h2 id="단축-URL을-클릭하면-어떻게-동작할까"><a href="#단축-URL을-클릭하면-어떻게-동작할까" class="headerlink" title="단축 URL을 클릭하면 어떻게 동작할까?"></a><strong>단축 URL을 클릭하면 어떻게 동작할까?</strong></h2><p><img src="image-2.png" alt="HTTP 상태 코드 301"><span class="image-caption">HTTP 상태 코드 301</span></p>
+<p>HTTP 상태 코드 301</p>
+<p><img src="image-3.png" alt="응답 헤더 위치 정보"><span class="image-caption">응답 헤더 위치 정보</span></p>
+<p>응답 헤더 위치 정보</p>
+<ul>
+<li>링크를 클릭하면 301 Moved Permanently라는 Status Code를 먼저 응답받습니다.</li>
+<li>Response Header의 Location을 보면 원본 링크에 대한 정보를 읽을 수 있습니다.<br>이 정보를 통해 알 수 있는 것은 링크를 클릭했을 때 단축링크를 확인하는 서버가 있고, 그 서버는 실제로 이동해야 할 정보에 대해서 알려준다는 것을 알 수 있습니다.</li>
+</ul>
+<p>위의 흐름을 아래의 Flow로 간단하게 정리할 수 있습니다.</p>
+<p><img src="image-4.png" alt="URL 클릭 흐름 단축"><span class="image-caption">URL 클릭 흐름 단축</span></p>
+<p>URL 클릭 흐름 단축</p>
+<h2 id="단축-URL-알고리즘"><a href="#단축-URL-알고리즘" class="headerlink" title="단축 URL 알고리즘"></a><strong>단축 URL 알고리즘</strong></h2><p>이 글을 읽는 여러분에게 질문을 해보겠습니다.</p>
+<p>‘나’라면 아래의 긴 링크를 어떻게 줄일 수 있을까요?</p>
+<blockquote>
+<p><a href="https://weolbu.com/community/61888?utm_source=tech_blog&utm_medium=tech_blog&utm_campaign=tech_blog_shorten_link" rel="external nofollow noopener noreferrer" target="_blank">https://weolbu.com/community/61888?utm_source=tech_blog&amp;utm_medium=tech_blog&amp;utm_campaign=tech_blog_shorten_link</a></p>
+</blockquote>
+<p>대부분 사람들은 <strong>‘단축’</strong>이라는 단어 때문에 링크를 실제로 압축하여 줄인다고 생각합니다. 어떤 마법 같은 특별한 압축 알고리즘이 존재할 것이라 생각하지만, 실제로 URL을 압축하는 방식은 효율적이지 않습니다.</p>
+<p>왜냐하면 URL 자체를 압축하면 실제 크기 감소 효과가 미미하며, 압축된 형태가 항상 고유하다고 보장하기도 어렵습니다. 따라서 단축 URL은 URL 압축이 아니라, <strong>원본 URL과 매핑되는 고유한 짧은 키(key)를 생성</strong>하여 간략한 링크를 만들어 사용합니다.</p>
+<h2 id="Base62-알고리즘"><a href="#Base62-알고리즘" class="headerlink" title="Base62 알고리즘"></a><strong>Base62 알고리즘</strong></h2><p><img src="image-5.png" alt="Base62 알고리즘"><span class="image-caption">Base62 알고리즘</span></p>
+<p>Base62 알고리즘을 선택한 이유는 명확하고 단순합니다. 숫자(0–9), 대문자(A-Z), 소문자(a-z)를 조합해 <strong>총 62개의 문자 집합</strong>을 사용할 수 있기 때문에, <strong>짧은 문자열로도 많은 수의 조합을 만들어낼 수 있는 효율적인 인코딩 방식</strong>입니다.</p>
+<p>우리는 단축 URL의 키(key)를 웹 주소로 직접 사용해야 하므로, <strong>URL-safe하고</strong>, <strong>사람이 읽기 쉬우며</strong>, <strong>길이도 짧은 인코딩 방식</strong>이 필요했습니다. 이 조건에 가장 적합한 방식이 바로 Base62였으며 통상적으로 사용하는 방식이기도 합니다.</p>
+<p>긴 링크는 바로 Base62 알고리즘으로 Key를 생성한 후 Value에는 원본 링크를 저장하는 방식으로 구현을 합니다.</p>
+<p>자 그러면 왜 원본 URL을 압축하는 것보다 Base62 알고리즘을 활용하였을 때 압도적으로 좋은 효율을 낼 수 있는지 알 수 있겠죠?</p>
+<ul>
+<li>Key : Base62로 인코딩된 ID</li>
+<li>Value : 원본 URL</li>
+</ul>
+<h2 id="단축-URL을-생성하는-서버"><a href="#단축-URL을-생성하는-서버" class="headerlink" title="단축 URL을 생성하는 서버"></a><strong>단축 URL을 생성하는 서버</strong></h2><p>자 그러면 간단하게 단축 URL을 생성하는 요청이 들어왔을 때 어떤 흐름으로 URL이 생성되는지 확인해 보도록 하겠습니다.</p>
+<p>Shorten URL Generate Server</p>
+<p><img src="image-6.png" alt="Shorten URL Generate Server"><span class="image-caption">Shorten URL Generate Server</span></p>
+<ul>
+<li>원본 URL을 단축 URL로 생성하라는 <strong>요청</strong>을 한다.</li>
+<li>숏링크 생성기는 <strong>고유한 ID</strong>를 만들어낸다.</li>
+<li>고유한 ID는 <strong>Base62 알고리즘</strong>으로 인코딩한다.</li>
+<li>Data 저장소는 Key와 Value형식으로 URL을 저장한다.Key : <strong>Base62로 인코딩한 ID</strong>Value : <strong>원본링크</strong><br>그림으로 보니 생각보다 어렵지 않은 구조로 풀어낼 수 있습니다.</li>
+</ul>
+<p>그러면 이 링크를 해석하는 과정도 유추할 수 있겠죠?</p>
+<h2 id="단축-URL-요청을-처리하는-서버"><a href="#단축-URL-요청을-처리하는-서버" class="headerlink" title="단축 URL 요청을 처리하는 서버"></a><strong>단축 URL 요청을 처리하는 서버</strong></h2><p>Shorten URL Resolver</p>
+<p><img src="image-7.png" alt="Shorten URL Resolver"><span class="image-caption">Shorten URL Resolver</span></p>
+<ul>
+<li><strong>&#x2F;s&#x2F;{key} 패턴을 해석</strong></li>
+<li>Data 저장소에 <strong>{key}가 있는지 확인</strong></li>
+<li>있다면 <strong>원본링크를 301 Redirection</strong></li>
+<li>없다면 <strong>기본링크(home)를 301 Redirection</strong><br>위의 흐름 외에도 서비스별로 고려야 할 것들이 있습니다.</li>
+</ul>
+<p>각 서비스의 사정에 맞게 설정을 하시면 될 것 같습니다.</p>
+<ul>
+<li>숏링크 유효상태, 유효기간 관리</li>
+<li>타깃링크 없을 때 기본링크 정책</li>
+</ul>
+<h1 id="트러블-슈팅-—-분산환경-ECS-환경에-직면한-문제"><a href="#트러블-슈팅-—-분산환경-ECS-환경에-직면한-문제" class="headerlink" title="트러블 슈팅 — 분산환경, ECS 환경에 직면한 문제"></a><strong>트러블 슈팅 — 분산환경, ECS 환경에 직면한 문제</strong></h1><h2 id="트러블-슈팅-1-분산환경의-고유-ID-생성"><a href="#트러블-슈팅-1-분산환경의-고유-ID-생성" class="headerlink" title="트러블 슈팅 1 (분산환경의 고유 ID 생성)"></a><strong>트러블 슈팅 1 (분산환경의 고유 ID 생성)</strong></h2><p>이때까지만 해도 순조롭게 해결할 것이라고 생각했는데 문제가 발생했습니다.</p>
+<p><img src="image-8.png" alt="Image 8"><span class="image-caption">Image 8</span></p>
+<p>?!</p>
+<p>ID생성 책임을 애플리케이션에게 위임했는데 우리 백엔드 서버는 분산서버로 여러 대의 인스턴스가 실행되고 있습니다.</p>
+<p><strong>문제는 ‘분산 서버 환경에서 절대 겹치지 않는 고유 ID’를 어떻게 생성할 것인가였습니다.</strong></p>
+<p>이 부분에 대해서 몇 가지 대안이 있을 수 있습니다.</p>
+<ul>
+<li>ID생성 책임을 Redis를 활용하면 되지 않은가?</li>
+<li>RDB의 Sequence, AutoIncrement ID를 사용하면 되는 거 아닌가?<br>일단 1번에 대해서는 Redis에 의존하는 관계를 만드는 순간 종속이 되고 장애나 지연과 같은 상황이 발생하였을 때 모든 인스턴스가 영향을 받아 제외했습니다.</li>
+</ul>
+<p>그리고, 이번 개발에서는 Document DB를 사용하기 때문에 고유의 채번으로 이루어진 숫자ID를 얻는데에는 한계가 있었습니다.</p>
+<p>서버 고유ID를 생성기가 있다면 DB에 종속되지 않고 여러곳에 사용할 수 있는 장점이 있습니다.</p>
+<p>이 문제의 해결은 바로 Snowflake ID 생성 알고리즘을 사용하는 것입니다.</p>
+<p><img src="image-9.png" alt="고유 ID 필요"><span class="image-caption">고유 ID 필요</span></p>
+<h2 id="분산환경의-고유-ID-Snowflake-ID-생성-알고리즘으로-해결하다"><a href="#분산환경의-고유-ID-Snowflake-ID-생성-알고리즘으로-해결하다" class="headerlink" title="분산환경의 고유 ID : Snowflake ID 생성 알고리즘으로 해결하다."></a><strong>분산환경의 고유 ID : Snowflake ID 생성 알고리즘으로 해결하다.</strong></h2><p><strong>❄️ Snowflake ID란?</strong></p>
+<p>twitter snowflke ID는 트위터가 개발한 64비트(Long의 비트수와 일치) 고유 ID 생성 방식으로, <strong>분산 시스템에서도 중복되지 않는 순차적인 ID를 생성하는 것이 핵심</strong>이다.</p>
+<ul>
+<li>글로벌 고유 ID 제공</li>
+<li>높은 성능 (분산 환경에서 독립적 ID 생성 가능)</li>
+<li>시간 순 정렬(검색 및 정렬에 유리)</li>
+</ul>
+
+            
+
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap" style="max-width:960px">
+        
+        <div class="post-footer-tags">
+            <span class="text-color-light text-small">
+                태그</span><br>
+            
+    <a class="tag tag--primary tag--small t-none-link" href="/tags/%EA%B0%9C%EB%B0%9C/" rel="tag">개발</a>
+
+        </div>
+        
+        
+        <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2025/04/29/blo-6-object-oriented-programming-book/" data-tooltip="객체지향의 사실과 오해" aria-label="이전: 객체지향의 사실과 오해">
+                
+                    <i class="fa fa-angle-left" aria-hidden="true"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">이전</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2024/07/10/blo-3-notion-api-github-pages-blog-hexo/" data-tooltip="Notion API로 Github Pages Blog (Hexo)에 쉽게 배포하기" aria-label="다음: Notion API로 Github Pages Blog (Hexo)에 쉽게 배포하기">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">다음</span>
+                    <i class="fa fa-angle-right" aria-hidden="true"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions" aria-label="이 글 공유하기">
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="_blank" href="https://twitter.com/intent/tweet?text=https://jungjoongi.com/2025/03/30/blo-5-shorten-url/" title="Twitter에 공유" rel="external nofollow noopener noreferrer">
+                    <i class="fab fa-twitter" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="_blank" href="https://plus.google.com/share?url=https://jungjoongi.com/2025/03/30/blo-5-shorten-url/" title="Google+에 공유" rel="external nofollow noopener noreferrer">
+                    <i class="fab fa-google-plus" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+            
+                <li class="post-action">
+                    <a class="post-action-btn btn btn--default" href="#disqus_thread">
+                        <i class="fa fa-comment"></i>
+                    </a>
+                </li>
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#table-of-contents" aria-label="목차">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+        
+        <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <!-- hexo-text -->
+        <ins class="adsbygoogle" style="display:block;margin-bottom: 10px;" data-ad-client="ca-pub-5379974693765383" data-ad-slot="8538682456" data-ad-format="auto" data-full-width-responsive="true"></ins>
+        <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+        
+        
+        <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+        
+        
+    </div>
+</article>
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2025 jung joongi. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+                <div id="bottom-bar" class="post-bottom-bar" data-behavior="5">
+                    <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2025/04/29/blo-6-object-oriented-programming-book/" data-tooltip="객체지향의 사실과 오해" aria-label="이전: 객체지향의 사실과 오해">
+                
+                    <i class="fa fa-angle-left" aria-hidden="true"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">이전</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2024/07/10/blo-3-notion-api-github-pages-blog-hexo/" data-tooltip="Notion API로 Github Pages Blog (Hexo)에 쉽게 배포하기" aria-label="다음: Notion API로 Github Pages Blog (Hexo)에 쉽게 배포하기">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">다음</span>
+                    <i class="fa fa-angle-right" aria-hidden="true"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions" aria-label="이 글 공유하기">
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="_blank" href="https://twitter.com/intent/tweet?text=https://jungjoongi.com/2025/03/30/blo-5-shorten-url/" title="Twitter에 공유" rel="external nofollow noopener noreferrer">
+                    <i class="fab fa-twitter" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="_blank" href="https://plus.google.com/share?url=https://jungjoongi.com/2025/03/30/blo-5-shorten-url/" title="Google+에 공유" rel="external nofollow noopener noreferrer">
+                    <i class="fab fa-google-plus" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+            
+                <li class="post-action">
+                    <a class="post-action-btn btn btn--default" href="#disqus_thread">
+                        <i class="fa fa-comment"></i>
+                    </a>
+                </li>
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#table-of-contents" aria-label="목차">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+                </div>
+                <div id="share-options-bar" class="share-options-bar" data-behavior="5">
+    <i id="btn-close-shareoptions" class="fa fa-times"></i>
+    <ul class="share-options">
+        
+            
+            
+            <li class="share-option">
+                <a class="share-option-btn" target="_blank" href="https://twitter.com/intent/tweet?text=https://jungjoongi.com/2025/03/30/blo-5-shorten-url/" rel="external nofollow noopener noreferrer">
+                    <i class="fab fa-twitter" aria-hidden="true"></i><span>Twitter에 공유</span>
+                </a>
+            </li>
+        
+            
+            
+            <li class="share-option">
+                <a class="share-option-btn" target="_blank" href="https://plus.google.com/share?url=https://jungjoongi.com/2025/03/30/blo-5-shorten-url/" rel="external nofollow noopener noreferrer">
+                    <i class="fab fa-google-plus" aria-hidden="true"></i><span>Google+에 공유</span>
+                </a>
+            </li>
+        
+    </ul>
+</div>
+
+            
+        </div>
+        
+
+
+    
+        
+    
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-times"></i>
+        </div>
+        
+            <img id="about-card-picture" src="/assets/images/profile.jpg" alt="프로필 사진">
+        
+            <h4 id="about-card-name">jung joongi</h4>
+        
+            <div id="about-card-bio"><p>백엔드 개발을 하고있습니다.</p>
+</div>
+        
+        
+            <div id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br>
+                <p>weolbu.com</p>
+
+            </div>
+        
+        
+            <div id="about-card-location">
+                <i class="fa fa-map-marker-alt"></i>
+                <br>
+                South.Korea
+            </div>
+        
+    </div>
+</div>
+
+        
+        
+<div id="cover" style="background-image:url('/assets/images/covers.jpg');"></div>
+        <!--SCRIPTS-->
+
+<script src="/assets/js/script-881bb61ay4tqeb1n817b1mzoszjpmkjnemq1di6rw1hbjimw8rontpgztokm.min.js"></script>
+
+<!--SCRIPTS END-->
+
+    
+        <script>
+             var disqus_config = function () {
+                 this.page.url = 'https://jungjoongi.com/2025/03/30/blo-5-shorten-url/';
+                 
+                    this.page.identifier = '2025/03/30/blo-5-shorten-url/';
+                 
+             };
+            (function() {
+                var d = document, s = d.createElement('script');
+                var disqus_shortname = 'jungjoongi';
+                s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+
+
+    </body>
+</html>

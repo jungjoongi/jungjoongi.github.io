@@ -1,0 +1,775 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="정준기의 개발공간 (dev.joongi)">
+    <title>AWS Summit 2024 방문기(Badrock, 플랫폼엔지니어링, 생성형 AI) - 정준기의 개발공간 (dev.joongi)</title>
+    <meta name="author" content="jung joongi">
+    
+        <meta name="keywords" content="생성형 AI,bedrock,플랫폼엔지니어링,aws,summit,summit seoul,서밋서울">
+    
+    
+    
+        <link rel="alternate" type="application/atom+xml" title="RSS" href="/rss2.xml">
+    
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"jung joongi","sameAs":["https://github.com/jungjoongi","mailto:dev.joongi@gmail.com"],"image":"profile.jpg"},"articleBody":"이번 AWS 컨퍼런스에서 가장 중요하게 꼽은 키워드는 2가지라고 생각합니다.\n\n생성형 AI\n플랫폼 엔지니어링\n\nAWS Summit Seoul 2024 컨퍼런스\n\nAWS 2024 Summit Seoul 개요2일차에만 참여를 하게 되었는데, 2일차 강연 아젠다도 생성형 AI 기반 기술 혁신 이었고, 관련된 주제로 진행되는 세션이 굉장히 많았습니다. 많이 언급되지는 않았지만 새롭게 떠오르는 주제로는 플랫폼 엔지니어링이라는 키워드를 꼽고 싶었습니다.\n이 글은 키워드 대표 관점으로 최대한 작성해보도록 하겠습니다.\n\n생성형 AI생성형 AI는 이미 OpenAI가 나오면서 대중화가 되었으며, 역시 예상한대로 AI가 기술세션의 대세가 되었습니다. AWS에서 말하는 대표 키워드는 2가지를 꼽을 수 있었습니다.\n\nBedrock\nAmazon Q\n\nBedrock아마존에서 제공하는 완전 관리형 생성형 AI 서비스입니다. 다양한 파운데이션 모델을 선택해서 사용할 수 있으며, 현재 지원되는 파운데이션 모델은 다음과 같습니다.Bedrock\ngpt를 통해 gpt와 bedrock의 차이점을 물어봤는데 다음과 같이 대답을 합니다.\n\n\n\n구분\nAWS Bedrock\nChatGPT\n\n\n\n개발사\nAmazon Web Services (AWS)\nOpenAI\n\n\n주요 기능\n다양한 기계 학습 모델을 손쉽게 배포하고 관리할 수 있는 플랫폼\n대규모 언어 모델을 이용한 대화형 AI 서비스\n\n\n목적\n기계 학습 모델 개발, 배포, 스케일링 지원\n자연어 이해 및 생성, 대화형 AI\n\n\n사용자 대상\n데이터 과학자, 기계 학습 엔지니어, 개발자\n일반 사용자, 개발자, 기업\n\n\n사용 사례\n맞춤형 ML 모델 개발, 배포, 관리\n챗봇, 컨텐츠 생성, 교육 도구, 고객 서비스\n\n\n확장성\n여러 ML 프레임워크 및 도구와의 통합 지원\nGPT-4 모델에 기반한 다양한 응용 프로그램\n\n\n모델 학습\n사용자가 자신의 데이터로 모델을 학습 및 커스터마이징 가능\n모델은 사전 학습된 상태로 제공되며, 사용자가 학습을 직접 수행하지 않음\n\n\n접근 방식\nAPI 및 관리 콘솔을 통한 모델 배포 및 관리\nAPI 및 다양한 플랫폼에서의 직접적인 대화 인터페이스 제공\n\n\n가격 구조\n사용한 리소스에 따른 종량제 가격 책정\nOpenAI의 서비스 이용 요금제\n\n\n1. AWS Bedrock Gallery\nBedrock으로 만든 이미지 합성 갤러리AWS Bedrock Gallery\n\n2. Robo-SoulMate여기는 로봇과 사람의 대화 위해 자연어 + 음석인식 처리 인터페이스를 만들고 각 로봇별로 특성을 만들어서 어떤 대화의 방법을 좋아하고 어떤 대화의 방법을 싫어하는지에 따라서 스코어를 매겨 점수를 올리는 게임입니다.Robo-SoulMate\nAmazonQ사실 우리가 알고있는 copilot과 굉장히 비슷하다. \n\n\n\nAmazon Q 체험 및 설명\nAmazon Q 사용 예시\n\n\n\nAmazon Q 체험 및 설명\nAmazon Q 사용 예시\n\n\n약간의 차별점이 있다면, AWS 서비스와 연계가 잘 되어있다는점 특히 Lambda 서비스의 코드를 구현하는데 아주 잘 되어있다. 또한 테라폼을 적용하기 위한 코드도 굉장히 최적화되어 잘 구현한다.\nAWS 세션에서도 대부분 Amazon Q + 다른 생성형 AI를 함께 사용하여 어플리케이션의 완성도와 정확도를 높여가는 것을 많이 보여주었다.\n\n플랫폼 엔지니어링플랫폼 엔지니어링이란, 내부 개발자들이 더 효율적으로 작업할 수 있도록 통합된 개발 환경, 도구, 서비스를 설계하고 구축하는 것을 의미합니다. 플랫폼 엔지니어링의 주요 목표는 개발자들의 생산성을 높이고, 코드 배포의 속도와 안정성을 향상시키며, 인프라 관리를 자동화하는 것입니다.\n클라우드 운영 모델 비교 (중앙화 vs 탈중앙화)\n\n\n구분\n중앙화된 모델\n탈중앙화된 모델\n\n\n\n책임\n중앙팀이 대부분의 책임을 짐\n개발자에게 책임이 있음\n\n\n속도\n느림, 배포에 병목 발생\n민첩성과 운영성이 뛰어남\n\n\n적합성\n다양한 요구사항을 가진 개발팀에게 비효율적\n개발팀의 자율성 증가, 그러나 불일치에 대한 위험 존재\n\n\n책임 분담\n중앙팀이 관리\n인프라 및 애플리케이션에 대한 자율성과 결정권을 개별 팀이 가짐\n\n\n플랫폼 엔지니어링의 장점\n플랫폼은 개발 속도를 빠르게 하여 목표 달성 시간을 단축합니다.\n플랫폼의 가드레일은 자율성을 제공하면서도 안전장치가 됩니다.\n플랫폼은 클라우드 도입 여정에서 규모의 경제를 달성할 수 있도록 지원합니다.\n\n플랫폼 구현 및 도입 패턴\n플랫폼을 제품처럼 다룬다.\n내부 고객의 피드백을 반영한다.\n리드타임을 줄여 확장성을 부여한다.\n템플릿 문서로 골든패스를 제공해야 한다.\n가장 얇고 실행 가능한 플랫폼으로 만든다.\n점진적으로 개선한다.\n\n\n무신사의 플랫폼 엔지니어링 사례무신사의 플랫폼 엔지니어링 사례를 통해 개념, 클라우드 운영 모델의 차이점, 플랫폼의 장점 및 도입 사례를 이해할 수 있습니다.\n\n끝으로alt textChatGPT가 세상에 알려진지 2년이 되지 않았습니다. 2011년 스마트폰이 본격적으로 대중화되면서 IT발전 속도가 빨라진 것처럼 생성형 AI의 등장으로 기술의 발전은 기하급수적으로 이루어지고 있습니다. AI의 민주화가 되어 비개발 직군에게는 오히려 기회가 되었고, 개발 직군은 더 많은 것을 활용하여 서비스를 제공할 수 있는 선택의 폭이 너무 넓어졌습니다.\nAWS의 행사를 통해 업계 트렌드를 알게 되었고, 더 쉽게 접근이 가능하다는 사실도 알게 되었습니다. 재미있었고 유익했습니다. 끝으로 기술을 쫓기보다는 문제 해결을 위해 필요한 것들을 미리 준비하여 변화에 잘 대응해야겠습니다.\nAWS Summit에 참여할 수 있는 기회를 주셔서 감사하고, 나의 성장과 개발팀의 성장을 돕는 사람이 되도록 하겠습니다.\n","dateCreated":"2024-06-30T19:17:55+00:00","dateModified":"2025-12-01T23:23:54+00:00","datePublished":"2024-06-30T19:17:55+00:00","description":"이번 AWS 컨퍼런스에서 가장 중요하게 꼽은 키워드는 2가지라고 생각합니다.\n\n생성형 AI\n플랫폼 엔지니어링","headline":"AWS Summit 2024 방문기(Badrock, 플랫폼엔지니어링, 생성형 AI)","image":[["title.png"],["title.png"]],"mainEntityOfPage":{"@type":"WebPage","@id":"https://jungjoongi.com/2024/06/30/aws-summit-2024/"},"publisher":{"@type":"Organization","name":"jung joongi","sameAs":["https://github.com/jungjoongi","mailto:dev.joongi@gmail.com"],"image":"profile.jpg","logo":{"@type":"ImageObject","url":"profile.jpg"}},"url":"https://jungjoongi.com/2024/06/30/aws-summit-2024/","keywords":"개발, aws, 생성형 AI, bedrock, 플랫폼엔지니어링, summit, summit seoul, 서밋서울","thumbnailUrl":["title.png"]}</script>
+    <meta name="description" content="이번 AWS 컨퍼런스에서 가장 중요하게 꼽은 키워드는 2가지라고 생각합니다.  생성형 AI 플랫폼 엔지니어링">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="AWS Summit 2024 방문기(Badrock, 플랫폼엔지니어링, 생성형 AI)">
+<meta property="og:url" content="https://jungjoongi.com/2024/06/30/aws-summit-2024/index.html">
+<meta property="og:site_name" content="정준기의 개발공간 (dev.joongi)">
+<meta property="og:description" content="이번 AWS 컨퍼런스에서 가장 중요하게 꼽은 키워드는 2가지라고 생각합니다.  생성형 AI 플랫폼 엔지니어링">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:image" content="https://jungjoongi.com/2024/06/30/aws-summit-2024/bedrock.png">
+<meta property="og:image" content="https://jungjoongi.com/2024/06/30/aws-summit-2024/AWS-Bedrock-Gallery-1.png">
+<meta property="og:image" content="https://jungjoongi.com/2024/06/30/aws-summit-2024/robo-soul-mate.png">
+<meta property="og:image" content="https://jungjoongi.com/2024/06/30/aws-summit-2024/image-1.png">
+<meta property="og:image" content="https://jungjoongi.com/2024/06/30/aws-summit-2024/image-2.png">
+<meta property="og:image" content="https://jungjoongi.com/2024/06/30/aws-summit-2024/end.png">
+<meta property="article:published_time" content="2024-06-30T19:17:55.000Z">
+<meta property="article:modified_time" content="2025-12-01T23:23:54.845Z">
+<meta property="article:author" content="jung joongi">
+<meta property="article:tag" content="개발">
+<meta property="article:tag" content="aws">
+<meta property="article:tag" content="생성형 AI">
+<meta property="article:tag" content="bedrock">
+<meta property="article:tag" content="플랫폼엔지니어링">
+<meta property="article:tag" content="summit">
+<meta property="article:tag" content="summit seoul">
+<meta property="article:tag" content="서밋서울">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://jungjoongi.com/2024/06/30/aws-summit-2024/bedrock.png">
+    
+    
+        
+    
+    
+        <meta property="og:image" content="https://jungjoongi.com/assets/images/profile.jpg">
+    
+    
+        <meta property="og:image" content="https://jungjoongi.com/2024/06/30/aws-summit-2024/title.png">
+        <meta class="swiftype" name="image" data-type="enum" content="https://jungjoongi.com/2024/06/30/aws-summit-2024/title.png">
+    
+    
+        <meta property="og:image" content="https://jungjoongi.com/2024/06/30/aws-summit-2024/title.png">
+        <meta class="swiftype" name="image" data-type="enum" content="https://jungjoongi.com/2024/06/30/aws-summit-2024/title.png">
+    
+    
+    <!--STYLES-->
+    
+<link rel="stylesheet" href="/assets/css/style-xbuojjy2ght4affx1n45g4jpzfblrkkc3n5xp00pvqgm4xqgmjfrnfgqsmqd.min.css">
+
+    <!--STYLES END-->
+    
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-KRV6LZLE5Z"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-KRV6LZLE5Z');
+    </script>
+
+
+    
+    <link rel="canonical" href="https://jungjoongi.com/2024/06/30/aws-summit-2024/">
+</head>
+
+    <body>
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+        
+            
+        
+    
+
+<header id="header" data-behavior="5">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <div class="header-title">
+        <a class="header-title-link" href="/">정준기의 개발공간 (dev.joongi)</a>
+    </div>
+    
+        
+            <a class="header-right-picture " href="#about">
+        
+        
+            <img class="header-picture" src="/assets/images/profile.jpg" alt="프로필 사진">
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+
+        
+    
+
+<nav id="sidebar" data-behavior="5">
+    <div class="sidebar-container">
+        
+            <div class="sidebar-profile">
+                <a href="/#about">
+                    <img class="sidebar-profile-picture" src="/assets/images/profile.jpg" alt="프로필 사진">
+                </a>
+                <h4 class="sidebar-profile-name">jung joongi</h4>
+                
+                    <h5 class="sidebar-profile-bio"><p>백엔드 개발을 하고있습니다.</p>
+</h5>
+                
+            </div>
+        
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/" title="홈">
+                    
+                        <i class="sidebar-button-icon fa fa-home" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">홈</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/all-categories" title="카테고리">
+                    
+                        <i class="sidebar-button-icon fa fa-bookmark" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">카테고리</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/all-tags" title="태그">
+                    
+                        <i class="sidebar-button-icon fa fa-tags" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">태그</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/all-archives" title="아카이브">
+                    
+                        <i class="sidebar-button-icon fa fa-archive" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">아카이브</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="https://www.linkedin.com/in/jungjoongi" target="_blank" rel="external nofollow noopener noreferrer" title="소개">
+                    
+                        <i class="sidebar-button-icon fa fa-question" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">소개</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="https://github.com/jungjoongi" target="_blank" rel="external nofollow noopener noreferrer" title="GitHub">
+                    
+                        <i class="sidebar-button-icon fab fa-github" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">GitHub</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="mailto:dev.joongi@gmail.com" target="_blank" rel="external nofollow noopener noreferrer" title="메일">
+                    
+                        <i class="sidebar-button-icon fa fa-envelope" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">메일</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/rss2.xml" title="RSS">
+                    
+                        <i class="sidebar-button-icon fa fa-rss" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">RSS</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+    </div>
+</nav>
+
+            
+        <div class="post-header-cover
+                    text-left
+                    " style="background-image:url('/2024/06/30/aws-summit-2024/title.png');" data-behavior="5">
+            
+                <div class="post-header main-content-wrap text-left">
+    
+        <h1 class="post-title">
+            AWS Summit 2024 방문기(Badrock, 플랫폼엔지니어링, 생성형 AI)
+        </h1>
+    
+    
+        <div class="post-meta">
+    <time datetime="2024-06-30T19:17:55+00:00">
+	
+		    2024년 06월 30일
+    	
+    </time>
+    
+        <span>카테고리: </span>
+        
+    <a class="category-link" href="/categories/%EA%B0%9C%EB%B0%9C/">개발</a>
+
+
+    
+</div>
+
+    
+</div>
+
+            
+        </div>
+
+            <div id="main" data-behavior="5" class="hasCover
+                        hasCoverMetaIn
+                        ">
+                
+<style>
+    #loading {
+        width: 100%;
+        height: 100%;
+        top: 0px;
+        left: 0px;
+        position: fixed;
+        display: block;
+        background-color: #fff;
+        z-index: 99;
+        text-align: center;
+    }
+
+    html body {
+        overflow: hidden;
+        height: 100%
+    }
+
+    #loading-image {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 100;
+    }
+
+    #loading-text {
+        position: absolute;
+        top: 60%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 100;
+        font-style: bold;
+    }
+
+    ol {
+        padding: 0 0 0 20px;
+        list-style: disc;
+    }
+
+    #coupang-layer-pop {
+        position: fixed;
+        width: 386px;
+        height: 345px;
+        padding: 16px;
+        background-color: white;
+        border: 1px dashed#c7c7c7;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        display: none;
+    }
+
+    #ads {
+        width: 360px;
+        margin-top: 30px;
+        position: absolute;
+        top: 30px;
+    }
+
+    #content-list {
+        font-size: 14px;
+        margin-bottom: 20px;
+    }
+
+    #coupang-layer-button {
+        position: absolute;
+        right: 30px;
+        bottom: 10px;
+    }
+</style>
+
+<div id="loading"><img id="loading-image" src="/assets/images/loading.gif" alt="Loading..."><span id="loading-text">페이지가 로딩중입니다. 잠시만 기다려주세요</span></div>
+<article class="post">
+    
+
+    
+    <div id="coupang-layer-pop">
+        <iframe src="https://ads-partners.coupang.com/iframe/search-bar?id=19092917192714204211009791-l1&type=l1&trackingCode=AF9416635" width="383px" height="75" frameborder="0" scrolling="no"></iframe>
+        <iframe id="coupang-0" src="https://coupa.ng/bgdTAw" width="125px" height="240" frameborder="0" scrolling="no"></iframe>
+        <iframe id="coupang-1" src="https://coupa.ng/bgdTbp" width="125px" height="240" frameborder="0" scrolling="no"></iframe>
+        <iframe id="coupang-2" src="https://coupa.ng/bgd0rL" width="125px" height="240" frameborder="0" scrolling="no"></iframe>
+        <button id="coupang-layer-button">close</button>
+    </div>
+    <div class="post-content markdown" style="margin:auto;max-width:1360px;">
+
+        <div id="ads" class="ad-area">
+            <div id="content-list">
+                <h3 id="table-of-contents"></h3><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#AWS-Summit-Seoul-2024-%EC%BB%A8%ED%8D%BC%EB%9F%B0%EC%8A%A4"><span class="toc-text">AWS Summit Seoul 2024 컨퍼런스</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#AWS-2024-Summit-Seoul-%EA%B0%9C%EC%9A%94"><span class="toc-text">AWS 2024 Summit Seoul 개요</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%EC%83%9D%EC%84%B1%ED%98%95-AI"><span class="toc-text">생성형 AI</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Bedrock"><span class="toc-text">Bedrock</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-AWS-Bedrock-Gallery"><span class="toc-text">1. AWS Bedrock Gallery</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-Robo-SoulMate"><span class="toc-text">2. Robo-SoulMate</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#AmazonQ"><span class="toc-text">AmazonQ</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%ED%94%8C%EB%9E%AB%ED%8F%BC-%EC%97%94%EC%A7%80%EB%8B%88%EC%96%B4%EB%A7%81"><span class="toc-text">플랫폼 엔지니어링</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%ED%81%B4%EB%9D%BC%EC%9A%B0%EB%93%9C-%EC%9A%B4%EC%98%81-%EB%AA%A8%EB%8D%B8-%EB%B9%84%EA%B5%90-%EC%A4%91%EC%95%99%ED%99%94-vs-%ED%83%88%EC%A4%91%EC%95%99%ED%99%94"><span class="toc-text">클라우드 운영 모델 비교 (중앙화 vs 탈중앙화)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%ED%94%8C%EB%9E%AB%ED%8F%BC-%EC%97%94%EC%A7%80%EB%8B%88%EC%96%B4%EB%A7%81%EC%9D%98-%EC%9E%A5%EC%A0%90"><span class="toc-text">플랫폼 엔지니어링의 장점</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%ED%94%8C%EB%9E%AB%ED%8F%BC-%EA%B5%AC%ED%98%84-%EB%B0%8F-%EB%8F%84%EC%9E%85-%ED%8C%A8%ED%84%B4"><span class="toc-text">플랫폼 구현 및 도입 패턴</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%EB%AC%B4%EC%8B%A0%EC%82%AC%EC%9D%98-%ED%94%8C%EB%9E%AB%ED%8F%BC-%EC%97%94%EC%A7%80%EB%8B%88%EC%96%B4%EB%A7%81-%EC%82%AC%EB%A1%80"><span class="toc-text">무신사의 플랫폼 엔지니어링 사례</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%EB%81%9D%EC%9C%BC%EB%A1%9C"><span class="toc-text">끝으로</span></a></li></ol></li></ol>
+            </div>
+            <!-- hexo-side1 -->
+            <ins class="adsbygoogle" style="display:block;width:340px;" data-ad-client="ca-pub-5379974693765383" data-ad-slot="6166524771" data-ad-format="auto" data-full-width-responsive="true"></ins>
+            <script>
+                (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+            <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+            <div id="lastAds">
+                <div class="coupang-ads">
+                    <!-- <p id="coupang-title">2020년 11월 28일 쿠팡 Best50</p><span id="coupang-title-icon">HOT</span> -->
+                    <p id="coupang-title"><iframe id="coupang-search" src="https://ads-partners.coupang.com/iframe/search-bar?id=19092917192714204211009791-l1&amp;type=l1&amp;trackingCode=AF9416635" width="383px" height="75" frameborder="0" scrolling="no"></iframe></p>
+                    <div class="ads-wrap ads-wrap-first">
+                        <img src>
+                        <p id="ads-first-name"></p>
+                    </div>
+                    <div class="ads-wrap ads-wrap-second">
+                        <img src>
+                        <p id="ads-second-name"></p>
+                    </div>
+                    <p id="coupang-notice">*파트너스 활동을 통해 일정액의 수수료를 제공받을 수 있음</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="main-content" class="main-content-wrap" style="margin-right:360px;">
+            <p>이번 AWS 컨퍼런스에서 가장 중요하게 꼽은 키워드는 2가지라고 생각합니다.</p>
+<ol>
+<li>생성형 AI</li>
+<li>플랫폼 엔지니어링<span id="more"></span></li>
+</ol>
+<h1 id="AWS-Summit-Seoul-2024-컨퍼런스"><a href="#AWS-Summit-Seoul-2024-컨퍼런스" class="headerlink" title="AWS Summit Seoul 2024 컨퍼런스"></a>AWS Summit Seoul 2024 컨퍼런스</h1><!-- toc -->
+
+<h2 id="AWS-2024-Summit-Seoul-개요"><a href="#AWS-2024-Summit-Seoul-개요" class="headerlink" title="AWS 2024 Summit Seoul 개요"></a>AWS 2024 Summit Seoul 개요</h2><p>2일차에만 참여를 하게 되었는데, 2일차 강연 아젠다도 <strong>생성형 AI 기반 기술 혁신</strong> 이었고, 관련된 주제로 진행되는 세션이 굉장히 많았습니다. 많이 언급되지는 않았지만 새롭게 떠오르는 주제로는 <strong>플랫폼 엔지니어링</strong>이라는 키워드를 꼽고 싶었습니다.</p>
+<p>이 글은 키워드 대표 관점으로 최대한 작성해보도록 하겠습니다.</p>
+<hr>
+<h2 id="생성형-AI"><a href="#생성형-AI" class="headerlink" title="생성형 AI"></a>생성형 AI</h2><p>생성형 AI는 이미 OpenAI가 나오면서 대중화가 되었으며, 역시 예상한대로 AI가 기술세션의 대세가 되었습니다. AWS에서 말하는 대표 키워드는 2가지를 꼽을 수 있었습니다.</p>
+<ol>
+<li>Bedrock</li>
+<li>Amazon Q</li>
+</ol>
+<h3 id="Bedrock"><a href="#Bedrock" class="headerlink" title="Bedrock"></a>Bedrock</h3><p>아마존에서 제공하는 완전 관리형 생성형 AI 서비스입니다. 다양한 파운데이션 모델을 선택해서 사용할 수 있으며, 현재 지원되는 파운데이션 모델은 다음과 같습니다.<br><img src="bedrock.png" alt="Bedrock"><span class="image-caption">Bedrock</span></p>
+<p>gpt를 통해 gpt와 bedrock의 차이점을 물어봤는데 다음과 같이 대답을 합니다.</p>
+<table>
+<thead>
+<tr>
+<th>구분</th>
+<th>AWS Bedrock</th>
+<th>ChatGPT</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>개발사</td>
+<td>Amazon Web Services (AWS)</td>
+<td>OpenAI</td>
+</tr>
+<tr>
+<td>주요 기능</td>
+<td>다양한 기계 학습 모델을 손쉽게 배포하고 관리할 수 있는 플랫폼</td>
+<td>대규모 언어 모델을 이용한 대화형 AI 서비스</td>
+</tr>
+<tr>
+<td>목적</td>
+<td>기계 학습 모델 개발, 배포, 스케일링 지원</td>
+<td>자연어 이해 및 생성, 대화형 AI</td>
+</tr>
+<tr>
+<td>사용자 대상</td>
+<td>데이터 과학자, 기계 학습 엔지니어, 개발자</td>
+<td>일반 사용자, 개발자, 기업</td>
+</tr>
+<tr>
+<td>사용 사례</td>
+<td>맞춤형 ML 모델 개발, 배포, 관리</td>
+<td>챗봇, 컨텐츠 생성, 교육 도구, 고객 서비스</td>
+</tr>
+<tr>
+<td>확장성</td>
+<td>여러 ML 프레임워크 및 도구와의 통합 지원</td>
+<td>GPT-4 모델에 기반한 다양한 응용 프로그램</td>
+</tr>
+<tr>
+<td>모델 학습</td>
+<td>사용자가 자신의 데이터로 모델을 학습 및 커스터마이징 가능</td>
+<td>모델은 사전 학습된 상태로 제공되며, 사용자가 학습을 직접 수행하지 않음</td>
+</tr>
+<tr>
+<td>접근 방식</td>
+<td>API 및 관리 콘솔을 통한 모델 배포 및 관리</td>
+<td>API 및 다양한 플랫폼에서의 직접적인 대화 인터페이스 제공</td>
+</tr>
+<tr>
+<td>가격 구조</td>
+<td>사용한 리소스에 따른 종량제 가격 책정</td>
+<td>OpenAI의 서비스 이용 요금제</td>
+</tr>
+</tbody></table>
+<h4 id="1-AWS-Bedrock-Gallery"><a href="#1-AWS-Bedrock-Gallery" class="headerlink" title="1. AWS Bedrock Gallery"></a>1. AWS Bedrock Gallery</h4><ul>
+<li>Bedrock으로 만든 이미지 합성 갤러리<br><img src="AWS-Bedrock-Gallery-1.png" alt="AWS Bedrock Gallery"><span class="image-caption">AWS Bedrock Gallery</span></li>
+</ul>
+<h4 id="2-Robo-SoulMate"><a href="#2-Robo-SoulMate" class="headerlink" title="2. Robo-SoulMate"></a>2. Robo-SoulMate</h4><p>여기는 로봇과 사람의 대화 위해 자연어 + 음석인식 처리 인터페이스를 만들고 각 로봇별로 특성을 만들어서 어떤 대화의 방법을 좋아하고 어떤 대화의 방법을 싫어하는지에 따라서 스코어를 매겨 점수를 올리는 게임입니다.<br><img src="robo-soul-mate.png" alt="Robo-SoulMate"><span class="image-caption">Robo-SoulMate</span></p>
+<h3 id="AmazonQ"><a href="#AmazonQ" class="headerlink" title="AmazonQ"></a>AmazonQ</h3><p>사실 우리가 알고있는 copilot과 굉장히 비슷하다. </p>
+<table>
+<thead>
+<tr>
+<th>Amazon Q 체험 및 설명</th>
+<th>Amazon Q 사용 예시</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><img src="image-1.png" alt="Amazon Q 체험 및 설명"><span class="image-caption">Amazon Q 체험 및 설명</span></td>
+<td><img src="image-2.png" alt="Amazon Q 사용 예시"><span class="image-caption">Amazon Q 사용 예시</span></td>
+</tr>
+</tbody></table>
+<p>약간의 차별점이 있다면, AWS 서비스와 연계가 잘 되어있다는점 특히 Lambda 서비스의 코드를 구현하는데 아주 잘 되어있다. 또한 테라폼을 적용하기 위한 코드도 굉장히 최적화되어 잘 구현한다.</p>
+<p>AWS 세션에서도 대부분 Amazon Q + 다른 생성형 AI를 함께 사용하여 어플리케이션의 완성도와 정확도를 높여가는 것을 많이 보여주었다.</p>
+<hr>
+<h2 id="플랫폼-엔지니어링"><a href="#플랫폼-엔지니어링" class="headerlink" title="플랫폼 엔지니어링"></a>플랫폼 엔지니어링</h2><p>플랫폼 엔지니어링이란, 내부 개발자들이 더 효율적으로 작업할 수 있도록 통합된 개발 환경, 도구, 서비스를 설계하고 구축하는 것을 의미합니다. 플랫폼 엔지니어링의 주요 목표는 개발자들의 생산성을 높이고, 코드 배포의 속도와 안정성을 향상시키며, 인프라 관리를 자동화하는 것입니다.</p>
+<h3 id="클라우드-운영-모델-비교-중앙화-vs-탈중앙화"><a href="#클라우드-운영-모델-비교-중앙화-vs-탈중앙화" class="headerlink" title="클라우드 운영 모델 비교 (중앙화 vs 탈중앙화)"></a>클라우드 운영 모델 비교 (중앙화 vs 탈중앙화)</h3><table>
+<thead>
+<tr>
+<th>구분</th>
+<th>중앙화된 모델</th>
+<th>탈중앙화된 모델</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>책임</td>
+<td>중앙팀이 대부분의 책임을 짐</td>
+<td>개발자에게 책임이 있음</td>
+</tr>
+<tr>
+<td>속도</td>
+<td>느림, 배포에 병목 발생</td>
+<td>민첩성과 운영성이 뛰어남</td>
+</tr>
+<tr>
+<td>적합성</td>
+<td>다양한 요구사항을 가진 개발팀에게 비효율적</td>
+<td>개발팀의 자율성 증가, 그러나 불일치에 대한 위험 존재</td>
+</tr>
+<tr>
+<td>책임 분담</td>
+<td>중앙팀이 관리</td>
+<td>인프라 및 애플리케이션에 대한 자율성과 결정권을 개별 팀이 가짐</td>
+</tr>
+</tbody></table>
+<h3 id="플랫폼-엔지니어링의-장점"><a href="#플랫폼-엔지니어링의-장점" class="headerlink" title="플랫폼 엔지니어링의 장점"></a>플랫폼 엔지니어링의 장점</h3><ul>
+<li>플랫폼은 개발 속도를 빠르게 하여 목표 달성 시간을 단축합니다.</li>
+<li>플랫폼의 가드레일은 자율성을 제공하면서도 안전장치가 됩니다.</li>
+<li>플랫폼은 클라우드 도입 여정에서 규모의 경제를 달성할 수 있도록 지원합니다.</li>
+</ul>
+<h3 id="플랫폼-구현-및-도입-패턴"><a href="#플랫폼-구현-및-도입-패턴" class="headerlink" title="플랫폼 구현 및 도입 패턴"></a>플랫폼 구현 및 도입 패턴</h3><ul>
+<li>플랫폼을 제품처럼 다룬다.</li>
+<li>내부 고객의 피드백을 반영한다.</li>
+<li>리드타임을 줄여 확장성을 부여한다.</li>
+<li>템플릿 문서로 골든패스를 제공해야 한다.</li>
+<li>가장 얇고 실행 가능한 플랫폼으로 만든다.</li>
+<li>점진적으로 개선한다.</li>
+</ul>
+<hr>
+<h2 id="무신사의-플랫폼-엔지니어링-사례"><a href="#무신사의-플랫폼-엔지니어링-사례" class="headerlink" title="무신사의 플랫폼 엔지니어링 사례"></a>무신사의 플랫폼 엔지니어링 사례</h2><p>무신사의 플랫폼 엔지니어링 사례를 통해 개념, 클라우드 운영 모델의 차이점, 플랫폼의 장점 및 도입 사례를 이해할 수 있습니다.</p>
+<hr>
+<h2 id="끝으로"><a href="#끝으로" class="headerlink" title="끝으로"></a>끝으로</h2><p><img src="end.png" alt="alt text"><span class="image-caption">alt text</span><br>ChatGPT가 세상에 알려진지 2년이 되지 않았습니다. 2011년 스마트폰이 본격적으로 대중화되면서 IT발전 속도가 빨라진 것처럼 생성형 AI의 등장으로 기술의 발전은 기하급수적으로 이루어지고 있습니다. AI의 민주화가 되어 비개발 직군에게는 오히려 기회가 되었고, 개발 직군은 더 많은 것을 활용하여 서비스를 제공할 수 있는 선택의 폭이 너무 넓어졌습니다.</p>
+<p>AWS의 행사를 통해 업계 트렌드를 알게 되었고, 더 쉽게 접근이 가능하다는 사실도 알게 되었습니다. 재미있었고 유익했습니다. 끝으로 기술을 쫓기보다는 문제 해결을 위해 필요한 것들을 미리 준비하여 변화에 잘 대응해야겠습니다.</p>
+<p>AWS Summit에 참여할 수 있는 기회를 주셔서 감사하고, 나의 성장과 개발팀의 성장을 돕는 사람이 되도록 하겠습니다.</p>
+
+            
+
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap" style="max-width:960px">
+        
+        <div class="post-footer-tags">
+            <span class="text-color-light text-small">
+                태그</span><br>
+            
+    <a class="tag tag--primary tag--small t-none-link" href="/tags/aws/" rel="tag">aws</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/bedrock/" rel="tag">bedrock</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/summit/" rel="tag">summit</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/summit-seoul/" rel="tag">summit seoul</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%EA%B0%9C%EB%B0%9C/" rel="tag">개발</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%EC%83%9D%EC%84%B1%ED%98%95-AI/" rel="tag">생성형 AI</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%EC%84%9C%EB%B0%8B%EC%84%9C%EC%9A%B8/" rel="tag">서밋서울</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%ED%94%8C%EB%9E%AB%ED%8F%BC%EC%97%94%EC%A7%80%EB%8B%88%EC%96%B4%EB%A7%81/" rel="tag">플랫폼엔지니어링</a>
+
+        </div>
+        
+        
+        <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2024/07/10/blo-3-notion-api-github-pages-blog-hexo/" data-tooltip="Notion API로 Github Pages Blog (Hexo)에 쉽게 배포하기" aria-label="이전: Notion API로 Github Pages Blog (Hexo)에 쉽게 배포하기">
+                
+                    <i class="fa fa-angle-left" aria-hidden="true"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">이전</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2020/12/11/disaus-korean-setting2/" data-tooltip="2020년 변경된 디스커스 Disqus 한글 세팅을 해보자" aria-label="다음: 2020년 변경된 디스커스 Disqus 한글 세팅을 해보자">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">다음</span>
+                    <i class="fa fa-angle-right" aria-hidden="true"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions" aria-label="이 글 공유하기">
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="_blank" href="https://twitter.com/intent/tweet?text=https://jungjoongi.com/2024/06/30/aws-summit-2024/" title="Twitter에 공유" rel="external nofollow noopener noreferrer">
+                    <i class="fab fa-twitter" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="_blank" href="https://plus.google.com/share?url=https://jungjoongi.com/2024/06/30/aws-summit-2024/" title="Google+에 공유" rel="external nofollow noopener noreferrer">
+                    <i class="fab fa-google-plus" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+            
+                <li class="post-action">
+                    <a class="post-action-btn btn btn--default" href="#disqus_thread">
+                        <i class="fa fa-comment"></i>
+                    </a>
+                </li>
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#table-of-contents" aria-label="목차">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+        
+        <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <!-- hexo-text -->
+        <ins class="adsbygoogle" style="display:block;margin-bottom: 10px;" data-ad-client="ca-pub-5379974693765383" data-ad-slot="8538682456" data-ad-format="auto" data-full-width-responsive="true"></ins>
+        <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+        
+        
+        <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+        
+        
+    </div>
+</article>
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2025 jung joongi. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+                <div id="bottom-bar" class="post-bottom-bar" data-behavior="5">
+                    <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2024/07/10/blo-3-notion-api-github-pages-blog-hexo/" data-tooltip="Notion API로 Github Pages Blog (Hexo)에 쉽게 배포하기" aria-label="이전: Notion API로 Github Pages Blog (Hexo)에 쉽게 배포하기">
+                
+                    <i class="fa fa-angle-left" aria-hidden="true"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">이전</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2020/12/11/disaus-korean-setting2/" data-tooltip="2020년 변경된 디스커스 Disqus 한글 세팅을 해보자" aria-label="다음: 2020년 변경된 디스커스 Disqus 한글 세팅을 해보자">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">다음</span>
+                    <i class="fa fa-angle-right" aria-hidden="true"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions" aria-label="이 글 공유하기">
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="_blank" href="https://twitter.com/intent/tweet?text=https://jungjoongi.com/2024/06/30/aws-summit-2024/" title="Twitter에 공유" rel="external nofollow noopener noreferrer">
+                    <i class="fab fa-twitter" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="_blank" href="https://plus.google.com/share?url=https://jungjoongi.com/2024/06/30/aws-summit-2024/" title="Google+에 공유" rel="external nofollow noopener noreferrer">
+                    <i class="fab fa-google-plus" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+            
+                <li class="post-action">
+                    <a class="post-action-btn btn btn--default" href="#disqus_thread">
+                        <i class="fa fa-comment"></i>
+                    </a>
+                </li>
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#table-of-contents" aria-label="목차">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+                </div>
+                <div id="share-options-bar" class="share-options-bar" data-behavior="5">
+    <i id="btn-close-shareoptions" class="fa fa-times"></i>
+    <ul class="share-options">
+        
+            
+            
+            <li class="share-option">
+                <a class="share-option-btn" target="_blank" href="https://twitter.com/intent/tweet?text=https://jungjoongi.com/2024/06/30/aws-summit-2024/" rel="external nofollow noopener noreferrer">
+                    <i class="fab fa-twitter" aria-hidden="true"></i><span>Twitter에 공유</span>
+                </a>
+            </li>
+        
+            
+            
+            <li class="share-option">
+                <a class="share-option-btn" target="_blank" href="https://plus.google.com/share?url=https://jungjoongi.com/2024/06/30/aws-summit-2024/" rel="external nofollow noopener noreferrer">
+                    <i class="fab fa-google-plus" aria-hidden="true"></i><span>Google+에 공유</span>
+                </a>
+            </li>
+        
+    </ul>
+</div>
+
+            
+        </div>
+        
+
+
+    
+        
+    
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-times"></i>
+        </div>
+        
+            <img id="about-card-picture" src="/assets/images/profile.jpg" alt="프로필 사진">
+        
+            <h4 id="about-card-name">jung joongi</h4>
+        
+            <div id="about-card-bio"><p>백엔드 개발을 하고있습니다.</p>
+</div>
+        
+        
+            <div id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br>
+                <p>weolbu.com</p>
+
+            </div>
+        
+        
+            <div id="about-card-location">
+                <i class="fa fa-map-marker-alt"></i>
+                <br>
+                South.Korea
+            </div>
+        
+    </div>
+</div>
+
+        
+        
+<div id="cover" style="background-image:url('/assets/images/covers.jpg');"></div>
+        <!--SCRIPTS-->
+
+<script src="/assets/js/script-881bb61ay4tqeb1n817b1mzoszjpmkjnemq1di6rw1hbjimw8rontpgztokm.min.js"></script>
+
+<!--SCRIPTS END-->
+
+    
+        <script>
+             var disqus_config = function () {
+                 this.page.url = 'https://jungjoongi.com/2024/06/30/aws-summit-2024/';
+                 
+                    this.page.identifier = '2024/06/30/aws-summit-2024/';
+                 
+             };
+            (function() {
+                var d = document, s = d.createElement('script');
+                var disqus_shortname = 'jungjoongi';
+                s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+
+
+    </body>
+</html>

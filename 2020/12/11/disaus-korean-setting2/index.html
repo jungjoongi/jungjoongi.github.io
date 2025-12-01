@@ -1,0 +1,642 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="정준기의 개발공간 (dev.joongi)">
+    <title>2020년 변경된 디스커스 Disqus 한글 세팅을 해보자 - 정준기의 개발공간 (dev.joongi)</title>
+    <meta name="author" content="jung joongi">
+    
+    
+    
+        <link rel="alternate" type="application/atom+xml" title="RSS" href="/rss2.xml">
+    
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"jung joongi","sameAs":["https://github.com/jungjoongi","mailto:dev.joongi@gmail.com"],"image":"profile.jpg"},"articleBody":"얼마전 디스커스에서 또 한번의 패치를 하고 그동안 편법으로 하던 한글세팅의 방법이 변경되었다. 기존의 편법으로 이용하던 이용자들은 피해가 없지만, 신규로 블로그에 유입되는 사람들은 또 한번의 난항을 겪고있다.\n\n\n디스커스(Disqus))\n새로 변경된 내용그동안에는 select box를 수정하여 쉽게 en을 ko로 변경하여 사용을 하였다.그러나 이 방법은 이제 적용되지 않는다. 2020년 12월 기준으로는 selectBox 형식이 아닌 div로 UI를 그려내고 있어 이용자들이 쉽게 한글로 변경하기는 쉽지 않다. 거두절미하고 쉽게 설명하도록 하겠다.\nQuick Start [이미지 새 창으로 보기]\ndisqus 전송구간 파라메터 변경1. 개발자도구 (또는 F12)를 누른다.2. 개발자도구의 Search부분에서 forums&#x2F;update를 검색한다.3. ctrl + F로 Oa.a.call(t &amp;&amp; t.useInternal ? &quot;internal/forums/update&quot; : &quot;forums/update&quot; 를 검색한다.4. n.props.selection.forum &amp;&amp; (e = dm(&#123; 부분을 찾아서 브레이크 포인트를 걸고 아무언어를 선택한 후에 SAVE를 눌러 변경처리를 한다.5. e 부분에 마우스를 클릭하여 en -&gt; ko로 변경한다.6. 브레이크포인트 Next를 눌러 변경된 값을 전송한다.\n이렇게 하면 역시 한글로 디스커스를 이용할 수 가 있다.\n끝으로정상적인 방법은 아니지만, 동일하게 디스커스를 한글로 설장이 가능하다. 왜 한국어를 빼먹었는지 아직까지도 의문이다. 2018년 최초로 한글세팅을 하는 방법을 작성하였다. 많은 사람들이 내 글을 읽고 성공하고 블로그에 퍼가주시니 감사할 따름이다.\n이 방법또한 최초로 작성하여 공유하는 방법이다.많은분들에게 도움이 되고 출처를 남겨 퍼가셔도 무방하니 많은 사람들이 한글세팅에 성공하길 바란다.\n감사의 글GodSchool.kr 님 께서 댓글로 한글세팅이 변경되었다는 사실을 알려주셨습니다. 알려주셔서 감사합니다. 덕분에 다시 방법을 찾아 정정하고 블로그에 발행하게 되었습니다. 모두 한글세팅에 성공하시고 좋은 블로그를 만들어가길 바랍니다.\n감사합니다.\n이전 글을 확인하려면연결되는 링크로 이동하면 이전 글을 확인하실 수 있습니다.\n디스커스 Disqus 한글 세팅을 해보자 편법(?)으로\n\n\n질문문의사항이 있으면 댓글로 남겨주세요.연구해서 답변드리도록 하겠습니다 ^^\n","dateCreated":"2020-12-11T07:30:00+00:00","dateModified":"2025-12-01T23:23:54+00:00","datePublished":"2020-12-11T07:30:00+00:00","description":"얼마전 디스커스에서 또 한번의 패치를 하고 그동안 편법으로 하던 한글세팅의 방법이 변경되었다. 기존의 편법으로 이용하던 이용자들은 피해가 없지만, 신규로 블로그에 유입되는 사람들은 또 한번의 난항을 겪고있다.","headline":"2020년 변경된 디스커스 Disqus 한글 세팅을 해보자","image":[["disqus-title.jpg"],[null]],"mainEntityOfPage":{"@type":"WebPage","@id":"https://jungjoongi.com/2020/12/11/disaus-korean-setting2/"},"publisher":{"@type":"Organization","name":"jung joongi","sameAs":["https://github.com/jungjoongi","mailto:dev.joongi@gmail.com"],"image":"profile.jpg","logo":{"@type":"ImageObject","url":"profile.jpg"}},"url":"https://jungjoongi.com/2020/12/11/disaus-korean-setting2/","keywords":"개발, 버그, hexo, disqus","thumbnailUrl":["disqus-title.jpg"]}</script>
+    <meta name="description" content="얼마전 디스커스에서 또 한번의 패치를 하고 그동안 편법으로 하던 한글세팅의 방법이 변경되었다. 기존의 편법으로 이용하던 이용자들은 피해가 없지만, 신규로 블로그에 유입되는 사람들은 또 한번의 난항을 겪고있다.">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="2020년 변경된 디스커스 Disqus 한글 세팅을 해보자">
+<meta property="og:url" content="https://jungjoongi.com/2020/12/11/disaus-korean-setting2/index.html">
+<meta property="og:site_name" content="정준기의 개발공간 (dev.joongi)">
+<meta property="og:description" content="얼마전 디스커스에서 또 한번의 패치를 하고 그동안 편법으로 하던 한글세팅의 방법이 변경되었다. 기존의 편법으로 이용하던 이용자들은 피해가 없지만, 신규로 블로그에 유입되는 사람들은 또 한번의 난항을 겪고있다.">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:image" content="https://jungjoongi.com/2020/12/11/disaus-korean-setting2/disqus-title.jpg">
+<meta property="og:image" content="https://jungjoongi.com/2020/12/11/disaus-korean-setting2/disqus-01.png">
+<meta property="article:published_time" content="2020-12-11T07:30:00.000Z">
+<meta property="article:modified_time" content="2025-12-01T23:23:54.867Z">
+<meta property="article:author" content="jung joongi">
+<meta property="article:tag" content="개발">
+<meta property="article:tag" content="버그">
+<meta property="article:tag" content="hexo">
+<meta property="article:tag" content="disqus">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://jungjoongi.com/2020/12/11/disaus-korean-setting2/disqus-title.jpg">
+    
+    
+        
+    
+    
+        <meta property="og:image" content="https://jungjoongi.com/assets/images/profile.jpg">
+    
+    
+        <meta property="og:image" content="https://jungjoongi.com/2020/12/11/disaus-korean-setting2/disqus-title.jpg">
+        <meta class="swiftype" name="image" data-type="enum" content="https://jungjoongi.com/2020/12/11/disaus-korean-setting2/disqus-title.jpg">
+    
+    
+        <meta property="og:image" content="https://jungjoongi.com/2020/12/11/disaus-korean-setting2/">
+        <meta class="swiftype" name="image" data-type="enum" content="https://jungjoongi.com/2020/12/11/disaus-korean-setting2/">
+    
+    
+    <!--STYLES-->
+    
+<link rel="stylesheet" href="/assets/css/style-xbuojjy2ght4affx1n45g4jpzfblrkkc3n5xp00pvqgm4xqgmjfrnfgqsmqd.min.css">
+
+    <!--STYLES END-->
+    
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-KRV6LZLE5Z"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-KRV6LZLE5Z');
+    </script>
+
+
+    
+    <link rel="canonical" href="https://jungjoongi.com/2020/12/11/disaus-korean-setting2/">
+</head>
+
+    <body>
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+        
+            
+        
+    
+
+<header id="header" data-behavior="5">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <div class="header-title">
+        <a class="header-title-link" href="/">정준기의 개발공간 (dev.joongi)</a>
+    </div>
+    
+        
+            <a class="header-right-picture " href="#about">
+        
+        
+            <img class="header-picture" src="/assets/images/profile.jpg" alt="프로필 사진">
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+
+        
+    
+
+<nav id="sidebar" data-behavior="5">
+    <div class="sidebar-container">
+        
+            <div class="sidebar-profile">
+                <a href="/#about">
+                    <img class="sidebar-profile-picture" src="/assets/images/profile.jpg" alt="프로필 사진">
+                </a>
+                <h4 class="sidebar-profile-name">jung joongi</h4>
+                
+                    <h5 class="sidebar-profile-bio"><p>백엔드 개발을 하고있습니다.</p>
+</h5>
+                
+            </div>
+        
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/" title="홈">
+                    
+                        <i class="sidebar-button-icon fa fa-home" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">홈</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/all-categories" title="카테고리">
+                    
+                        <i class="sidebar-button-icon fa fa-bookmark" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">카테고리</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/all-tags" title="태그">
+                    
+                        <i class="sidebar-button-icon fa fa-tags" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">태그</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/all-archives" title="아카이브">
+                    
+                        <i class="sidebar-button-icon fa fa-archive" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">아카이브</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="https://www.linkedin.com/in/jungjoongi" target="_blank" rel="external nofollow noopener noreferrer" title="소개">
+                    
+                        <i class="sidebar-button-icon fa fa-question" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">소개</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="https://github.com/jungjoongi" target="_blank" rel="external nofollow noopener noreferrer" title="GitHub">
+                    
+                        <i class="sidebar-button-icon fab fa-github" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">GitHub</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="mailto:dev.joongi@gmail.com" target="_blank" rel="external nofollow noopener noreferrer" title="메일">
+                    
+                        <i class="sidebar-button-icon fa fa-envelope" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">메일</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/rss2.xml" title="RSS">
+                    
+                        <i class="sidebar-button-icon fa fa-rss" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">RSS</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+    </div>
+</nav>
+
+            
+        <div class="post-header-cover
+                    text-left
+                    " style="background-image:url('/2020/12/11/disaus-korean-setting2/');" data-behavior="5">
+            
+                <div class="post-header main-content-wrap text-left">
+    
+        <h1 class="post-title">
+            2020년 변경된 디스커스 Disqus 한글 세팅을 해보자
+        </h1>
+    
+    
+        <div class="post-meta">
+    <time datetime="2020-12-11T07:30:00+00:00">
+	
+		    2020년 12월 11일
+    	
+    </time>
+    
+        <span>카테고리: </span>
+        
+    <a class="category-link" href="/categories/hexo/">hexo</a>
+
+
+    
+</div>
+
+    
+</div>
+
+            
+        </div>
+
+            <div id="main" data-behavior="5" class="hasCover
+                        hasCoverMetaIn
+                        ">
+                
+<style>
+    #loading {
+        width: 100%;
+        height: 100%;
+        top: 0px;
+        left: 0px;
+        position: fixed;
+        display: block;
+        background-color: #fff;
+        z-index: 99;
+        text-align: center;
+    }
+
+    html body {
+        overflow: hidden;
+        height: 100%
+    }
+
+    #loading-image {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 100;
+    }
+
+    #loading-text {
+        position: absolute;
+        top: 60%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 100;
+        font-style: bold;
+    }
+
+    ol {
+        padding: 0 0 0 20px;
+        list-style: disc;
+    }
+
+    #coupang-layer-pop {
+        position: fixed;
+        width: 386px;
+        height: 345px;
+        padding: 16px;
+        background-color: white;
+        border: 1px dashed#c7c7c7;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        display: none;
+    }
+
+    #ads {
+        width: 360px;
+        margin-top: 30px;
+        position: absolute;
+        top: 30px;
+    }
+
+    #content-list {
+        font-size: 14px;
+        margin-bottom: 20px;
+    }
+
+    #coupang-layer-button {
+        position: absolute;
+        right: 30px;
+        bottom: 10px;
+    }
+</style>
+
+<div id="loading"><img id="loading-image" src="/assets/images/loading.gif" alt="Loading..."><span id="loading-text">페이지가 로딩중입니다. 잠시만 기다려주세요</span></div>
+<article class="post">
+    
+
+    
+    <div id="coupang-layer-pop">
+        <iframe src="https://ads-partners.coupang.com/iframe/search-bar?id=19092917192714204211009791-l1&type=l1&trackingCode=AF9416635" width="383px" height="75" frameborder="0" scrolling="no"></iframe>
+        <iframe id="coupang-0" src="https://coupa.ng/bgdTAw" width="125px" height="240" frameborder="0" scrolling="no"></iframe>
+        <iframe id="coupang-1" src="https://coupa.ng/bgdTbp" width="125px" height="240" frameborder="0" scrolling="no"></iframe>
+        <iframe id="coupang-2" src="https://coupa.ng/bgd0rL" width="125px" height="240" frameborder="0" scrolling="no"></iframe>
+        <button id="coupang-layer-button">close</button>
+    </div>
+    <div class="post-content markdown" style="margin:auto;max-width:1360px;">
+
+        <div id="ads" class="ad-area">
+            <div id="content-list">
+                <h3 id="table-of-contents"></h3><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%EC%83%88%EB%A1%9C-%EB%B3%80%EA%B2%BD%EB%90%9C-%EB%82%B4%EC%9A%A9"><span class="toc-text">새로 변경된 내용</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Quick-Start-%EC%9D%B4%EB%AF%B8%EC%A7%80-%EC%83%88-%EC%B0%BD%EC%9C%BC%EB%A1%9C-%EB%B3%B4%EA%B8%B0"><span class="toc-text">Quick Start [이미지 새 창으로 보기]</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%EB%81%9D%EC%9C%BC%EB%A1%9C"><span class="toc-text">끝으로</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%EA%B0%90%EC%82%AC%EC%9D%98-%EA%B8%80"><span class="toc-text">감사의 글</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%EC%9D%B4%EC%A0%84-%EA%B8%80%EC%9D%84-%ED%99%95%EC%9D%B8%ED%95%98%EB%A0%A4%EB%A9%B4"><span class="toc-text">이전 글을 확인하려면</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%EC%A7%88%EB%AC%B8"><span class="toc-text">질문</span></a></li></ol>
+            </div>
+            <!-- hexo-side1 -->
+            <ins class="adsbygoogle" style="display:block;width:340px;" data-ad-client="ca-pub-5379974693765383" data-ad-slot="6166524771" data-ad-format="auto" data-full-width-responsive="true"></ins>
+            <script>
+                (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+            <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+            <div id="lastAds">
+                <div class="coupang-ads">
+                    <!-- <p id="coupang-title">2020년 11월 28일 쿠팡 Best50</p><span id="coupang-title-icon">HOT</span> -->
+                    <p id="coupang-title"><iframe id="coupang-search" src="https://ads-partners.coupang.com/iframe/search-bar?id=19092917192714204211009791-l1&amp;type=l1&amp;trackingCode=AF9416635" width="383px" height="75" frameborder="0" scrolling="no"></iframe></p>
+                    <div class="ads-wrap ads-wrap-first">
+                        <img src>
+                        <p id="ads-first-name"></p>
+                    </div>
+                    <div class="ads-wrap ads-wrap-second">
+                        <img src>
+                        <p id="ads-second-name"></p>
+                    </div>
+                    <p id="coupang-notice">*파트너스 활동을 통해 일정액의 수수료를 제공받을 수 있음</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="main-content" class="main-content-wrap" style="margin-right:360px;">
+            <p>얼마전 디스커스에서 또 한번의 패치를 하고 그동안 편법으로 하던 한글세팅의 방법이 변경되었다. 기존의 편법으로 이용하던 이용자들은 피해가 없지만, 신규로 블로그에 유입되는 사람들은 또 한번의 난항을 겪고있다.</p>
+<span id="more"></span>
+<!-- toc -->
+<p><img src="disqus-title.jpg" alt="디스커스(Disqus))"><span class="image-caption">디스커스(Disqus))</span></p>
+<h1 id="새로-변경된-내용"><a href="#새로-변경된-내용" class="headerlink" title="새로 변경된 내용"></a>새로 변경된 내용</h1><p>그동안에는 select box를 수정하여 쉽게 <code>en</code>을 <code>ko</code>로 변경하여 사용을 하였다.<br>그러나 이 방법은 이제 적용되지 않는다. 2020년 12월 기준으로는 selectBox 형식이 아닌 div로 UI를 그려내고 있어 이용자들이 쉽게 한글로 변경하기는 쉽지 않다. 거두절미하고 쉽게 설명하도록 하겠다.</p>
+<h1 id="Quick-Start-이미지-새-창으로-보기"><a href="#Quick-Start-이미지-새-창으로-보기" class="headerlink" title="Quick Start [이미지 새 창으로 보기]"></a>Quick Start <a href="disqus-01.png" target="_blank">[이미지 새 창으로 보기]</a></h1><hr>
+<p><a href="disqus-01.png" target="_blank"><img src="disqus-01.png" alt="disqus 전송구간 파라메터 변경"><span class="image-caption">disqus 전송구간 파라메터 변경</span></a><br><strong>1. 개발자도구 (또는 F12)를 누른다.</strong><br><strong>2. 개발자도구의 Search부분에서 forums&#x2F;update를 검색한다.</strong><br><strong>3. ctrl + F로 <code>Oa.a.call(t &amp;&amp; t.useInternal ? &quot;internal/forums/update&quot; : &quot;forums/update&quot;</code> 를 검색한다.</strong><br><strong>4. <code>n.props.selection.forum &amp;&amp; (e = dm(&#123;</code> 부분을 찾아서 브레이크 포인트를 걸고 아무언어를 선택한 후에 SAVE를 눌러 변경처리를 한다.</strong><br><strong>5. <code>e</code> 부분에 마우스를 클릭하여 <code>en -&gt; ko</code>로 변경한다.</strong><br><strong>6. 브레이크포인트 <code>Next</code>를 눌러 변경된 값을 전송한다.</strong></p>
+<p><strong>이렇게 하면 역시 한글로 디스커스를 이용할 수 가 있다.</strong></p>
+<h2 id="끝으로"><a href="#끝으로" class="headerlink" title="끝으로"></a>끝으로</h2><p>정상적인 방법은 아니지만, 동일하게 디스커스를 한글로 설장이 가능하다. 왜 한국어를 빼먹었는지 아직까지도 의문이다. 2018년 최초로 한글세팅을 하는 방법을 작성하였다. 많은 사람들이 내 글을 읽고 성공하고 블로그에 퍼가주시니 감사할 따름이다.</p>
+<p>이 방법또한 최초로 작성하여 공유하는 방법이다.<br>많은분들에게 도움이 되고 출처를 남겨 퍼가셔도 무방하니 많은 사람들이 한글세팅에 성공하길 바란다.<br><br></p>
+<h1 id="감사의-글"><a href="#감사의-글" class="headerlink" title="감사의 글"></a>감사의 글</h1><p><strong>GodSchool.kr</strong> 님 께서 댓글로 한글세팅이 변경되었다는 사실을 알려주셨습니다. 알려주셔서 감사합니다. 덕분에 다시 방법을 찾아 정정하고 블로그에 발행하게 되었습니다. 모두 한글세팅에 성공하시고 좋은 블로그를 만들어가길 바랍니다.</p>
+<p>감사합니다.</p>
+<h2 id="이전-글을-확인하려면"><a href="#이전-글을-확인하려면" class="headerlink" title="이전 글을 확인하려면"></a>이전 글을 확인하려면</h2><p>연결되는 링크로 이동하면 이전 글을 확인하실 수 있습니다.</p>
+<div class="alert danger no-icon"><p><a href="/2018/10/30/disqus-korean-setting/">디스커스 Disqus 한글 세팅을 해보자 편법(?)으로</a></p>
+</div>
+
+<h1 id="질문"><a href="#질문" class="headerlink" title="질문"></a>질문</h1><p>문의사항이 있으면 댓글로 남겨주세요.<br>연구해서 답변드리도록 하겠습니다 ^^</p>
+
+            
+
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap" style="max-width:960px">
+        
+        <div class="post-footer-tags">
+            <span class="text-color-light text-small">
+                태그</span><br>
+            
+    <a class="tag tag--primary tag--small t-none-link" href="/tags/disqus/" rel="tag">disqus</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/hexo/" rel="tag">hexo</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%EA%B0%9C%EB%B0%9C/" rel="tag">개발</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%EB%B2%84%EA%B7%B8/" rel="tag">버그</a>
+
+        </div>
+        
+        
+        <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2024/06/30/aws-summit-2024/" data-tooltip="AWS Summit 2024 방문기(Badrock, 플랫폼엔지니어링, 생성형 AI)" aria-label="이전: AWS Summit 2024 방문기(Badrock, 플랫폼엔지니어링, 생성형 AI)">
+                
+                    <i class="fa fa-angle-left" aria-hidden="true"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">이전</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2019/09/29/2019-09-29/" data-tooltip="2019년 9월 치킨모임 후기" aria-label="다음: 2019년 9월 치킨모임 후기">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">다음</span>
+                    <i class="fa fa-angle-right" aria-hidden="true"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions" aria-label="이 글 공유하기">
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="_blank" href="https://twitter.com/intent/tweet?text=https://jungjoongi.com/2020/12/11/disaus-korean-setting2/" title="Twitter에 공유" rel="external nofollow noopener noreferrer">
+                    <i class="fab fa-twitter" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="_blank" href="https://plus.google.com/share?url=https://jungjoongi.com/2020/12/11/disaus-korean-setting2/" title="Google+에 공유" rel="external nofollow noopener noreferrer">
+                    <i class="fab fa-google-plus" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+            
+                <li class="post-action">
+                    <a class="post-action-btn btn btn--default" href="#disqus_thread">
+                        <i class="fa fa-comment"></i>
+                    </a>
+                </li>
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#table-of-contents" aria-label="목차">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+        
+        <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <!-- hexo-text -->
+        <ins class="adsbygoogle" style="display:block;margin-bottom: 10px;" data-ad-client="ca-pub-5379974693765383" data-ad-slot="8538682456" data-ad-format="auto" data-full-width-responsive="true"></ins>
+        <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+        
+        
+        <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+        
+        
+    </div>
+</article>
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2025 jung joongi. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+                <div id="bottom-bar" class="post-bottom-bar" data-behavior="5">
+                    <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2024/06/30/aws-summit-2024/" data-tooltip="AWS Summit 2024 방문기(Badrock, 플랫폼엔지니어링, 생성형 AI)" aria-label="이전: AWS Summit 2024 방문기(Badrock, 플랫폼엔지니어링, 생성형 AI)">
+                
+                    <i class="fa fa-angle-left" aria-hidden="true"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">이전</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2019/09/29/2019-09-29/" data-tooltip="2019년 9월 치킨모임 후기" aria-label="다음: 2019년 9월 치킨모임 후기">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">다음</span>
+                    <i class="fa fa-angle-right" aria-hidden="true"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions" aria-label="이 글 공유하기">
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="_blank" href="https://twitter.com/intent/tweet?text=https://jungjoongi.com/2020/12/11/disaus-korean-setting2/" title="Twitter에 공유" rel="external nofollow noopener noreferrer">
+                    <i class="fab fa-twitter" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="_blank" href="https://plus.google.com/share?url=https://jungjoongi.com/2020/12/11/disaus-korean-setting2/" title="Google+에 공유" rel="external nofollow noopener noreferrer">
+                    <i class="fab fa-google-plus" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+            
+                <li class="post-action">
+                    <a class="post-action-btn btn btn--default" href="#disqus_thread">
+                        <i class="fa fa-comment"></i>
+                    </a>
+                </li>
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#table-of-contents" aria-label="목차">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+                </div>
+                <div id="share-options-bar" class="share-options-bar" data-behavior="5">
+    <i id="btn-close-shareoptions" class="fa fa-times"></i>
+    <ul class="share-options">
+        
+            
+            
+            <li class="share-option">
+                <a class="share-option-btn" target="_blank" href="https://twitter.com/intent/tweet?text=https://jungjoongi.com/2020/12/11/disaus-korean-setting2/" rel="external nofollow noopener noreferrer">
+                    <i class="fab fa-twitter" aria-hidden="true"></i><span>Twitter에 공유</span>
+                </a>
+            </li>
+        
+            
+            
+            <li class="share-option">
+                <a class="share-option-btn" target="_blank" href="https://plus.google.com/share?url=https://jungjoongi.com/2020/12/11/disaus-korean-setting2/" rel="external nofollow noopener noreferrer">
+                    <i class="fab fa-google-plus" aria-hidden="true"></i><span>Google+에 공유</span>
+                </a>
+            </li>
+        
+    </ul>
+</div>
+
+            
+        </div>
+        
+
+
+    
+        
+    
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-times"></i>
+        </div>
+        
+            <img id="about-card-picture" src="/assets/images/profile.jpg" alt="프로필 사진">
+        
+            <h4 id="about-card-name">jung joongi</h4>
+        
+            <div id="about-card-bio"><p>백엔드 개발을 하고있습니다.</p>
+</div>
+        
+        
+            <div id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br>
+                <p>weolbu.com</p>
+
+            </div>
+        
+        
+            <div id="about-card-location">
+                <i class="fa fa-map-marker-alt"></i>
+                <br>
+                South.Korea
+            </div>
+        
+    </div>
+</div>
+
+        
+        
+<div id="cover" style="background-image:url('/assets/images/covers.jpg');"></div>
+        <!--SCRIPTS-->
+
+<script src="/assets/js/script-881bb61ay4tqeb1n817b1mzoszjpmkjnemq1di6rw1hbjimw8rontpgztokm.min.js"></script>
+
+<!--SCRIPTS END-->
+
+    
+        <script>
+             var disqus_config = function () {
+                 this.page.url = 'https://jungjoongi.com/2020/12/11/disaus-korean-setting2/';
+                 
+                    this.page.identifier = '2020/12/11/disaus-korean-setting2/';
+                 
+             };
+            (function() {
+                var d = document, s = d.createElement('script');
+                var disqus_shortname = 'jungjoongi';
+                s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+
+
+    </body>
+</html>

@@ -1,0 +1,730 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="정준기의 개발공간 (dev.joongi)">
+    <title>Notion API로 Github Pages Blog (Hexo)에 쉽게 배포하기 - 정준기의 개발공간 (dev.joongi)</title>
+    <meta name="author" content="jung joongi">
+    
+    
+    
+        <link rel="alternate" type="application/atom+xml" title="RSS" href="/rss2.xml">
+    
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"jung joongi","sameAs":["https://github.com/jungjoongi","mailto:dev.joongi@gmail.com"],"image":"profile.jpg"},"articleBody":"Notion API로 Github Pages Blog (Hexo) 에 쉽게 배포해본 경험을 나누어보려고 합니다.저는 Hexo로 구성된 블로그를 사용중이기 때문에 Hexo 기준으로 작성되었음을 알려드립니다.\n\n\n\nHexo 와 Notion API를 활용한 쉽고 빠른 배포 (GPT로 뽑은 썸네일..ㅋ)\n무엇이 문제였는가?Github Pages를 사용하다보면 개발자가 커스텀하면서 나만의 웹을 구성하고 만든다는 장점이 있었습니다.\n하지만 글을 작성하는게 쉬운 에디터로 쓰지 못하고 Markdown문법을 사용하지만 실시간으로 이미지나, 여러 링크를 작성하기에 편리하지는 않았습니다. 그래서 글을 쓰는데 저해요소가 되었고 작성이 꺼려지는 문제까지 발생을 하였습니다.\nGIthub Pages의 불편함을 해소하는 방법을 찾다.이미 대중적으로 많이 쓰는 에디터는 Notion 이 있었고, 회사에서는 컨플루언스를 사용하고 있었습니다. 이 에디터의 공통점은 Markdown을 지원하고 이미 너무 익숙하고 편하게 글을 쓸 수 있다는 점이 있었습니다.\n그리고 Notion의 API가 제공이 되기때문에 Notion의 작성된 Post를 가져와서 그대로 포스팅을 만들고 배포하면 되겠다는 생각을 해보았습니다.\nNotion Post 배포 구성 방안\nNotion의 Blog 전용 Database를 만든다.\nTag, Categories, status, createdAt, hasThumbnail과 같은 필요한 컬럼을 추가한다.\nstatus로 배포를 관리하기 때문에 (시작 전, 작성중, 배포필요, 배포완료) 의 상태를 구분해놓는다.\n\n\nblog의 소스코드를 관리하는 repository에서 github action을 통해 CI&#x2F;CD 작업을 진행한다.\nNoion API를 통해 Markdown을 만들어내는 js 코드를 작성한다.\ngithub action workflow를 만든다.\nNotion API를 통해 Blog Database를 읽어서 배표필요의 status의 값을 가져온다.\n컬럼값을을 읽어서 원하는 작업을 진행한다. (저는 tag, catagories, hasThumbnail 의 값으로 원하는 작업들을 핸들링 하였음)\nGithub Pages에 배포한다. (이미 포스트가 있다면 대치한다.)\n배포가 된 Post는 상태값을 배포완료 로 변경한다.\n\n\ngit commit을 한다.\n이 모든것을 자동화 한다.\n\n\nmake.com을 활용한 자동화자 그러면 이 모든 방안을 또 수동으로 할 것인가? 👆No~ 아니다!! 나는 여기서 한번 더 자동화를 할 것이다.이 자동화 Workflow를 Make.com 으로 연동할 수 있다.\n아래의 이미지를 보면 발행 버튼을 만들었다. 이 발행버튼의 workflow는 다음과 같다.\n\n배포버튼 클릭 → webhook 작동 → github API 요청 → 배포 gitgub action workflow실행\n\nNotion의 상단 컬럼은 다음과 같이 만들어서 제어한다.Notion 상단 컬럼 속성들\nmake.com을 이용한 workflow 자동화\n\n자세한 배포 가이드는 다음 포스팅에서 자세하게 작성해볼 예정이다.\n\n\nNotion BlockType 속성 테스트표\n\n\n헤더1\n헤더2\n해더3\n\n\n\n1-1\n2-1\n3-1\n\n\n1-2\n2-2\n3-2\n\n\n코드블럭12345const hello = &#x27;hello world&#x27;function print(text) &#123;    console.log(text);&#125;\n\n\n\n콜아웃 테스트\n💡 노션의 콜아웃 블록 테스트\n\n체크박스 테스트todo list\n\n 아침 3:10 기상\n 물마시기\n 코드리뷰 하기\n\n이미지 및 캡션 테스트개인적으로 아주 좋아하는 미드 (실리콘밸리)\n미드 실리콘밸리\n넘버링 또는 ‘-’ 테스트모든 열거방식은 편의상 ‘-’ 로 대체하였음\n\n1번\n1-1\n1-1-1\n1-1-2\n\n\n1-2\n1-2-1\n1-2-2\n\n\n\n\n2번\n3번\n\n인용구 테스트\n인용구 테스트 입니다.\n\n토글 테스트\n토글 테스트\n\n토글은 가능한지 모르겠습니다(?)\n\n\n구분선 테스트\n구분선 아래입니다.\n","dateCreated":"2024-07-10T08:00:00+00:00","dateModified":"2025-10-24T03:42:00+00:00","datePublished":"2024-07-10T08:00:00+00:00","description":"Notion API로 Github Pages Blog (Hexo) 에 쉽게 배포해본 경험을 나누어보려고 합니다.저는 Hexo로 구성된 블로그를 사용중이기 때문에 Hexo 기준으로 작성되었음을 알려드립니다.","headline":"Notion API로 Github Pages Blog (Hexo)에 쉽게 배포하기","image":["cover.png","cover.png"],"mainEntityOfPage":{"@type":"WebPage","@id":"https://jungjoongi.com/2024/07/10/blo-3-notion-api-github-pages-blog-hexo/"},"publisher":{"@type":"Organization","name":"jung joongi","sameAs":["https://github.com/jungjoongi","mailto:dev.joongi@gmail.com"],"image":"profile.jpg","logo":{"@type":"ImageObject","url":"profile.jpg"}},"url":"https://jungjoongi.com/2024/07/10/blo-3-notion-api-github-pages-blog-hexo/","keywords":"개발, hexo, gitblog, notion, api","thumbnailUrl":"cover.png"}</script>
+    <meta name="description" content="Notion API로 Github Pages Blog (Hexo) 에 쉽게 배포해본 경험을 나누어보려고 합니다.저는 Hexo로 구성된 블로그를 사용중이기 때문에 Hexo 기준으로 작성되었음을 알려드립니다.">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="Notion API로 Github Pages Blog (Hexo)에 쉽게 배포하기">
+<meta property="og:url" content="https://jungjoongi.com/2024/07/10/blo-3-notion-api-github-pages-blog-hexo/index.html">
+<meta property="og:site_name" content="정준기의 개발공간 (dev.joongi)">
+<meta property="og:description" content="Notion API로 Github Pages Blog (Hexo) 에 쉽게 배포해본 경험을 나누어보려고 합니다.저는 Hexo로 구성된 블로그를 사용중이기 때문에 Hexo 기준으로 작성되었음을 알려드립니다.">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:image" content="https://jungjoongi.com/2024/07/10/blo-3-notion-api-github-pages-blog-hexo/image-1.png">
+<meta property="og:image" content="https://jungjoongi.com/2024/07/10/blo-3-notion-api-github-pages-blog-hexo/image-2.png">
+<meta property="og:image" content="https://jungjoongi.com/2024/07/10/blo-3-notion-api-github-pages-blog-hexo/image-3.png">
+<meta property="og:image" content="https://jungjoongi.com/2024/07/10/blo-3-notion-api-github-pages-blog-hexo/image-4.png">
+<meta property="article:published_time" content="2024-07-10T08:00:00.000Z">
+<meta property="article:modified_time" content="2025-10-24T03:42:00.000Z">
+<meta property="article:author" content="jung joongi">
+<meta property="article:tag" content="개발">
+<meta property="article:tag" content="hexo">
+<meta property="article:tag" content="gitblog">
+<meta property="article:tag" content="notion">
+<meta property="article:tag" content="api">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://jungjoongi.com/2024/07/10/blo-3-notion-api-github-pages-blog-hexo/image-1.png">
+    
+    
+        
+    
+    
+        <meta property="og:image" content="https://jungjoongi.com/assets/images/profile.jpg">
+    
+    
+        <meta property="og:image" content="https://jungjoongi.com/2024/07/10/blo-3-notion-api-github-pages-blog-hexo/cover.png">
+        <meta class="swiftype" name="image" data-type="enum" content="https://jungjoongi.com/2024/07/10/blo-3-notion-api-github-pages-blog-hexo/cover.png">
+    
+    
+        <meta property="og:image" content="https://jungjoongi.com/2024/07/10/blo-3-notion-api-github-pages-blog-hexo/cover.png">
+        <meta class="swiftype" name="image" data-type="enum" content="https://jungjoongi.com/2024/07/10/blo-3-notion-api-github-pages-blog-hexo/cover.png">
+    
+    
+    <!--STYLES-->
+    
+<link rel="stylesheet" href="/assets/css/style-xbuojjy2ght4affx1n45g4jpzfblrkkc3n5xp00pvqgm4xqgmjfrnfgqsmqd.min.css">
+
+    <!--STYLES END-->
+    
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-KRV6LZLE5Z"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-KRV6LZLE5Z');
+    </script>
+
+
+    
+    <link rel="canonical" href="https://jungjoongi.com/2024/07/10/blo-3-notion-api-github-pages-blog-hexo/">
+</head>
+
+    <body>
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+        
+            
+        
+    
+
+<header id="header" data-behavior="5">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <div class="header-title">
+        <a class="header-title-link" href="/">정준기의 개발공간 (dev.joongi)</a>
+    </div>
+    
+        
+            <a class="header-right-picture " href="#about">
+        
+        
+            <img class="header-picture" src="/assets/images/profile.jpg" alt="프로필 사진">
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+
+        
+    
+
+<nav id="sidebar" data-behavior="5">
+    <div class="sidebar-container">
+        
+            <div class="sidebar-profile">
+                <a href="/#about">
+                    <img class="sidebar-profile-picture" src="/assets/images/profile.jpg" alt="프로필 사진">
+                </a>
+                <h4 class="sidebar-profile-name">jung joongi</h4>
+                
+                    <h5 class="sidebar-profile-bio"><p>백엔드 개발을 하고있습니다.</p>
+</h5>
+                
+            </div>
+        
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/" title="홈">
+                    
+                        <i class="sidebar-button-icon fa fa-home" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">홈</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/all-categories" title="카테고리">
+                    
+                        <i class="sidebar-button-icon fa fa-bookmark" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">카테고리</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/all-tags" title="태그">
+                    
+                        <i class="sidebar-button-icon fa fa-tags" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">태그</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/all-archives" title="아카이브">
+                    
+                        <i class="sidebar-button-icon fa fa-archive" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">아카이브</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="https://www.linkedin.com/in/jungjoongi" target="_blank" rel="external nofollow noopener noreferrer" title="소개">
+                    
+                        <i class="sidebar-button-icon fa fa-question" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">소개</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="https://github.com/jungjoongi" target="_blank" rel="external nofollow noopener noreferrer" title="GitHub">
+                    
+                        <i class="sidebar-button-icon fab fa-github" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">GitHub</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="mailto:dev.joongi@gmail.com" target="_blank" rel="external nofollow noopener noreferrer" title="메일">
+                    
+                        <i class="sidebar-button-icon fa fa-envelope" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">메일</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a class="sidebar-button-link " href="/rss2.xml" title="RSS">
+                    
+                        <i class="sidebar-button-icon fa fa-rss" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">RSS</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+    </div>
+</nav>
+
+            
+        <div class="post-header-cover
+                    text-left
+                    " style="background-image:url('/2024/07/10/blo-3-notion-api-github-pages-blog-hexo/cover.png');" data-behavior="5">
+            
+                <div class="post-header main-content-wrap text-left">
+    
+        <h1 class="post-title">
+            Notion API로 Github Pages Blog (Hexo)에 쉽게 배포하기
+        </h1>
+    
+    
+        <div class="post-meta">
+    <time datetime="2024-07-10T08:00:00+00:00">
+	
+		    2024년 07월 10일
+    	
+    </time>
+    
+        <span>카테고리: </span>
+        
+    <a class="category-link" href="/categories/hexo/">hexo</a>
+
+
+    
+</div>
+
+    
+</div>
+
+            
+        </div>
+
+            <div id="main" data-behavior="5" class="hasCover
+                        hasCoverMetaIn
+                        ">
+                
+<style>
+    #loading {
+        width: 100%;
+        height: 100%;
+        top: 0px;
+        left: 0px;
+        position: fixed;
+        display: block;
+        background-color: #fff;
+        z-index: 99;
+        text-align: center;
+    }
+
+    html body {
+        overflow: hidden;
+        height: 100%
+    }
+
+    #loading-image {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 100;
+    }
+
+    #loading-text {
+        position: absolute;
+        top: 60%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 100;
+        font-style: bold;
+    }
+
+    ol {
+        padding: 0 0 0 20px;
+        list-style: disc;
+    }
+
+    #coupang-layer-pop {
+        position: fixed;
+        width: 386px;
+        height: 345px;
+        padding: 16px;
+        background-color: white;
+        border: 1px dashed#c7c7c7;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        display: none;
+    }
+
+    #ads {
+        width: 360px;
+        margin-top: 30px;
+        position: absolute;
+        top: 30px;
+    }
+
+    #content-list {
+        font-size: 14px;
+        margin-bottom: 20px;
+    }
+
+    #coupang-layer-button {
+        position: absolute;
+        right: 30px;
+        bottom: 10px;
+    }
+</style>
+
+<div id="loading"><img id="loading-image" src="/assets/images/loading.gif" alt="Loading..."><span id="loading-text">페이지가 로딩중입니다. 잠시만 기다려주세요</span></div>
+<article class="post">
+    
+
+    
+    <div id="coupang-layer-pop">
+        <iframe src="https://ads-partners.coupang.com/iframe/search-bar?id=19092917192714204211009791-l1&type=l1&trackingCode=AF9416635" width="383px" height="75" frameborder="0" scrolling="no"></iframe>
+        <iframe id="coupang-0" src="https://coupa.ng/bgdTAw" width="125px" height="240" frameborder="0" scrolling="no"></iframe>
+        <iframe id="coupang-1" src="https://coupa.ng/bgdTbp" width="125px" height="240" frameborder="0" scrolling="no"></iframe>
+        <iframe id="coupang-2" src="https://coupa.ng/bgd0rL" width="125px" height="240" frameborder="0" scrolling="no"></iframe>
+        <button id="coupang-layer-button">close</button>
+    </div>
+    <div class="post-content markdown" style="margin:auto;max-width:1360px;">
+
+        <div id="ads" class="ad-area">
+            <div id="content-list">
+                <h3 id="table-of-contents"></h3><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%EB%AC%B4%EC%97%87%EC%9D%B4-%EB%AC%B8%EC%A0%9C%EC%98%80%EB%8A%94%EA%B0%80"><span class="toc-text">무엇이 문제였는가?</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#GIthub-Pages%EC%9D%98-%EB%B6%88%ED%8E%B8%ED%95%A8%EC%9D%84-%ED%95%B4%EC%86%8C%ED%95%98%EB%8A%94-%EB%B0%A9%EB%B2%95%EC%9D%84-%EC%B0%BE%EB%8B%A4"><span class="toc-text">GIthub Pages의 불편함을 해소하는 방법을 찾다.</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Notion-Post-%EB%B0%B0%ED%8F%AC-%EA%B5%AC%EC%84%B1-%EB%B0%A9%EC%95%88"><span class="toc-text">Notion Post 배포 구성 방안</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#make-com%EC%9D%84-%ED%99%9C%EC%9A%A9%ED%95%9C-%EC%9E%90%EB%8F%99%ED%99%94"><span class="toc-text">make.com을 활용한 자동화</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Notion%EC%9D%98-%EC%83%81%EB%8B%A8-%EC%BB%AC%EB%9F%BC%EC%9D%80-%EB%8B%A4%EC%9D%8C%EA%B3%BC-%EA%B0%99%EC%9D%B4-%EB%A7%8C%EB%93%A4%EC%96%B4%EC%84%9C-%EC%A0%9C%EC%96%B4%ED%95%9C%EB%8B%A4"><span class="toc-text">Notion의 상단 컬럼은 다음과 같이 만들어서 제어한다.</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Notion-BlockType-%EC%86%8D%EC%84%B1-%ED%85%8C%EC%8A%A4%ED%8A%B8"><span class="toc-text">Notion BlockType 속성 테스트</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%ED%91%9C"><span class="toc-text">표</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%EC%BD%94%EB%93%9C%EB%B8%94%EB%9F%AD"><span class="toc-text">코드블럭</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%EC%BD%9C%EC%95%84%EC%9B%83-%ED%85%8C%EC%8A%A4%ED%8A%B8"><span class="toc-text">콜아웃 테스트</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%EC%B2%B4%ED%81%AC%EB%B0%95%EC%8A%A4-%ED%85%8C%EC%8A%A4%ED%8A%B8"><span class="toc-text">체크박스 테스트</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%EC%9D%B4%EB%AF%B8%EC%A7%80-%EB%B0%8F-%EC%BA%A1%EC%85%98-%ED%85%8C%EC%8A%A4%ED%8A%B8"><span class="toc-text">이미지 및 캡션 테스트</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%EB%84%98%EB%B2%84%EB%A7%81-%EB%98%90%EB%8A%94-%E2%80%98-%E2%80%99-%ED%85%8C%EC%8A%A4%ED%8A%B8"><span class="toc-text">넘버링 또는 ‘-’ 테스트</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%EC%9D%B8%EC%9A%A9%EA%B5%AC-%ED%85%8C%EC%8A%A4%ED%8A%B8"><span class="toc-text">인용구 테스트</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%ED%86%A0%EA%B8%80-%ED%85%8C%EC%8A%A4%ED%8A%B8"><span class="toc-text">토글 테스트</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%EA%B5%AC%EB%B6%84%EC%84%A0-%ED%85%8C%EC%8A%A4%ED%8A%B8"><span class="toc-text">구분선 테스트</span></a></li></ol></li></ol>
+            </div>
+            <!-- hexo-side1 -->
+            <ins class="adsbygoogle" style="display:block;width:340px;" data-ad-client="ca-pub-5379974693765383" data-ad-slot="6166524771" data-ad-format="auto" data-full-width-responsive="true"></ins>
+            <script>
+                (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+            <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+            <div id="lastAds">
+                <div class="coupang-ads">
+                    <!-- <p id="coupang-title">2020년 11월 28일 쿠팡 Best50</p><span id="coupang-title-icon">HOT</span> -->
+                    <p id="coupang-title"><iframe id="coupang-search" src="https://ads-partners.coupang.com/iframe/search-bar?id=19092917192714204211009791-l1&amp;type=l1&amp;trackingCode=AF9416635" width="383px" height="75" frameborder="0" scrolling="no"></iframe></p>
+                    <div class="ads-wrap ads-wrap-first">
+                        <img src>
+                        <p id="ads-first-name"></p>
+                    </div>
+                    <div class="ads-wrap ads-wrap-second">
+                        <img src>
+                        <p id="ads-second-name"></p>
+                    </div>
+                    <p id="coupang-notice">*파트너스 활동을 통해 일정액의 수수료를 제공받을 수 있음</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="main-content" class="main-content-wrap" style="margin-right:360px;">
+            <p>Notion API로 Github Pages Blog (Hexo) 에 쉽게 배포해본 경험을 나누어보려고 합니다.<br>저는 Hexo로 구성된 블로그를 사용중이기 때문에 Hexo 기준으로 작성되었음을 알려드립니다.</p>
+<span id="more"></span>
+<!-- toc -->
+
+<p><img src="image-1.png" alt="Hexo 와 Notion API를 활용한 쉽고 빠른 배포 (GPT로 뽑은 썸네일..ㅋ)"><span class="image-caption">Hexo 와 Notion API를 활용한 쉽고 빠른 배포 (GPT로 뽑은 썸네일..ㅋ)</span></p>
+<h2 id="무엇이-문제였는가"><a href="#무엇이-문제였는가" class="headerlink" title="무엇이 문제였는가?"></a>무엇이 문제였는가?</h2><p>Github Pages를 사용하다보면 개발자가 커스텀하면서 나만의 웹을 구성하고 만든다는 장점이 있었습니다.</p>
+<p>하지만 글을 작성하는게 쉬운 에디터로 쓰지 못하고 Markdown문법을 사용하지만 실시간으로 이미지나, 여러 링크를 작성하기에 편리하지는 않았습니다. 그래서 글을 쓰는데 저해요소가 되었고 작성이 꺼려지는 문제까지 발생을 하였습니다.</p>
+<h2 id="GIthub-Pages의-불편함을-해소하는-방법을-찾다"><a href="#GIthub-Pages의-불편함을-해소하는-방법을-찾다" class="headerlink" title="GIthub Pages의 불편함을 해소하는 방법을 찾다."></a>GIthub Pages의 불편함을 해소하는 방법을 찾다.</h2><p>이미 대중적으로 많이 쓰는 에디터는 Notion 이 있었고, 회사에서는 컨플루언스를 사용하고 있었습니다. 이 에디터의 공통점은 Markdown을 지원하고 이미 너무 익숙하고 편하게 글을 쓸 수 있다는 점이 있었습니다.</p>
+<p>그리고 Notion의 API가 제공이 되기때문에 Notion의 작성된 Post를 가져와서 그대로 포스팅을 만들고 배포하면 되겠다는 생각을 해보았습니다.</p>
+<h3 id="Notion-Post-배포-구성-방안"><a href="#Notion-Post-배포-구성-방안" class="headerlink" title="Notion Post 배포 구성 방안"></a>Notion Post 배포 구성 방안</h3><ul>
+<li>Notion의 Blog 전용 Database를 만든다.<ul>
+<li>Tag, Categories, status, createdAt, hasThumbnail과 같은 필요한 컬럼을 추가한다.</li>
+<li>status로 배포를 관리하기 때문에 (<code>시작 전, 작성중, 배포필요, 배포완료</code>) 의 상태를 구분해놓는다.</li>
+</ul>
+</li>
+<li>blog의 소스코드를 관리하는 repository에서 github action을 통해 CI&#x2F;CD 작업을 진행한다.<ul>
+<li>Noion API를 통해 Markdown을 만들어내는 js 코드를 작성한다.</li>
+<li>github action workflow를 만든다.</li>
+<li>Notion API를 통해 Blog Database를 읽어서 배표필요의 status의 값을 가져온다.</li>
+<li>컬럼값을을 읽어서 원하는 작업을 진행한다. (저는 tag, catagories, hasThumbnail 의 값으로 원하는 작업들을 핸들링 하였음)</li>
+<li>Github Pages에 배포한다. (이미 포스트가 있다면 대치한다.)</li>
+<li>배포가 된 Post는 상태값을 <code>배포완료</code> 로 변경한다.</li>
+</ul>
+</li>
+<li>git commit을 한다.</li>
+<li>이 모든것을 자동화 한다.</li>
+</ul>
+<hr>
+<h3 id="make-com을-활용한-자동화"><a href="#make-com을-활용한-자동화" class="headerlink" title="make.com을 활용한 자동화"></a>make.com을 활용한 자동화</h3><p>자 그러면 이 모든 방안을 또 수동으로 할 것인가? 👆No~ 아니다!! 나는 여기서 한번 더 자동화를 할 것이다.<br>이 자동화 Workflow를 <code>Make.com</code> 으로 연동할 수 있다.</p>
+<p>아래의 이미지를 보면 <code>발행</code> 버튼을 만들었다. 이 발행버튼의 workflow는 다음과 같다.</p>
+<ul>
+<li>배포버튼 클릭 → webhook 작동 → github API 요청 → 배포 gitgub action workflow실행</li>
+</ul>
+<h3 id="Notion의-상단-컬럼은-다음과-같이-만들어서-제어한다"><a href="#Notion의-상단-컬럼은-다음과-같이-만들어서-제어한다" class="headerlink" title="Notion의 상단 컬럼은 다음과 같이 만들어서 제어한다."></a>Notion의 상단 컬럼은 다음과 같이 만들어서 제어한다.</h3><p><img src="image-2.png" alt="Notion 상단 컬럼 속성들"><span class="image-caption">Notion 상단 컬럼 속성들</span></p>
+<p><img src="image-3.png" alt="make.com을 이용한 workflow 자동화"><span class="image-caption">make.com을 이용한 workflow 자동화</span></p>
+<blockquote>
+<p>자세한 배포 가이드는 다음 포스팅에서 자세하게 작성해볼 예정이다.</p>
+</blockquote>
+<hr>
+<h2 id="Notion-BlockType-속성-테스트"><a href="#Notion-BlockType-속성-테스트" class="headerlink" title="Notion BlockType 속성 테스트"></a>Notion BlockType 속성 테스트</h2><h3 id="표"><a href="#표" class="headerlink" title="표"></a>표</h3><table>
+<thead>
+<tr>
+<th>헤더1</th>
+<th>헤더2</th>
+<th>해더3</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1-1</td>
+<td>2-1</td>
+<td>3-1</td>
+</tr>
+<tr>
+<td>1-2</td>
+<td>2-2</td>
+<td>3-2</td>
+</tr>
+</tbody></table>
+<h3 id="코드블럭"><a href="#코드블럭" class="headerlink" title="코드블럭"></a>코드블럭</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> hello = <span class="string">&#x27;hello world&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">print</span>(<span class="params">text</span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(text);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="콜아웃-테스트"><a href="#콜아웃-테스트" class="headerlink" title="콜아웃 테스트"></a>콜아웃 테스트</h3><blockquote>
+<p>💡 노션의 콜아웃 블록 테스트</p>
+</blockquote>
+<h3 id="체크박스-테스트"><a href="#체크박스-테스트" class="headerlink" title="체크박스 테스트"></a>체크박스 테스트</h3><p>todo list</p>
+<ul>
+<li><input checked disabled type="checkbox"> 아침 3:10 기상</li>
+<li><input checked disabled type="checkbox"> 물마시기</li>
+<li><input disabled type="checkbox"> 코드리뷰 하기</li>
+</ul>
+<h3 id="이미지-및-캡션-테스트"><a href="#이미지-및-캡션-테스트" class="headerlink" title="이미지 및 캡션 테스트"></a>이미지 및 캡션 테스트</h3><p>개인적으로 아주 좋아하는 미드 (실리콘밸리)</p>
+<p><img src="image-4.png" alt="미드 실리콘밸리"><span class="image-caption">미드 실리콘밸리</span></p>
+<h3 id="넘버링-또는-‘-’-테스트"><a href="#넘버링-또는-‘-’-테스트" class="headerlink" title="넘버링 또는 ‘-’ 테스트"></a>넘버링 또는 ‘-’ 테스트</h3><p>모든 열거방식은 편의상 ‘-’ 로 대체하였음</p>
+<ul>
+<li>1번<ul>
+<li>1-1<ul>
+<li>1-1-1</li>
+<li>1-1-2</li>
+</ul>
+</li>
+<li>1-2<ul>
+<li>1-2-1</li>
+<li>1-2-2</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>2번</li>
+<li>3번</li>
+</ul>
+<h3 id="인용구-테스트"><a href="#인용구-테스트" class="headerlink" title="인용구 테스트"></a>인용구 테스트</h3><blockquote>
+<p>인용구 테스트 입니다.</p>
+</blockquote>
+<h3 id="토글-테스트"><a href="#토글-테스트" class="headerlink" title="토글 테스트"></a>토글 테스트</h3><details>
+<summary>토글 테스트</summary>
+
+<p>토글은 가능한지 모르겠습니다(?)</p>
+</details>
+
+<h3 id="구분선-테스트"><a href="#구분선-테스트" class="headerlink" title="구분선 테스트"></a>구분선 테스트</h3><hr>
+<p>구분선 아래입니다.</p>
+
+            
+
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap" style="max-width:960px">
+        
+        <div class="post-footer-tags">
+            <span class="text-color-light text-small">
+                태그</span><br>
+            
+    <a class="tag tag--primary tag--small t-none-link" href="/tags/api/" rel="tag">api</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/gitblog/" rel="tag">gitblog</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/hexo/" rel="tag">hexo</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/notion/" rel="tag">notion</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%EA%B0%9C%EB%B0%9C/" rel="tag">개발</a>
+
+        </div>
+        
+        
+        <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2025/03/30/blo-5-shorten-url/" data-tooltip="단축 URL과 Snowflake id 구현" aria-label="이전: 단축 URL과 Snowflake id 구현">
+                
+                    <i class="fa fa-angle-left" aria-hidden="true"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">이전</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2024/06/30/aws-summit-2024/" data-tooltip="AWS Summit 2024 방문기(Badrock, 플랫폼엔지니어링, 생성형 AI)" aria-label="다음: AWS Summit 2024 방문기(Badrock, 플랫폼엔지니어링, 생성형 AI)">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">다음</span>
+                    <i class="fa fa-angle-right" aria-hidden="true"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions" aria-label="이 글 공유하기">
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="_blank" href="https://twitter.com/intent/tweet?text=https://jungjoongi.com/2024/07/10/blo-3-notion-api-github-pages-blog-hexo/" title="Twitter에 공유" rel="external nofollow noopener noreferrer">
+                    <i class="fab fa-twitter" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="_blank" href="https://plus.google.com/share?url=https://jungjoongi.com/2024/07/10/blo-3-notion-api-github-pages-blog-hexo/" title="Google+에 공유" rel="external nofollow noopener noreferrer">
+                    <i class="fab fa-google-plus" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+            
+                <li class="post-action">
+                    <a class="post-action-btn btn btn--default" href="#disqus_thread">
+                        <i class="fa fa-comment"></i>
+                    </a>
+                </li>
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#table-of-contents" aria-label="목차">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+        
+        <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <!-- hexo-text -->
+        <ins class="adsbygoogle" style="display:block;margin-bottom: 10px;" data-ad-client="ca-pub-5379974693765383" data-ad-slot="8538682456" data-ad-format="auto" data-full-width-responsive="true"></ins>
+        <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+        
+        
+        <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+        
+        
+    </div>
+</article>
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2025 jung joongi. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+                <div id="bottom-bar" class="post-bottom-bar" data-behavior="5">
+                    <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2025/03/30/blo-5-shorten-url/" data-tooltip="단축 URL과 Snowflake id 구현" aria-label="이전: 단축 URL과 Snowflake id 구현">
+                
+                    <i class="fa fa-angle-left" aria-hidden="true"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">이전</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2024/06/30/aws-summit-2024/" data-tooltip="AWS Summit 2024 방문기(Badrock, 플랫폼엔지니어링, 생성형 AI)" aria-label="다음: AWS Summit 2024 방문기(Badrock, 플랫폼엔지니어링, 생성형 AI)">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">다음</span>
+                    <i class="fa fa-angle-right" aria-hidden="true"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions" aria-label="이 글 공유하기">
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="_blank" href="https://twitter.com/intent/tweet?text=https://jungjoongi.com/2024/07/10/blo-3-notion-api-github-pages-blog-hexo/" title="Twitter에 공유" rel="external nofollow noopener noreferrer">
+                    <i class="fab fa-twitter" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="_blank" href="https://plus.google.com/share?url=https://jungjoongi.com/2024/07/10/blo-3-notion-api-github-pages-blog-hexo/" title="Google+에 공유" rel="external nofollow noopener noreferrer">
+                    <i class="fab fa-google-plus" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+            
+                <li class="post-action">
+                    <a class="post-action-btn btn btn--default" href="#disqus_thread">
+                        <i class="fa fa-comment"></i>
+                    </a>
+                </li>
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#table-of-contents" aria-label="목차">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+                </div>
+                <div id="share-options-bar" class="share-options-bar" data-behavior="5">
+    <i id="btn-close-shareoptions" class="fa fa-times"></i>
+    <ul class="share-options">
+        
+            
+            
+            <li class="share-option">
+                <a class="share-option-btn" target="_blank" href="https://twitter.com/intent/tweet?text=https://jungjoongi.com/2024/07/10/blo-3-notion-api-github-pages-blog-hexo/" rel="external nofollow noopener noreferrer">
+                    <i class="fab fa-twitter" aria-hidden="true"></i><span>Twitter에 공유</span>
+                </a>
+            </li>
+        
+            
+            
+            <li class="share-option">
+                <a class="share-option-btn" target="_blank" href="https://plus.google.com/share?url=https://jungjoongi.com/2024/07/10/blo-3-notion-api-github-pages-blog-hexo/" rel="external nofollow noopener noreferrer">
+                    <i class="fab fa-google-plus" aria-hidden="true"></i><span>Google+에 공유</span>
+                </a>
+            </li>
+        
+    </ul>
+</div>
+
+            
+        </div>
+        
+
+
+    
+        
+    
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-times"></i>
+        </div>
+        
+            <img id="about-card-picture" src="/assets/images/profile.jpg" alt="프로필 사진">
+        
+            <h4 id="about-card-name">jung joongi</h4>
+        
+            <div id="about-card-bio"><p>백엔드 개발을 하고있습니다.</p>
+</div>
+        
+        
+            <div id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br>
+                <p>weolbu.com</p>
+
+            </div>
+        
+        
+            <div id="about-card-location">
+                <i class="fa fa-map-marker-alt"></i>
+                <br>
+                South.Korea
+            </div>
+        
+    </div>
+</div>
+
+        
+        
+<div id="cover" style="background-image:url('/assets/images/covers.jpg');"></div>
+        <!--SCRIPTS-->
+
+<script src="/assets/js/script-881bb61ay4tqeb1n817b1mzoszjpmkjnemq1di6rw1hbjimw8rontpgztokm.min.js"></script>
+
+<!--SCRIPTS END-->
+
+    
+        <script>
+             var disqus_config = function () {
+                 this.page.url = 'https://jungjoongi.com/2024/07/10/blo-3-notion-api-github-pages-blog-hexo/';
+                 
+                    this.page.identifier = '2024/07/10/blo-3-notion-api-github-pages-blog-hexo/';
+                 
+             };
+            (function() {
+                var d = document, s = d.createElement('script');
+                var disqus_shortname = 'jungjoongi';
+                s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        </script>
+    
+
+
+    </body>
+</html>
