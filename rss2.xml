@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0"
+  xmlns:atom="http://www.w3.org/2005/Atom"
+  xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>정준기의 개발공간 (dev.joongi)</title>
+    <link>https://jungjoongi.com/</link>
+    
+    <atom:link href="https://jungjoongi.com/rss2.xml" rel="self" type="application/rss+xml"/>
+    
+    <description>IT소식과 도서 개발지식등 개발이슈를 담는공간</description>
+    <pubDate>Sat, 26 Sep 2026 01:34:00 GMT</pubDate>
+    <generator>http://hexo.io/</generator>
+    
+    <item>
+      <title>AI한테 10만 원 주고 24시간 동안 게임 공장을 차리라고 했다.</title>
+      <link>https://jungjoongi.com/2026/09/26/blo-24-ai-web-game-factory-24h/</link>
+      <guid>https://jungjoongi.com/2026/09/26/blo-24-ai-web-game-factory-24h/</guid>
+      <pubDate>Sat, 26 Sep 2026 01:40:00 GMT</pubDate>
+      
+      <description>&lt;blockquote&gt;
+&lt;p&gt;🏭 2026년 9월 25일 21:49에 시작해 26일 21:49에 끝나는 챌린지의 중간 기록입니다. 이 글을 쓰는 지금(26일 오전 10시 반) 기준으로 웹게임 87개가 나왔고, 수익은 아직 0원입니다.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;img src=&quot;image-1.png&quot;&gt;&lt;/p&gt;
+&lt;h2 id=&quot;무리한-주문으로-시작해보다&quot;&gt;&lt;a href=&quot;#무리한-주문으로-시작해보다&quot; class=&quot;headerlink&quot; title=&quot;무리한 주문으로 시작해보다.&quot;&gt;&lt;/a&gt;무리한 주문으로 시작해보다.&lt;/h2&gt;&lt;p&gt;요즘 이게 유행인지 Claude Code에게 이렇게 말했습니다.&lt;/p&gt;
+&lt;p&gt;&lt;u&gt;“지금부터 24시간 줄 테니까 1천만 원을 벌어 와. 예산은 10만 원.”&lt;/u&gt;&lt;/p&gt;</description>
+      
+      
+      
+      <content:encoded><![CDATA[<blockquote><p>🏭 2026년 9월 25일 21:49에 시작해 26일 21:49에 끝나는 챌린지의 중간 기록입니다. 이 글을 쓰는 지금(26일 오전 10시 반) 기준으로 웹게임 87개가 나왔고, 수익은 아직 0원입니다.</p></blockquote><p><img src="image-1.png"></p><h2 id="무리한-주문으로-시작해보다"><a href="#무리한-주문으로-시작해보다" class="headerlink" title="무리한 주문으로 시작해보다."></a>무리한 주문으로 시작해보다.</h2><p>요즘 이게 유행인지 Claude Code에게 이렇게 말했습니다.</p><p><u>“지금부터 24시간 줄 테니까 1천만 원을 벌어 와. 예산은 10만 원.”</u></p><span id="more"></span><!-- toc --><p>첫 답은 “현실적으로 불가능합니다”였습니다. 계좌도 없고, 계약도 할 수 없고, 제휴 수수료가 3% 안팎이라면 1천만 원을 벌려면 24시간 안에 매출 3억 원이 넘게 필요하다는 계산이었죠. 맞는 말입니다.</p><p>그래서 제가 가진 것을 전부 내놓았습니다.</p><ul><li>쿠팡 파트너스 계정</li><li>도메인 4개 (jungjoongi.com은 애드센스 승인됨)</li><li>Claude Code 계정 </li><li>개인사업자와 통신판매업 신고</li><li>예산 10만 원</li></ul><p>처음에는 디지털 템플릿 키트를 팔자는 안이 나왔는데, 저는 별로여서 “매력 없다”고 피드백했습니다. 그리고 정한 컨셉은… <strong>“AI가 24시간 동안 웹게임을 몇 개나 만들 수 있을까?”</strong></p><p>수익은 광고(애드센스)와 쿠팡 파트너스로만 냅니다. 1천만 원은 사실상 표어고, 진짜 실험은 “AI 직원들로 공장을 돌리면 어디까지 되나”입니다.</p><h2 id="공장-구조-AI-직원-5명"><a href="#공장-구조-AI-직원-5명" class="headerlink" title="공장 구조: AI 직원 5명"></a>공장 구조: AI 직원 5명</h2><p>Claude Code 세션 5개를 tmux에 띄워 역할을 나눴습니다.</p><table><thead><tr><th>역할</th><th>하는 일</th></tr></thead><tbody><tr><td>총괄</td><td>게임 기획, 지시, 결과 검수, 배포, 현황판 관리</td></tr><tr><td>빌더</td><td>공용 틀(헤더·결과 화면·공유·광고 자리), 로비, 인프라, 그리고 게임</td></tr><tr><td>게임 개발자 A</td><td>주로 액션·물리 게임</td></tr><tr><td>게임 개발자 B</td><td>주로 퍼즐 (생성기와 풀이기가 필요한 것)</td></tr><tr><td>게임 개발자 C</td><td>주로 퀴즈 (출처 검증이 필요한 것)</td></tr></tbody></table><p>흐름은 심플하게 구성했어요.</p><ol><li>총괄이 게임 하나를 한 문단으로 기획해 개발자에게 보냅니다.</li><li>개발자는 자기 폴더에서만 만들고, 로컬에서 테스트하고, 스크린샷을 직접 열어 확인한 뒤 보고합니다. 배포는 하지 않습니다.</li><li>총괄이 보고서와 스크린샷을 검수하고, 괜찮으면 배포하고, 곧바로 다음 게임을 맡깁니다.</li></ol><p>사람인 제가 한 일은 방향을 정하고, 도메인 DNS 같은 계정 작업을 하고, 가끔 스크린샷 보고 “이거 이상한데?” 하는 정도였습니다.</p><h2 id="숫자로-보는-공장-26일-오전-10시-반-기준"><a href="#숫자로-보는-공장-26일-오전-10시-반-기준" class="headerlink" title="숫자로 보는 공장 (26일 오전 10시 반 기준)"></a>숫자로 보는 공장 (26일 오전 10시 반 기준)</h2><ul><li>출시한 게임: <strong>87개</strong></li><li>종류: 액션 25 · 퍼즐 26 · 퀴즈 24 · 테스트 12</li><li>한 게임 제작 시간: 평균 약 20분, 가장 빠른 건 5분(#07 1부터 50까지), 가장 오래 걸린 건 42분(#43 막차 러너)</li><li>제작 시간 합계: 약 28시간 (여러 명이 동시에 만들어서 실제 경과 시간보다 깁니다)</li><li>쓴 예산: 0원 (Vercel 무료 플랜, 이미 가진 도메인)</li><li>수익: 0원</li></ul><p><img src="image-2.png"></p><h2 id="아직-홍보를-하지-않았따"><a href="#아직-홍보를-하지-않았따" class="headerlink" title="아직 홍보를 하지 않았따.."></a>아직 홍보를 하지 않았따..</h2><p>게임은 밤새 쌓였는데 방문자가 없습니다. 이제 방문자를 유입해보려고해요 ㅎㅎ</p><p>1천만 원 챌린지에서 제일 중요한 일은 게임을 더 만드는 게 아니라 <strong>알리는 일</strong>이었고, 그건 여전히 사람과 마케팅의 영역이 강한 것 같습니다.</p><h2 id="직접-해-보기"><a href="#직접-해-보기" class="headerlink" title="직접 해 보기"></a>직접 해 보기</h2><p>👉 <a href="https://play.jungjoongi.com/"><strong>play.jungjoongi.com</strong></a></p><p>오늘 밤 21:49까지 계속 만들어볼께요!</p>]]></content:encoded>
+      
+      
+      <category domain="https://jungjoongi.com/categories/%EA%B0%9C%EB%B0%9C/">개발</category>
+      
+      
+      <category domain="https://jungjoongi.com/tags/%EA%B0%9C%EB%B0%9C/">개발</category>
+      
+      <category domain="https://jungjoongi.com/tags/%EC%83%9D%EC%84%B1%ED%98%95-AI/">생성형 AI</category>
+      
+      <category domain="https://jungjoongi.com/tags/Claude-Code/">Claude Code</category>
+      
+      <category domain="https://jungjoongi.com/tags/%EC%9B%B9%EA%B2%8C%EC%9E%84/">웹게임</category>
+      
+      
+      <comments>https://jungjoongi.com/2026/09/26/blo-24-ai-web-game-factory-24h/#disqus_thread</comments>
+      
+    </item>
+    
+    <item>
+      <title>Notion API로 Github Pages Blog (Hexo)에 쉽게 배포하기</title>
+      <link>https://jungjoongi.com/2024/07/10/blo-3-notion-api-github-pages-blog-hexo/</link>
+      <guid>https://jungjoongi.com/2024/07/10/blo-3-notion-api-github-pages-blog-hexo/</guid>
+      <pubDate>Tue, 09 Jul 2024 23:00:00 GMT</pubDate>
+      
+      <description>&lt;p&gt;Notion API로 Github Pages Blog (Hexo) 에 쉽게 배포해본 경험을 나누어보려고 합니다.&lt;br&gt;저는 Hexo로 구성된 블로그를 사용중이기 때문에 Hexo 기준으로 작성되었음을 알려드립니다.&lt;/p&gt;</description>
+      
+      
+      
+      <content:encoded><![CDATA[<p>Notion API로 Github Pages Blog (Hexo) 에 쉽게 배포해본 경험을 나누어보려고 합니다.<br>저는 Hexo로 구성된 블로그를 사용중이기 때문에 Hexo 기준으로 작성되었음을 알려드립니다.</p><span id="more"></span><!-- toc --><p><img src="image-1.png" alt="Hexo 와 Notion API를 활용한 쉽고 빠른 배포 (GPT로 뽑은 썸네일..ㅋ)"><span class="image-caption">Hexo 와 Notion API를 활용한 쉽고 빠른 배포 (GPT로 뽑은 썸네일..ㅋ)</span></p><h2 id="무엇이-문제였는가"><a href="#무엇이-문제였는가" class="headerlink" title="무엇이 문제였는가?"></a>무엇이 문제였는가?</h2><p>Github Pages를 사용하다보면 개발자가 커스텀하면서 나만의 웹을 구성하고 만든다는 장점이 있었습니다.</p><p>하지만 글을 작성하는게 쉬운 에디터로 쓰지 못하고 Markdown문법을 사용하지만 실시간으로 이미지나, 여러 링크를 작성하기에 편리하지는 않았습니다. 그래서 글을 쓰는데 저해요소가 되었고 작성이 꺼려지는 문제까지 발생을 하였습니다.</p><h2 id="GIthub-Pages의-불편함을-해소하는-방법을-찾다"><a href="#GIthub-Pages의-불편함을-해소하는-방법을-찾다" class="headerlink" title="GIthub Pages의 불편함을 해소하는 방법을 찾다."></a>GIthub Pages의 불편함을 해소하는 방법을 찾다.</h2><p>이미 대중적으로 많이 쓰는 에디터는 Notion 이 있었고, 회사에서는 컨플루언스를 사용하고 있었습니다. 이 에디터의 공통점은 Markdown을 지원하고 이미 너무 익숙하고 편하게 글을 쓸 수 있다는 점이 있었습니다.</p><p>그리고 Notion의 API가 제공이 되기때문에 Notion의 작성된 Post를 가져와서 그대로 포스팅을 만들고 배포하면 되겠다는 생각을 해보았습니다.</p><h3 id="Notion-Post-배포-구성-방안"><a href="#Notion-Post-배포-구성-방안" class="headerlink" title="Notion Post 배포 구성 방안"></a>Notion Post 배포 구성 방안</h3><ul><li>Notion의 Blog 전용 Database를 만든다.<ul><li>Tag, Categories, status, createdAt, hasThumbnail과 같은 필요한 컬럼을 추가한다.</li><li>status로 배포를 관리하기 때문에 (<code>시작 전, 작성중, 배포필요, 배포완료</code>) 의 상태를 구분해놓는다.</li></ul></li><li>blog의 소스코드를 관리하는 repository에서 github action을 통해 CI&#x2F;CD 작업을 진행한다.<ul><li>Noion API를 통해 Markdown을 만들어내는 js 코드를 작성한다.</li><li>github action workflow를 만든다.</li><li>Notion API를 통해 Blog Database를 읽어서 배표필요의 status의 값을 가져온다.</li><li>컬럼값을을 읽어서 원하는 작업을 진행한다. (저는 tag, catagories, hasThumbnail 의 값으로 원하는 작업들을 핸들링 하였음)</li><li>Github Pages에 배포한다. (이미 포스트가 있다면 대치한다.)</li><li>배포가 된 Post는 상태값을 <code>배포완료</code> 로 변경한다.</li></ul></li><li>git commit을 한다.</li><li>이 모든것을 자동화 한다.</li></ul><hr><h3 id="make-com을-활용한-자동화"><a href="#make-com을-활용한-자동화" class="headerlink" title="make.com을 활용한 자동화"></a>make.com을 활용한 자동화</h3><p>자 그러면 이 모든 방안을 또 수동으로 할 것인가? 👆No~ 아니다!! 나는 여기서 한번 더 자동화를 할 것이다.<br>이 자동화 Workflow를 <code>Make.com</code> 으로 연동할 수 있다.</p><p>아래의 이미지를 보면 <code>발행</code> 버튼을 만들었다. 이 발행버튼의 workflow는 다음과 같다.</p><ul><li>배포버튼 클릭 → webhook 작동 → github API 요청 → 배포 gitgub action workflow실행</li></ul><h3 id="Notion의-상단-컬럼은-다음과-같이-만들어서-제어한다"><a href="#Notion의-상단-컬럼은-다음과-같이-만들어서-제어한다" class="headerlink" title="Notion의 상단 컬럼은 다음과 같이 만들어서 제어한다."></a>Notion의 상단 컬럼은 다음과 같이 만들어서 제어한다.</h3><p><img src="image-2.png" alt="Notion 상단 컬럼 속성들"><span class="image-caption">Notion 상단 컬럼 속성들</span></p><p><img src="image-3.png" alt="make.com을 이용한 workflow 자동화"><span class="image-caption">make.com을 이용한 workflow 자동화</span></p><blockquote><p>자세한 배포 가이드는 다음 포스팅에서 자세하게 작성해볼 예정이다.</p></blockquote><hr><h2 id="Notion-BlockType-속성-테스트"><a href="#Notion-BlockType-속성-테스트" class="headerlink" title="Notion BlockType 속성 테스트"></a>Notion BlockType 속성 테스트</h2><h3 id="표"><a href="#표" class="headerlink" title="표"></a>표</h3><table><thead><tr><th>헤더1</th><th>헤더2</th><th>해더3</th></tr></thead><tbody><tr><td>1-1</td><td>2-1</td><td>3-1</td></tr><tr><td>1-2</td><td>2-2</td><td>3-2</td></tr></tbody></table><h3 id="코드블럭"><a href="#코드블럭" class="headerlink" title="코드블럭"></a>코드블럭</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> hello = <span class="string">&#x27;hello world&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">print</span>(<span class="params">text</span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(text);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h3 id="콜아웃-테스트"><a href="#콜아웃-테스트" class="headerlink" title="콜아웃 테스트"></a>콜아웃 테스트</h3><blockquote><p>💡 노션의 콜아웃 블록 테스트</p></blockquote><h3 id="체크박스-테스트"><a href="#체크박스-테스트" class="headerlink" title="체크박스 테스트"></a>체크박스 테스트</h3><p>todo list</p><ul><li><input checked="" disabled="" type="checkbox"> 아침 3:10 기상</li><li><input checked="" disabled="" type="checkbox"> 물마시기</li><li><input disabled="" type="checkbox"> 코드리뷰 하기</li></ul><h3 id="이미지-및-캡션-테스트"><a href="#이미지-및-캡션-테스트" class="headerlink" title="이미지 및 캡션 테스트"></a>이미지 및 캡션 테스트</h3><p>개인적으로 아주 좋아하는 미드 (실리콘밸리)</p><p><img src="image-4.png" alt="미드 실리콘밸리"><span class="image-caption">미드 실리콘밸리</span></p><h3 id="넘버링-또는-‘-’-테스트"><a href="#넘버링-또는-‘-’-테스트" class="headerlink" title="넘버링 또는 ‘-’ 테스트"></a>넘버링 또는 ‘-’ 테스트</h3><p>모든 열거방식은 편의상 ‘-’ 로 대체하였음</p><ul><li>1번<ul><li>1-1<ul><li>1-1-1</li><li>1-1-2</li></ul></li><li>1-2<ul><li>1-2-1</li><li>1-2-2</li></ul></li></ul></li><li>2번</li><li>3번</li></ul><h3 id="인용구-테스트"><a href="#인용구-테스트" class="headerlink" title="인용구 테스트"></a>인용구 테스트</h3><blockquote><p>인용구 테스트 입니다.</p></blockquote><h3 id="토글-테스트"><a href="#토글-테스트" class="headerlink" title="토글 테스트"></a>토글 테스트</h3><details><summary>토글 테스트</summary><p>토글은 가능한지 모르겠습니다(?)</p></details><h3 id="구분선-테스트"><a href="#구분선-테스트" class="headerlink" title="구분선 테스트"></a>구분선 테스트</h3><hr><p>구분선 아래입니다.</p>]]></content:encoded>
+      
+      
+      <category domain="https://jungjoongi.com/categories/hexo/">hexo</category>
+      
+      
+      <category domain="https://jungjoongi.com/tags/%EA%B0%9C%EB%B0%9C/">개발</category>
+      
+      <category domain="https://jungjoongi.com/tags/hexo/">hexo</category>
+      
+      <category domain="https://jungjoongi.com/tags/gitblog/">gitblog</category>
+      
+      <category domain="https://jungjoongi.com/tags/notion/">notion</category>
+      
+      <category domain="https://jungjoongi.com/tags/api/">api</category>
+      
+      
+      <comments>https://jungjoongi.com/2024/07/10/blo-3-notion-api-github-pages-blog-hexo/#disqus_thread</comments>
+      
+    </item>
+    
+    <item>
+      <title>2020년 변경된 디스커스 Disqus 한글 세팅을 해보자</title>
+      <link>https://jungjoongi.com/2020/12/11/disaus-korean-setting2/</link>
+      <guid>https://jungjoongi.com/2020/12/11/disaus-korean-setting2/</guid>
+      <pubDate>Thu, 10 Dec 2020 22:30:00 GMT</pubDate>
+      
+      <description>&lt;p&gt;얼마전 디스커스에서 또 한번의 패치를 하고 그동안 편법으로 하던 한글세팅의 방법이 변경되었다. 기존의 편법으로 이용하던 이용자들은 피해가 없지만, 신규로 블로그에 유입되는 사람들은 또 한번의 난항을 겪고있다.&lt;/p&gt;</description>
+      
+      
+      
+      <content:encoded><![CDATA[<p>얼마전 디스커스에서 또 한번의 패치를 하고 그동안 편법으로 하던 한글세팅의 방법이 변경되었다. 기존의 편법으로 이용하던 이용자들은 피해가 없지만, 신규로 블로그에 유입되는 사람들은 또 한번의 난항을 겪고있다.</p><span id="more"></span><!-- toc --><p><img src="image-1.jpg" alt="디스커스(Disqus))"><span class="image-caption">디스커스(Disqus))</span></p><h1 id="새로-변경된-내용"><a href="#새로-변경된-내용" class="headerlink" title="새로 변경된 내용"></a>새로 변경된 내용</h1><p>그동안에는 select box를 수정하여 쉽게 <code>en</code>을 <code>ko</code>로 변경하여 사용을 하였다.<br>그러나 이 방법은 이제 적용되지 않는다. 2020년 12월 기준으로는 selectBox 형식이 아닌 div로 UI를 그려내고 있어 이용자들이 쉽게 한글로 변경하기는 쉽지 않다. 거두절미하고 쉽게 설명하도록 하겠다.</p><h1 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h1><hr><p><img src="image-2.png" alt="disqus 전송구간 파라메터 변경"><span class="image-caption">disqus 전송구간 파라메터 변경</span></p><p><strong>1. 개발자도구 (또는 F12)를 누른다.<br>2. 개발자도구의 Search부분에서 forums&#x2F;update를 검색한다.<br>3. ctrl + F로 <code>Oa.a.call(t &amp;&amp; t.useInternal ? &quot;internal/forums/update&quot; : &quot;forums/update&quot;</code> 를 검색한다.<br>4. <code>n.props.selection.forum &amp;&amp; (e = dm(&#123;</code> 부분을 찾아서 브레이크 포인트를 걸고 아무언어를 선택한 후에 SAVE를 눌러 변경처리를 한다.<br>5. <code>e</code> 부분에 마우스를 클릭하여 <code>en -&gt; ko</code>로 변경한다.<br>6. 브레이크포인트 <code>Next</code>를 눌러 변경된 값을 전송한다.</strong></p><p><strong>이렇게 하면 역시 한글로 디스커스를 이용할 수 가 있다.</strong></p><h2 id="끝으로"><a href="#끝으로" class="headerlink" title="끝으로"></a>끝으로</h2><p>정상적인 방법은 아니지만, 동일하게 디스커스를 한글로 설장이 가능하다. 왜 한국어를 빼먹었는지 아직까지도 의문이다. 2018년 최초로 한글세팅을 하는 방법을 작성하였다. 많은 사람들이 내 글을 읽고 성공하고 블로그에 퍼가주시니 감사할 따름이다.</p><p>이 방법또한 최초로 작성하여 공유하는 방법이다.<br>많은분들에게 도움이 되고 출처를 남겨 퍼가셔도 무방하니 많은 사람들이 한글세팅에 성공하길 바란다.</p><h1 id="감사의-글"><a href="#감사의-글" class="headerlink" title="감사의 글"></a>감사의 글</h1><p><strong>GodSchool.kr</strong> 님 께서 댓글로 한글세팅이 변경되었다는 사실을 알려주셨습니다. 알려주셔서 감사합니다. 덕분에 다시 방법을 찾아 정정하고 블로그에 발행하게 되었습니다. 모두 한글세팅에 성공하시고 좋은 블로그를 만들어가길 바랍니다.</p><p>감사합니다.</p><h2 id="이전-글을-확인하려면"><a href="#이전-글을-확인하려면" class="headerlink" title="이전 글을 확인하려면"></a>이전 글을 확인하려면</h2><p>연결되는 링크로 이동하면 이전 글을 확인하실 수 있습니다.</p><blockquote><p>💡 <a href="https://jungjoongi.com/2018/10/30/disqus-korean-setting/">디스커스 Disqus 한글 세팅을 해보자 편법(?)으로</a></p></blockquote><h1 id="질문"><a href="#질문" class="headerlink" title="질문"></a>질문</h1><p>문의사항이 있으면 댓글로 남겨주세요.<br>연구해서 답변드리도록 하겠습니다 ^^</p>]]></content:encoded>
+      
+      
+      <category domain="https://jungjoongi.com/categories/hexo/">hexo</category>
+      
+      
+      <category domain="https://jungjoongi.com/tags/%EA%B0%9C%EB%B0%9C/">개발</category>
+      
+      <category domain="https://jungjoongi.com/tags/%EB%B2%84%EA%B7%B8/">버그</category>
+      
+      <category domain="https://jungjoongi.com/tags/disqus/">disqus</category>
+      
+      <category domain="https://jungjoongi.com/tags/hexo/">hexo</category>
+      
+      
+      <comments>https://jungjoongi.com/2020/12/11/disaus-korean-setting2/#disqus_thread</comments>
+      
+    </item>
+    
+    <item>
+      <title>IOS(아이폰/아이패드)에서 터미널(SSH) 사용하기(feat.termius)</title>
+      <link>https://jungjoongi.com/2018/12/17/iphone-terminal/</link>
+      <guid>https://jungjoongi.com/2018/12/17/iphone-terminal/</guid>
+      <pubDate>Mon, 17 Dec 2018 08:32:00 GMT</pubDate>
+      
+      <description>&lt;p&gt;얼마전 엄청나고 간편하고 강력한 IOS어플리케이션을 발견했다.&lt;br&gt;termius라는 어플리케이션인데 IOS에서 terminal을 사용하는 강력한 어플이다.&lt;br&gt;이 어플리케이션에 대해서 소개하도록 하겠습니다.&lt;/p&gt;</description>
+      
+      
+      
+      <content:encoded><![CDATA[<p>얼마전 엄청나고 간편하고 강력한 IOS어플리케이션을 발견했다.<br>termius라는 어플리케이션인데 IOS에서 terminal을 사용하는 강력한 어플이다.<br>이 어플리케이션에 대해서 소개하도록 하겠습니다.</p><span id="more"></span><!-- toc --><p><img src="image-1.png" alt="Termius"><span class="image-caption">Termius</span></p><h1 id="Termius-어플리케이션-소개"><a href="#Termius-어플리케이션-소개" class="headerlink" title="Termius 어플리케이션 소개"></a>Termius 어플리케이션 소개</h1><hr><p><img src="image-2.jpg" alt="IOS에서 SSH접속을 가능하게 해주는 어플리케이션 Termius"><span class="image-caption">IOS에서 SSH접속을 가능하게 해주는 어플리케이션 Termius</span></p><p>아이폰 또는 아이패드로 터미널을 통해 SSH접속을 할수있는 어플리케이션입니다.<br>장점이 있다면 <strong>무료</strong>이며 또한 <strong>광고</strong>가 없습니다.<br>그리고 튜토리얼이 없더라도 어렵지않게 사용할 수 있을것 같습니다.</p><h1 id="어플리케이션-구동-및-SSH접속"><a href="#어플리케이션-구동-및-SSH접속" class="headerlink" title="어플리케이션 구동 및 SSH접속"></a>어플리케이션 구동 및 SSH접속</h1><hr><p><img src="image-3.png" alt="실제 IphoneX에서 구동하는 장면-02"><span class="image-caption">실제 IphoneX에서 구동하는 장면-02</span></p><p>이것은 실제로 어플리케이션을 받고 접속을 시도해본 결과물입니다. 실제로 터미널에서 사용하는것과 똑같이 사용이 가능합니다.<br>저는 프리티어를 사용하고있는데 가끔 서버가 내려가는일이 있어서 외부에있을때 사용하기에 아주 적절했습니다.</p><p><img src="image-4.png" alt="디렉토리를 ui로 확인할 수 있다."><span class="image-caption">디렉토리를 ui로 확인할 수 있다.</span></p><p>디렉토리를 ui로 확인할 수 도있다.<br>생각보다 작지만 강력한 기능을 구현하는 어플리케이션임을 확인할 수가 있다.<br>아마 FTP기능도 제공하는 것으로 보인다. 나의 local디렉토리도 보여주는것으로 보아하니 파일전송도 가능한것같다.<br>그렇다면 아이폰 하나만으로 원격서버를 완벽하게 리모트할수있는 기능이 되기도 하는것 같다.</p><h1 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h1><hr><ol><li>Hosts에서 New Host를 등록한다.</li><li>HostName &#x3D; public IP 등록</li><li>SSH -&gt; USE</li><li>private Key 등록<br>이와같이 등록을 마친다면 아이폰 &#x2F; 아이패드 환경에서 터미널환경으로 접속을 할 수 가있습니다.</li></ol>]]></content:encoded>
+      
+      
+      <category domain="https://jungjoongi.com/categories/%EA%B0%9C%EB%B0%9C/">개발</category>
+      
+      
+      <category domain="https://jungjoongi.com/tags/aws/">aws</category>
+      
+      <category domain="https://jungjoongi.com/tags/%EA%B0%9C%EB%B0%9C/">개발</category>
+      
+      
+      <comments>https://jungjoongi.com/2018/12/17/iphone-terminal/#disqus_thread</comments>
+      
+    </item>
+    
+    <item>
+      <title>hexo블로그(tranquilpeak)에 구글애드센스(adsense) 및 광고 설치</title>
+      <link>https://jungjoongi.com/2018/12/05/hexo-adsense/</link>
+      <guid>https://jungjoongi.com/2018/12/05/hexo-adsense/</guid>
+      <pubDate>Wed, 05 Dec 2018 06:23:00 GMT</pubDate>
+      
+      <description>&lt;p&gt;요즘 일이 바빠서 블로그 작성을 소홀히 하였지만 드디어 구글애드센스와 쿠팡광고를 블로그에 설치하였다.&lt;br&gt;이에대한 과정을 나누어보려고 한다.&lt;/p&gt;</description>
+      
+      
+      
+      <content:encoded><![CDATA[<p>요즘 일이 바빠서 블로그 작성을 소홀히 하였지만 드디어 구글애드센스와 쿠팡광고를 블로그에 설치하였다.<br>이에대한 과정을 나누어보려고 한다.</p><span id="more"></span><!-- toc --><h2 id="근황"><a href="#근황" class="headerlink" title="근황"></a>근황</h2><p>최근 프로젝트가 하나 끝나고 얼마전부터 sm운영을 하고있었다. 그전까지는 조금 바빠서 블로그에 손을 델수가 없었다.<br>글을 쓰고싶었지만 집에가면 쉬고싶고 역시 그냥 쉬고싶은 것이었다.</p><p>이제 다시 블로그에 투자를 하기위해서 미루고 미루었던 광고게재하기위한 작업을 다시 시작했다.<br>처음에 너무나 귀찮았던 일이라.. 1달여 넘게 미루었던 일이었는데 더이상 마루게된다면 글쓰는것도 미루게될 것 같았다.<br>드디어 블로그 소스를 까보고 어디위치에 넣어볼까 고민을 하던끝에 좌측에 광고를 달기로 결심했다.</p><h2 id="광고위치-선정-고려사항"><a href="#광고위치-선정-고려사항" class="headerlink" title="광고위치 선정 고려사항"></a>광고위치 선정 고려사항</h2><hr><p>블로그에 광고를 게재하기 위해 많은것을 고려하게 되었다.</p><p><strong>1. 가독성을 방해하면 안된다.<br>2. 컨텐츠 외에 장소를 확보해야한다.<br>3. 모바일 환경에서는 광고를 보여주지 않는다.<br>4. 한번의 삽입으로 끝내야한다</strong></p><p>이와같은 이유는 모두 컨텐츠를 보호하기 위함이었다.<br>첫째도 둘째도 컨텐츠를 방해하지 않기위한 방향으로 잡았기 때문이다.<br>예컨데 우리나라 인터넷 신문 사이트만 들어가도 광고로 도배가 되어있는것을 볼 수가 있다. 정말 스트레스 받는다.<br>도무지 기사내용을 확인할 수가 없다. 그래서 생각해낸 방법은 블로그에 컨텐츠 영역을 나누는 것이었다.</p><h2 id="작업"><a href="#작업" class="headerlink" title="작업"></a>작업</h2><p>그런데 문제가 하나 더 생겼다. 내 블로그는 post에 최적화 되어있는 블로그이기때문에 약간 손을봐야 했던 것이었다.<br><code>tranquilpeak</code> 테마를 사용해본 사람들은 알것이다. 딱 post에 최적화가 되어있고 글에 집중할수 있도록 되어있기 때문이었다.<br>그래서 어쩔수없이 테마를 손보기로 하였다.</p><p>테마는 좌측에 광고가 들어갈만큼 나누어주었다.<br><code>post.ejs</code>파일을 건드려 post를 2영역으로 나누어주었고 좌측에는 광고 우측에는 포스트가 들어가도록 설정해주었다.<br>좌측 광고는 <code>fixed</code>를 걸어 항상 고정이 되게하였고 컨텐츠는 스크롤하는 방향에 맞추어 기존과 같이 기능이 동작하도록 하였다.</p><h3 id="광고는-3개만"><a href="#광고는-3개만" class="headerlink" title="광고는 3개만"></a>광고는 3개만</h3><hr><p><strong>1. 쿠팡광고 1개<br>2. 쿠팡광고 1개<br>3. 구글애드센스 1개</strong></p><p>그래도 배너형식으로 넣어보니 꾀 블로그가 깔끔하게 보이기 시작했다.<br>여기서 고려해야 할 사항들이 몇가지 생겨났다.</p><h2 id="광고대응-작업"><a href="#광고대응-작업" class="headerlink" title="광고대응 작업"></a>광고대응 작업</h2><p>모바일페이지와 화면이 작아졌을때를 대비하는 것이었다.<br>나는 여기서 <code>resize()</code>함수를 사용하여 최소 아이패드 해상도까지만 광고가 보이게하였고 그 이하로 해상도가 내려간다면 과감하게 광고를 지우고 post의 사이즈는 원래대로 복귀시키는 것이었다.</p><p>예제코드를 첨부한다.</p><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">$(<span class="variable language_">window</span>).<span class="title function_">resize</span>(<span class="keyword">function</span> (<span class="params"></span>)&#123;</span><br><span class="line">    <span class="keyword">var</span> width_size = <span class="variable language_">window</span>.<span class="property">outerWidth</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span> (width_size &lt;= <span class="number">760</span>) &#123;</span><br><span class="line">        $(<span class="string">&quot;#ads&quot;</span>).<span class="title function_">css</span>(<span class="string">&quot;display&quot;</span>,<span class="string">&quot;none&quot;</span>);</span><br><span class="line">        $(<span class="string">&quot;#main-content&quot;</span>).<span class="title function_">attr</span>(<span class="string">&quot;style&quot;</span>,<span class="string">&quot;&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (width_size &gt; <span class="number">760</span>) &#123;</span><br><span class="line">        $(<span class="string">&quot;#ads&quot;</span>).<span class="title function_">css</span>(<span class="string">&quot;display&quot;</span>,<span class="string">&quot;block&quot;</span>);</span><br><span class="line">        $(<span class="string">&quot;#main-content&quot;</span>).<span class="title function_">css</span>(<span class="string">&quot;margin-left&quot;</span>,<span class="string">&quot;270px&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure><p>물론 나의 DOM트리 상황에 맞는 attribute 설정을 하였지만 이것은 자신의 소스코드 입맛에 맞게 사용하면 될것같다.<br>또 <code>google Adsense</code>는 반응형으로 사이즈가 동적으로 생겨난다.<br>그래서 스크립트가 실행이 되기전 사용자의 스크롤이동으로 인한 깨짐을 최소한으로 방지하고자 로딩 이미지등 사전작업을 실시하였다.</p><h3 id="방법은-간단하다"><a href="#방법은-간단하다" class="headerlink" title="방법은 간단하다."></a>방법은 간단하다.</h3><hr><p><strong>1. 로딩이미지를 띄운다<br>2. 스크롤바 기능을 중지시킨다.<br>3. window.onload 함수를 사용하여 이미지 제거&#x2F;스크롤 작동</strong></p><p>질문이 있다면 댓글남겨주세요. 답변드리겠습니다.</p>]]></content:encoded>
+      
+      
+      <category domain="https://jungjoongi.com/categories/hexo/">hexo</category>
+      
+      
+      <category domain="https://jungjoongi.com/tags/hexo/">hexo</category>
+      
+      <category domain="https://jungjoongi.com/tags/tranquilpeak/">tranquilpeak</category>
+      
+      <category domain="https://jungjoongi.com/tags/adsense/">adsense</category>
+      
+      
+      <comments>https://jungjoongi.com/2018/12/05/hexo-adsense/#disqus_thread</comments>
+      
+    </item>
+    
+    <item>
+      <title>디스커스 Disqus 한글 세팅을 해보자 편법(?)으로</title>
+      <link>https://jungjoongi.com/2018/10/30/disqus-korean-setting/</link>
+      <guid>https://jungjoongi.com/2018/10/30/disqus-korean-setting/</guid>
+      <pubDate>Tue, 30 Oct 2018 05:39:00 GMT</pubDate>
+      
+      <description>&lt;p&gt;얼마전 DISQUS에서 크게 업데이트를 한후 한글지원이 공식적으로(?) 빠지게되었다. 기존이용자들은 잘 이용했지만 신규이용자들은 한글이용에 제한이 있었는데 해결방법을 찾아내어 그 방법을 공유합니다.&lt;/p&gt;</description>
+      
+      
+      
+      <content:encoded><![CDATA[<p>얼마전 DISQUS에서 크게 업데이트를 한후 한글지원이 공식적으로(?) 빠지게되었다. 기존이용자들은 잘 이용했지만 신규이용자들은 한글이용에 제한이 있었는데 해결방법을 찾아내어 그 방법을 공유합니다.</p><span id="more"></span><!-- toc --><p><img src="image-1.jpg" alt="디스커스(Disqus))"><span class="image-caption">디스커스(Disqus))</span></p><h3 id="디스커스-Disqus-란"><a href="#디스커스-Disqus-란" class="headerlink" title="디스커스(Disqus)란?"></a>디스커스(Disqus)란?</h3><p>디스커스는 소셜 댓글서비스 입니다. 대표적으로 Facebook같은 계정만 있다면 누구든지 댓글을 달수있도록 되어있는 위젯입니다. 장점으로 특별히 댓글시스템을 구현할 필요없이 디스커스(Disqus)를 통해 위젯을 제공받아 설치가 가능합니다.<br>특히 정적페이지인 gitPage에도 설치만으로 실시간 댓글서비스가 되기때문에 최대 장점으로 꼽을수가 있습니다.</p><h3 id="설치방법"><a href="#설치방법" class="headerlink" title="설치방법"></a>설치방법</h3><hr><p>일단 저는 Hexo기반의 tranquilpeak테마를 사용하고있습니다.<br>설치방법은 생각보다 아주~~많이? 쉽습니다. 그냥 따라오시면 됩니다.</p><p><strong>1. 먼저</strong> <a href="https://disqus.com/"><strong>Disqus</strong></a><strong>에 가입이 되어있지 않다면 가입을 합니다.<br>2. GET STARTED 클릭<br>3. I want to comment on site 클릭<br>4. edit profile 클릭<br>5. Acount 에서 username을 확인 및 설정한다 (중요)<br>6. root폴더에 <code>_config.yml</code> 파일을 편집한다</strong></p><figure class="highlight yaml"><figcaption><span>_config.yml</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">  <span class="comment"># for Disqus</span></span><br><span class="line"><span class="attr">disqus_shortname:</span> <span class="string">disqus이름</span></span><br></pre></td></tr></table></figure><p>위의 코드를 맨 아래 추가해준다.</p><p><strong>7. 배포</strong><br><code>hexo generate -d</code> 명령어를 실행해 배포를 해본다.</p><p><img src="image-2.jpg" alt="disqus 댓글서비스 설치된 이미지"><span class="image-caption">disqus 댓글서비스 설치된 이미지</span></p><h3 id="언어선택-문제"><a href="#언어선택-문제" class="headerlink" title="언어선택 문제"></a>언어선택 문제</h3><p>그런데 문제가 생겼다. 우리는 댓글서비스를 한글로 이용하고싶은데 영어로 기본 세팅이 되어있다.<br>그래서 설정으로 들어가 언어세팅을 시도해본다.<br>(이미 세팅이 완료된 시점에서.. 중간에 중략된것이 있을수도 있다.)</p><p><img src="image-3.jpg" alt="disqus 언어선택"><span class="image-caption">disqus 언어선택</span></p><p>그런데 큰일이다! 얼마전 disqus가 대규모 업데이트를 하면서 한글선택이 사라진것이다.<br>아무리 눈씻고 찾아봐도 korean은 찾을수가 없었다.</p><p>한국어지원이 아예 사라진것일까? 그건 아닌것같다. 왜냐하면 이미 한국어로 설정된 블로그가 많이 있기때문이다.<br>이전에 설정했더라도 한국어지원이 사라지지 않았기 때문에 그들은 한국어로 셋팅되어있는것이 사라지지 않았다.<br><strong>나는 여기서 영감을 받았다.</strong></p><h3 id="편법으로-한글선택"><a href="#편법으로-한글선택" class="headerlink" title="편법으로 한글선택"></a>편법으로 한글선택</h3><p>명색이 웹개발자라 그런가 머리가 갑자기 비상하게 돌아가기 시작한다.<br>내 마음속으로는 <strong>“분명히 한국어 지원은 가능하다. 방법은 있을것이다!”</strong> 마음속으로 외치기 시작했다.</p><p>웹페이지의 소스코드를 까보기 시작했다.</p><figure class="highlight html"><figcaption><span>disqus 언어선택 selectBox 소스</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">&quot;ForumSettingsGeneral_language&quot;</span> <span class="attr">class</span>=<span class="string">&quot;input--select&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">&quot;&quot;</span> <span class="attr">disabled</span>=<span class="string">&quot;&quot;</span>&gt;</span>Select a Language<span class="tag">&lt;/<span class="name">option</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">&quot;af&quot;</span>&gt;</span>Afrikaans<span class="tag">&lt;/<span class="name">option</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">&quot;sq&quot;</span>&gt;</span>Albanian<span class="tag">&lt;/<span class="name">option</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">&quot;ar&quot;</span>&gt;</span>Arabic<span class="tag">&lt;/<span class="name">option</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">&quot;az&quot;</span>&gt;</span>Azerbaijani<span class="tag">&lt;/<span class="name">option</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">&quot;eu&quot;</span>&gt;</span>Basque<span class="tag">&lt;/<span class="name">option</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">&quot;bg&quot;</span>&gt;</span>Bulgarian<span class="tag">&lt;/<span class="name">option</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">&quot;ca&quot;</span>&gt;</span>Catalan<span class="tag">&lt;/<span class="name">option</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">&quot;zh&quot;</span>&gt;</span>Chinese<span class="tag">&lt;/<span class="name">option</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">&quot;cs&quot;</span>&gt;</span>Czech<span class="tag">&lt;/<span class="name">option</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">&quot;nl&quot;</span>&gt;</span>Dutch<span class="tag">&lt;/<span class="name">option</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">&quot;en&quot;</span>&gt;</span>English<span class="tag">&lt;/<span class="name">option</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">&quot;fi&quot;</span>&gt;</span>Finnish<span class="tag">&lt;/<span class="name">option</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">&quot;fr&quot;</span>&gt;</span>French<span class="tag">&lt;/<span class="name">option</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">&quot;de&quot;</span>&gt;</span>German<span class="tag">&lt;/<span class="name">option</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">&quot;el&quot;</span>&gt;</span>Greek<span class="tag">&lt;/<span class="name">option</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">&quot;hu&quot;</span>&gt;</span>Hungarian<span class="tag">&lt;/<span class="name">option</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">&quot;id&quot;</span>&gt;</span>Indonesian<span class="tag">&lt;/<span class="name">option</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">&quot;it&quot;</span>&gt;</span>Italian<span class="tag">&lt;/<span class="name">option</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">&quot;ja&quot;</span>&gt;</span>Japanese<span class="tag">&lt;/<span class="name">option</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">&quot;lv&quot;</span>&gt;</span>Latvian<span class="tag">&lt;/<span class="name">option</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">&quot;nb&quot;</span>&gt;</span>Norwegian Bokmål<span class="tag">&lt;/<span class="name">option</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">&quot;fa&quot;</span>&gt;</span>Persian<span class="tag">&lt;/<span class="name">option</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">&quot;pl&quot;</span>&gt;</span>Polish<span class="tag">&lt;/<span class="name">option</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">&quot;pt_BR&quot;</span>&gt;</span>Portuguese (Brazil)<span class="tag">&lt;/<span class="name">option</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">&quot;ru&quot;</span>&gt;</span>Russian<span class="tag">&lt;/<span class="name">option</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">&quot;sr&quot;</span>&gt;</span>Serbian<span class="tag">&lt;/<span class="name">option</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">&quot;sr@latin&quot;</span>&gt;</span>Serbian (Latin)<span class="tag">&lt;/<span class="name">option</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">&quot;sk&quot;</span>&gt;</span>Slovak<span class="tag">&lt;/<span class="name">option</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">&quot;sl&quot;</span>&gt;</span>Slovenian<span class="tag">&lt;/<span class="name">option</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">&quot;es_MX&quot;</span>&gt;</span>Spanish (Mexico)<span class="tag">&lt;/<span class="name">option</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">&quot;es_ES&quot;</span>&gt;</span>Spanish (Spain)<span class="tag">&lt;/<span class="name">option</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">&quot;tr&quot;</span>&gt;</span>Turkish<span class="tag">&lt;/<span class="name">option</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">&quot;uk&quot;</span>&gt;</span>Ukrainian<span class="tag">&lt;/<span class="name">option</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br></pre></td></tr></table></figure><p>보시다시피 한글은 없다. 그런데 내머릿속 떠오르는 생각은 데이터를 조작해보는 것이었다.<br>보통 한글은 <code>kr</code> 또는 <code>ko</code>로 되어있다.</p><p>아래와같이 크롬의 개발자도구로 value를 <code>ko</code>로 설정해 업데이트를 해본다.</p><p><img src="image-4.jpg" alt="disqus selectBox 조작"><span class="image-caption">disqus selectBox 조작</span></p><p><strong>그 결과 disqus가 한글로 설정이 된 것을 확인할 수 있다.</strong><br>한글을 왜 빼먹었는지는 알수가 없다. 그런데 약간의 비상한 잔꾀를 발휘해서 설정했는데 한글적용이 된 것이다.<br>이미 이 글의 disqus도 한글로 되어있는것을 확인할 수 있다.</p><p>혹시나 한글설정하는데 어려움이 있었거나 방법을 몰랐던 사람들이 있다면 이 방법을 통해 설정하길 바랍니다.<br>정상적인 루트(?)는 아니지만 서버에서 랜더링할때 빼먹은건지.. 아니면 고의적으로 뺀건지는 알수없지만 꼭 한글이 하고싶으면 이 방법을 써도 무방하다는 지장은 없다는것을 알려드리기위해 글을 작성합니다.</p><h1 id="2020년-12월-Disqus-한글세팅-방법이-변경되었습니다"><a href="#2020년-12월-Disqus-한글세팅-방법이-변경되었습니다" class="headerlink" title="2020년 12월 Disqus 한글세팅 방법이 변경되었습니다."></a>2020년 12월 Disqus 한글세팅 방법이 변경되었습니다.</h1><p><strong>GodSchool.kr</strong> 님 께서 댓글로 한글세팅이 변경되었다는 사실을 알려주셨습니다.</p><p><strong>변경된 한글세팅은</strong> <a href="https://jungjoongi.com/2020/12/11/disaus-korean-setting2/"><strong>2020년 변경된 디스커스 Disqus 한글 세팅을 해보자</strong></a> <strong>에 다시 포스팅 하였습니다.</strong> 링크로 이동하셔서 설정해주시면 됩니다.</p><p>감사합니다.</p>]]></content:encoded>
+      
+      
+      <category domain="https://jungjoongi.com/categories/hexo/">hexo</category>
+      
+      
+      <category domain="https://jungjoongi.com/tags/%EA%B0%9C%EB%B0%9C/">개발</category>
+      
+      <category domain="https://jungjoongi.com/tags/%EB%B2%84%EA%B7%B8/">버그</category>
+      
+      <category domain="https://jungjoongi.com/tags/disqus/">disqus</category>
+      
+      <category domain="https://jungjoongi.com/tags/hexo/">hexo</category>
+      
+      
+      <comments>https://jungjoongi.com/2018/10/30/disqus-korean-setting/#disqus_thread</comments>
+      
+    </item>
+    
+  </channel>
+</rss>
